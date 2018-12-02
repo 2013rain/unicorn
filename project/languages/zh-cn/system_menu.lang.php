@@ -3,6 +3,7 @@
 Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
+
 $LANG['member_manage'] = '管理会员';
 $LANG['member_add'] = '添加会员';
 $LANG['member_edit'] = '编辑会员';
@@ -455,4 +456,5 @@ $LANG['complete_info'] = '填写资料';
 $LANG['clear_data'] = '一键清理';
 $LANG['player_manage'] = '播放器管理';
 $LANG['video_upload'] = '视频上传'; 
+
 ?>

@@ -60,7 +60,7 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
 <div class="header">
 	<div class="logo lf"><a href="<?php echo $currentsite['domain']?>" target="_blank"><span class="invisible"><?php echo L('phpcms_title')?></span></a></div>
     <div class="rt-col">
-    	<div class="tab_style white cut_line text-r"><a href="javascript:;" onclick="lock_screen()"><img src="<?php echo IMG_PATH.'icon/lockscreen.png'?>"> <?php echo L('lockscreen')?></a><span>|</span><a href="http://www.phpcms.cn" target="_blank">PHPCMS</a><span>|</span><a href="http://www.phpcms.cn/license/license.php" target="_blank"><?php echo L('authorization')?></a><span>|</span><a href="http://bbs.phpcms.cn" target="_blank"><?php echo L('igenus_for_postfix')?></a><span>|</span><a href="http://v9.help.phpcms.cn/" target="_blank"><?php echo L('help')?></a>
+    	<div class="tab_style white cut_line text-r"><a href="javascript:;" onclick="lock_screen()"><img src="<?php echo IMG_PATH.'icon/lockscreen.png'?>"> <?php echo L('lockscreen')?></a>
     <ul id="Skin">
 		<li class="s1 styleswitch" rel="styles1"></li>
 		<li class="s2 styleswitch" rel="styles2"></li>
@@ -70,24 +70,18 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
         </div>
     </div>
     <div class="col-auto">
-    	<div class="log white cut_line"><?php echo L('hello'),$admin_username?>  [<?php echo $rolename?>]<span>|</span><a href="?m=admin&c=index&a=public_logout">[<?php echo L('exit')?>]</a><span>|</span>
-    		<a href="<?php echo $currentsite['domain']?>" target="_blank" id="site_homepage"><?php echo L('site_homepage')?></a><span>|</span>
-    		<a href="?m=member" target="_blank"><?php echo L('member_center')?></a><span>|</span>
-    		<a href="?m=search" target="_blank" id="site_search"><?php echo L('search')?></a>
+    	<div class="log white cut_line"><?php echo L('hello'),$admin_username?>  [<?php echo $rolename?>]<span>
     	</div>
         <ul class="nav white" id="top_menu">
         <?php
         $array = admin::admin_menu(0);
         foreach($array as $_value) {
-        	if($_value['id']==10) {
-        		echo '<li id="_M'.$_value['id'].'" class="on top_menu"><a href="javascript:_M('.$_value['id'].',\'?m='.$_value['m'].'&c='.$_value['c'].'&a='.$_value['a'].'\')" hidefocus="true" style="outline:none;">'.L($_value['name']).'</a></li>';
-        		
-        	} else {
+        	
         		echo '<li id="_M'.$_value['id'].'" class="top_menu"><a href="javascript:_M('.$_value['id'].',\'?m='.$_value['m'].'&c='.$_value['c'].'&a='.$_value['a'].'\')"  hidefocus="true" style="outline:none;">'.L($_value['name']).'</a></li>';
-        	}      	
+        	 	
         }
         ?>
-            <li class="tab_web"><a href="javascript:;"><span><?php echo $currentsite['name']?></span></a></li>
+
         </ul>
     </div>
 </div>
@@ -108,30 +102,12 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
     	<div class="col-1">
         	<div class="content" style="position:relative; overflow:hidden">
                 <iframe name="right" id="rightMain" src="?m=admin&c=index&a=public_main" frameborder="false" scrolling="auto" style="border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true"></iframe>
-                <div class="fav-nav">
-					<div id="panellist">
-						<?php foreach($adminpanel as $v) {?>
-								<span>
-								<a onclick="paneladdclass(this);" target="right" href="<?php echo $v['url'].'menuid='.$v['menuid'].'&pc_hash='.$_SESSION['pc_hash'];?>"><?php echo L($v['name'])?></a>
-								<a class="panel-delete" href="javascript:delete_panel(<?php echo $v['menuid']?>, this);"></a></span>
-						<?php }?>
-					</div>
-					<div id="paneladd"></div>
-					<input type="hidden" id="menuid" value="">
-					<input type="hidden" id="bigid" value="" />
-                    <div id="help" class="fav-help"></div>
-				</div>
+                
         	</div>
         </div>
     </div>
 </div>
-<div class="tab-web-panel hidden" style="position:absolute; z-index:999; background:#fff">
-<ul>
-<?php foreach ($sitelist as $key=>$v):?>
-	<li style="margin:0"><a href="javascript:site_select(<?php echo $v['siteid']?>, '<?php echo new_addslashes($v['name'])?>', '<?php echo $v['domain']?>', '<?php echo $v['siteid']?>')"><?php echo $v['name']?></a></li>
-<?php endforeach;?>
-</ul>
-</div>
+
 <div class="scroll"><a href="javascript:;" class="per" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(1);"></a><a href="javascript:;" class="next" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(2);"></a></div>
 <script type="text/javascript"> 
 if(!Array.prototype.map)
@@ -310,29 +286,7 @@ function _MP(menuid,targetUrl) {
 	show_help(targetUrl);
 }
 
-function show_help(targetUrl) {
-	$("#help").slideUp("slow");
-	var str = '';
-	$.getJSON("http://v9.help.phpcms.cn/api.php?jsoncallback=?",{op:'help',targetUrl: targetUrl},
-	function(data){
-		if(data!=null) {
-			$("#help").slideDown("slow");
-			$.each(data, function(i,item){
-				str += '<a href="'+item.url+'" target="_blank">'+item.title+'</a>';
-			});
-			
-			str += '<a class="panel-delete" href="javascript:;" onclick="$(\'#help\').slideUp(\'slow\')"></a>';
-			$('#help').html(str);
-		}
-	});
-	$("#help").data('time', 1);
-}
-setInterval("hidden_help()", 30000);
-function hidden_help() {
-	var htime = $("#help").data('time')+1;
-	$("#help").data('time', htime);
-	if(htime>2) $("#help").slideUp("slow");
-}
+
 function add_panel() {
 	var menuid = $("#menuid").val();
 	$.ajax({
