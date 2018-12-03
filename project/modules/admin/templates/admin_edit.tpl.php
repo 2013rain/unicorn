@@ -33,6 +33,14 @@ $show_validator = true;include $this->admin_tpl('header');?>
 <input type="text" name="info[email]" value="<?php echo $email?>" class="input-text" id="email" size="30"></input>
 </td>
 </tr>
+<?php if ($roleid==2){ ?>
+<tr>
+<td><?php echo L('setting_rebate')?></td>
+<td>
+<input type="text" name="info[rebate]" value="<?php echo $rebate?>" class="input-text" id="rebate" size="5">(0-99)</input>
+</td>
+</tr>
+<?php } ?>
 
 <tr>
 <td><?php echo L('realname')?></td>
@@ -40,6 +48,7 @@ $show_validator = true;include $this->admin_tpl('header');?>
 <input type="text" name="info[realname]" value="<?php echo $realname?>" class="input-text" id="realname"></input>
 </td>
 </tr>
+
 <?php if ($_SESSION['roleid']==1) {?>
 <tr>
 <td><?php echo L('userinrole')?></td>

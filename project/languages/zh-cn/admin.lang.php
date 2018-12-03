@@ -253,6 +253,8 @@ $LANG['new_pwdconfirm'] = '重复新密码';
 $LANG['old_password_wrong'] = '旧密码输入错误';
 $LANG['old_password_right'] = '旧密码输入正确';
 $LANG['email_already_exists'] = '该邮箱已经存在';
+$LANG['setting_rebate'] = '设置折扣';
+$LANG['view_rebate'] = '查看折扣';
 
 //database.php
 

@@ -40,7 +40,7 @@ class model {
 	 * @param $key          返回数组按键名排序
 	 * @return array		查询结果集数组
 	 */
-	final public function select($where = '', $data = '*', $limit = '', $order = '', $group = '', $key='') {
+	public function select($where = '', $data = '*', $limit = '', $order = '', $group = '', $key='') {
 		if (is_array($where)) $where = $this->sqls($where);
 		return $this->db->select($data, $this->table_name, $where, $limit, $order, $group, $key);
 	}
@@ -53,7 +53,7 @@ class model {
 	 * @param $pagesize
 	 * @return unknown_type
 	 */
-	final public function listinfo($where = '', $order = '', $page = 1, $pagesize = 20, $key='', $setpages = 10,$urlrule = '',$array = array(), $data = '*') {
+	public function listinfo($where = '', $order = '', $page = 1, $pagesize = 20, $key='', $setpages = 10,$urlrule = '',$array = array(), $data = '*') {
 		$where = to_sqls($where);
 		$this->number = $this->count($where);
 		$page = max(intval($page), 1);
@@ -75,7 +75,7 @@ class model {
 	 * @param $group 		分组方式	[默认为空]
 	 * @return array/null	数据查询结果集,如果不存在，则返回空
 	 */
-	final public function get_one($where = '', $data = '*', $order = '', $group = '') {
+	public function get_one($where = '', $data = '*', $order = '', $group = '') {
 		if (is_array($where)) $where = $this->sqls($where);
 		return $this->db->get_one($data, $this->table_name, $where, $order, $group);
 	}
@@ -129,7 +129,7 @@ class model {
 	 * @param $where 		删除数据条件,不充许为空。
 	 * @return boolean
 	 */
-	final public function delete($where) {
+	public function delete($where) {
 		if (is_array($where)) $where = $this->sqls($where);
 		return $this->db->delete($this->table_name, $where);
 	}

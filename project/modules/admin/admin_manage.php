@@ -77,14 +77,21 @@ class admin_manage extends admin {
 				$this->op->edit_password($info['userid'], $info['password']);
 			}
 			$userid = $info['userid'];
-			$admin_fields = array('username', 'email', 'roleid','realname');
+			$admin_fields = array('username', 'email', 'roleid','realname','rebate');
 			foreach ($info as $k=>$value) {
 				if (!in_array($k, $admin_fields)){
 					unset($info[$k]);
 				}
 			}
+			if (isset($info["rebate"])) {
+				if ($info["rebate"]<0 ||$info["rebate"]>=100||!is_numeric($info["rebate"])) {
+					showmessage("折扣设置错误");
+				}
+			}
 			$this->db->update($info,array('userid'=>$userid));
 			showmessage(L('operation_success'),'','','edit');
+			
+			
 		} else {					
 			$info = $this->db->get_one(array('userid'=>$_GET['userid']));
 			extract($info);	

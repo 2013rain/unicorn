@@ -37,7 +37,7 @@ if(is_array($infos)){
 <a href="javascript:confirmurl('?m=admin&c=admin_manage&a=delete&userid=<?php echo $info['userid']?>', '<?php echo L('admin_del_cofirm')?>')"><?php echo L('delete')?></a>
 <?php } else {?>
 <font color="#cccccc"><?php echo L('delete')?></font>
-<?php } ?> | <a href="javascript:void(0)" onclick="card(<?php echo $info['userid']?>)"><?php echo L('ht_card')?></a>
+<?php } ?>
 </td>
 </tr>
 <?php 
