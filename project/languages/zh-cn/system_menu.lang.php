@@ -3,7 +3,8 @@
 Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
-
+$LANG['manage_admin_member'] = '供货商列表';
+$LANG['manage_admin_code'] = '生成邀请码';
 $LANG['member_manage'] = '管理会员';
 $LANG['member_add'] = '添加会员';
 $LANG['member_edit'] = '编辑会员';
