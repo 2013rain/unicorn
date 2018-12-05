@@ -260,7 +260,7 @@ class member extends admin {
 			$info['overduedate'] = strtotime($info['overduedate']);
 
 			$status = $this->client->ps_member_register($info['username'], $info['password'], $info['email'], $info['regip']);
-
+			var_dump($status);exit();
 			if($status > 0) {
 				unset($info[pwdconfirm]);
 				$info['phpssouid'] = $status;
@@ -761,6 +761,59 @@ class member extends admin {
 			exit('1');
 		}
 	}
+
+	/**
+	 * admin_member
+	 */
+	function admin_member() {
+		$this->admin_db = pc_base::load_model('admin_model');
+		$roleid = 2;
+		$roles = getcache('role','commons');
+
+		$infos = $this->admin_db->select(array('roleid'=> $roleid));
+		include $this->admin_tpl('admin_member');
+	}
+	/**
+	 * admin_member
+	 */
+	function admin_code() {
+		$this->admin_code = pc_base::load_model('invite_code_model');
+		$this->admin_db = pc_base::load_model('admin_model');
+		$charset = 'abcdefghkmnprstuvwyzABCDEFGHKLMNPRSTUVWYZ23456789';
+
 	
+		$code_len = 6;
+		$roleid = 2;
+		$userid = $_SESSION['userid'];
+		$admin_username = param::get_cookie('admin_username');
+
+		$info = $this->admin_db->get_one(array('userid'=>$userid));
+		if ($info["roleid"]!=$roleid && $info["roleid"]!=1) {
+			showmessage('当前角色不允许', HTTP_REFERER);
+		}
+		$info = $this->admin_code->get_one(array('admin_userid'=>$userid));
+		if (empty($info)) {
+			$go =1;
+			while($go){
+					$charset_len = strlen($charset)-1;
+					$code ='';
+					for ($i=0; $i< $code_len; $i++) {
+						$code .= $charset[rand(1, $charset_len)];
+					}
+
+					$info3 = $this->admin_code->get_one(array('code'=>$code));
+					if (!empty($info3)) {
+						continue;
+					}else{
+						$go=0;
+						$this->admin_code->insert(array('code'=>$code,'admin_userid'=>$userid,'create_time'=>date('Y-m-d H:i:s')));
+						$info = $this->admin_code->get_one(array('admin_userid'=>$userid));
+						break;
+					}
+			}
+		}
+		
+		include $this->admin_tpl('admin_code');
+	}
 }
 ?>
