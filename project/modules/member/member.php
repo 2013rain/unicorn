@@ -252,18 +252,31 @@ class member extends admin {
 			if(!$this->_checkname($_POST['info']['username'])){
 				showmessage(L('member_exist'));
 			}
+			if(!$this->_checkenname($_POST['info']['enname'])){
+				showmessage("英文名已存在");
+			}
 			$info = $this->_checkuserinfo($_POST['info']);
 			if(!$this->_checkpasswd($info['password'])){
 				showmessage(L('password_format_incorrect'));
 			}
+			$admin_code = $info['admin_code'];
+			$admin_userid =$this->_checkadmincode($admin_code);
+
+			if(!empty($admin_code) && !$admin_userid){
+				showmessage("无效邀请码");
+			}
+			unset($info['admin_code']);
+
 			$info['regip'] = ip();
 			$info['overduedate'] = strtotime($info['overduedate']);
 
 			$status = $this->client->ps_member_register($info['username'], $info['password'], $info['email'], $info['regip']);
-			var_dump($status);exit();
+			
 			if($status > 0) {
 				unset($info[pwdconfirm]);
 				$info['phpssouid'] = $status;
+				$info['admin_userid'] = $admin_userid;
+
 				//取phpsso密码随机数
 				$memberinfo = $this->client->ps_get_member_info($status);
 				$memberinfo = unserialize($memberinfo);
@@ -273,6 +286,7 @@ class member extends admin {
 				
 				$this->db->insert($info);
 				if($this->db->insert_id()){
+					$this->_deleteadmincode($admin_code);
 					showmessage(L('operation_success'),'?m=member&c=member&a=add', '', 'add');
 				}
 			} elseif($status == -4) {
@@ -693,7 +707,32 @@ class member extends admin {
 		}
 		return true;
 	}
+	private function _checkenname($enname) {
+		$enname =  trim($enname);
+		if ($this->db->get_one(array('enname'=>$enname))){
+			return false;
+		}
+		return true;
+	}
 	
+	private function _checkadmincode($code) {
+		$code =  trim($code);
+		$this->admin_code = pc_base::load_model('invite_code_model');
+		$codeinfo = $this->admin_code->get_one(array('code'=>$code));
+		if (!empty($codeinfo)){
+			return $codeinfo["admin_userid"];
+		}
+		return false;
+	}
+	private function _deleteadmincode($code) {
+		$code =  trim($code);
+		$this->admin_code = pc_base::load_model('invite_code_model');
+		if ($this->admin_code->delete(array('code'=>$code))){
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * 初始化phpsso
 	 * about phpsso, include client and client configure
@@ -791,29 +830,52 @@ class member extends admin {
 		if ($info["roleid"]!=$roleid && $info["roleid"]!=1) {
 			showmessage('当前角色不允许', HTTP_REFERER);
 		}
-		$info = $this->admin_code->get_one(array('admin_userid'=>$userid));
-		if (empty($info)) {
-			$go =1;
-			while($go){
-					$charset_len = strlen($charset)-1;
-					$code ='';
-					for ($i=0; $i< $code_len; $i++) {
-						$code .= $charset[rand(1, $charset_len)];
-					}
+		$codelist = $this->admin_code->select(array('admin_userid'=>$userid));
+		$count =  count($codelist);
+		$charset_len = strlen($charset)-1;
+		while ( $count < 10) {	
+				$code ='';
+				for ($i=0; $i< $code_len; $i++) {
+					$code .= $charset[rand(1, $charset_len)];
+				}
 
-					$info3 = $this->admin_code->get_one(array('code'=>$code));
-					if (!empty($info3)) {
-						continue;
-					}else{
-						$go=0;
-						$this->admin_code->insert(array('code'=>$code,'admin_userid'=>$userid,'create_time'=>date('Y-m-d H:i:s')));
-						$info = $this->admin_code->get_one(array('admin_userid'=>$userid));
-						break;
-					}
-			}
+				$info3 = $this->admin_code->get_one(array('code'=>$code));
+				if (!empty($info3)) {
+					continue;
+				}else{
+					$count+=1;
+					$this->admin_code->insert(array('code'=>$code,'admin_userid'=>$userid,'create_time'=>date('Y-m-d H:i:s')));
+				}
 		}
+		$codelist = $this->admin_code->select(array('admin_userid'=>$userid));
 		
 		include $this->admin_tpl('admin_code');
+	}
+	/**
+	 * 
+	 */
+	function children_list() {
+		$admin_userid = isset($_GET['admin_userid']) && trim($_GET['admin_userid']) ? trim($_GET['admin_userid']) : exit(0);
+		$admin_userid = (int)$admin_userid;
+		$this->admin_db = pc_base::load_model('admin_model');
+
+		$info = $this->admin_db->get_one(array('userid'=>$admin_userid));
+		if (empty($info)) {
+			 exit(0);
+		}
+		$member_list = $this->db->select(array('admin_userid'=> $admin_userid));
+		
+		
+		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+		$memberlist = $this->db->listinfo(array('admin_userid'=> $admin_userid), 'userid DESC', $page, 15);
+		//查询会员头像
+		foreach($memberlist as $k=>$v) {
+			$memberlist[$k]['avatar'] = get_memberavatar($v['phpssouid']);
+		}
+		$pages = $this->db->pages;
+		// var_dump($memberlist);
+
+		include $this->admin_tpl('children_list');
 	}
 }
 ?>

@@ -36,8 +36,8 @@ if(is_array($infos)){
 <td width="10%"  align="center"><?php echo $info['realname']?></td>
 <td width="10%"  align="center">
 <a href="javascript:edit(<?php echo $info['userid']?>, '<?php echo new_addslashes($info['username'])?>')"><?php echo L('edit')?></a> | 
+<a href="?m=member&c=member&a=children_list&admin_userid=<?php echo $info['userid']?>">会员列表</a> 
 
-<a href="/">会员列表</a>
 
 </td>
 </tr>

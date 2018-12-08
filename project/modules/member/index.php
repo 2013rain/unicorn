@@ -100,7 +100,15 @@ class index extends foreground {
 				if(!preg_match('/^1([0-9]{10})$/',$userinfo['mobile'])) {
 					showmessage('请提供正确的手机号码！', HTTP_REFERER);
 				}
-			} 
+			}
+			$admin_code = $userinfo['admin_code'];
+			$admin_userid =$this->_checkadmincode($admin_code);
+
+			if(!empty($admin_code) && !$admin_userid){
+				showmessage("无效邀请码");
+			}
+			unset($userinfo["admin_code"]);
+
  			unset($_SESSION['connectid'], $_SESSION['from']);
 			
 			if($member_setting['enablemailcheck']) {	//是否需要邮件验证
@@ -139,6 +147,7 @@ class index extends foreground {
 				$status = $this->client->ps_member_register($userinfo['username'], $userinfo['password'], $userinfo['email'], $userinfo['regip'], $userinfo['encrypt']);
 				if($status > 0) {
 					$userinfo['phpssouid'] = $status;
+					$userinfo['admin_userid']=$admin_userid;
 					//传入phpsso为明文密码，加密后存入phpcms_v9
 					$password = $userinfo['password'];
 					$userinfo['password'] = password($userinfo['password'], $userinfo['encrypt']);
@@ -151,6 +160,7 @@ class index extends foreground {
 					}
 					
 					if($userid > 0) {
+						$this->_deleteadmincode($admin_code);
 						//执行登陆操作
 						if(!$cookietime) $get_cookietime = param::get_cookie('cookietime');
 						$_cookietime = $cookietime ? intval($cookietime) : ($get_cookietime ? $get_cookietime : 0);
@@ -1060,6 +1070,43 @@ class index extends foreground {
 			}
 		} 
 	}
+	/**
+	 * 检查用户英文名
+	 * @param string $enname	英文名
+	 * @return $status {0:已存在;1:成功}
+	 */
+	public function public_checkenname_ajax() {
+		$enname = isset($_GET['enname']) && trim($_GET['enname']) && is_username(trim($_GET['enname'])) ? trim($_GET['enname']) : exit('0');
+		if(CHARSET != 'utf-8') {
+			$enname = iconv('utf-8', CHARSET, $enname);
+			$enname = addslashes($enname);
+		} 
+
+		if(isset($_GET['userid'])) {
+			$userid = intval($_GET['userid']);
+			//如果是会员修改，而且NICKNAME和原来优质一致返回1，否则返回0
+			$info = get_memberinfo($userid);
+			if($info['enname'] == $enname){//未改变
+				exit('1');
+			}else{//已改变，判断是否已有此名
+				$where = array('enname'=>$enname);
+				$res = $this->db->get_one($where);
+				if($res) {
+					exit('0');
+				} else {
+					exit('1');
+				}
+			}
+ 		} else {
+			$where = array('enname'=>$enname);
+			$res = $this->db->get_one($where);
+			if($res) {
+				exit('0');
+			} else {
+				exit('1');
+			}
+		} 
+	}
 	
 	/**
 	 * 检查邮箱
@@ -1093,7 +1140,23 @@ class index extends foreground {
 			exit('1');
 		}
 	}
-	
+	private function _checkadmincode($code) {
+		$code =  trim($code);
+		$this->admin_code = pc_base::load_model('invite_code_model');
+		$codeinfo = $this->admin_code->get_one(array('code'=>$code));
+		if (!empty($codeinfo)){
+			return $codeinfo["admin_userid"];
+		}
+		return false;
+	}
+	private function _deleteadmincode($code) {
+		$code =  trim($code);
+		$this->admin_code = pc_base::load_model('invite_code_model');
+		if ($this->admin_code->delete(array('code'=>$code))){
+			return true;
+		}
+		return false;
+	}
 	public function public_sina_login() {
 		define('WB_AKEY', pc_base::load_config('system', 'sina_akey'));
 		define('WB_SKEY', pc_base::load_config('system', 'sina_skey'));

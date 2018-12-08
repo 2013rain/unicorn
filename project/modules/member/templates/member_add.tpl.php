@@ -61,6 +61,23 @@ $(function(){
 		onerror : "<?php echo L('already_exist').L('already_exist')?>",
 		onwait : "<?php echo L('connecting_please_wait')?>"
 	}).defaultPassed();
+	$("#enname").formValidator({onshow:"<?php echo L('input').'英文名'?>",onfocus:"<?php echo '英文名'.L('between_2_to_20')?>"}).inputValidator({min:2,max:20,onerror:"<?php echo '英文名'.L('between_2_to_20')?>"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"<?php echo '英文名'.L('format_incorrect')?>"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=member&c=index&a=public_checkenname_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+            if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "<?php echo L('already_exist').L('already_exist')?>",
+		onwait : "<?php echo L('connecting_please_wait')?>"
+	}).defaultPassed();
 });
 //-->
 </script>
@@ -73,6 +90,10 @@ $(function(){
 		<tr>
 			<td width="80"><?php echo L('username')?></td> 
 			<td><input type="text" name="info[username]"  class="input-text" id="username"></input></td>
+		</tr>
+		<tr>
+			<td width="80">英文名</td> 
+			<td><input type="text" name="info[enname]"  class="input-text" id="enname"></input></td>
 		</tr>
 		<tr>
 			<td><?php echo L('password')?></td> 
@@ -98,31 +119,17 @@ $(function(){
 			<input type="text" name="info[mobile]" value="<?php echo $memberinfo['mobile']?>" class="input-text" id="mobile" size="15"></input>
 			</td>
 		</tr>
+
+		
+
 		<tr>
-			<td><?php echo L('member_group')?></td>
+			<td>邀请码</td>
 			<td>
-			<?php echo form::select($grouplist, '2', 'name="info[groupid]"', '');?>
+			<input type="text" name="info[admin_code]" value="" class="input-text" id="admin_code" size="15"></input>
 			</td>
 		</tr>
-		<tr>
-			<td><?php echo L('point')?></td>
-			<td>
-			<input type="text" name="info[point]" value="" class="input-text" id="point" size="10"></input>
-			</td>
-		</tr>
-		<tr>
-			<td><?php echo L('member_model')?></td>
-			<td>
-			<?php echo form::select($modellist, '44', 'name="info[modelid]"', '');?>
-			</td>
-		</tr>
-		<tr>
-			<td><?php echo L('vip')?></td>
-			<td>
-			<?php echo L('isvip')?> <input type="checkbox" name="info[vip]" value=1 />
-			<?php echo L('overduedate')?> <?php echo form::date('info[overduedate]', '', 1)?>
-			</td>
-		</tr>
+
+		
 	</table>
 </fieldset>
 

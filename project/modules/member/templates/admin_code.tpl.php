@@ -13,10 +13,12 @@
 		</tr>
         </thead>
         <tbody>
+<?php foreach ($codelist as $info) { ?>
  <tr>
 <td width="50%" align="center"><?php echo $info['code']?></td>
 <td width="50%" ><?php echo $info['create_time'] ?></td>
 </tr>
+<?php } ?>
 </tbody>
 </table>
 
