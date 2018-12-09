@@ -112,11 +112,11 @@ class admin {
 			}
 			if($_value['parentid'] == 0 || $_value['m']=='') continue;
 			if($classname) {
-				// $string .= "<a href='javascript:;' $classname><em>".L($_value['name'])."</em></a><span>|</span>";
-				$string .= "<a href='javascript:;' $classname><em>".$_value['tabname']."</em></a><span>|</span>";
+				 $string .= "<a href='javascript:;' $classname><em>".L($_value['name'])."</em></a><span>|</span>";
+
 			} else {
-				// $string .= "<a href='?m=".$_value['m']."&c=".$_value['c']."&a=".$_value['a']."&menuid=$parentid&pc_hash=$pc_hash".'&'.$_value['data']."' $classname><em>".L($_value['name'])."</em></a><span>|</span>";
-				$string .= "<a href='?m=".$_value['m']."&c=".$_value['c']."&a=".$_value['a']."&menuid=$parentid&pc_hash=$pc_hash".'&'.$_value['data']."' $classname><em>".$_value['tabname']."</em></a><span>|</span>";
+				 $string .= "<a href='?m=".$_value['m']."&c=".$_value['c']."&a=".$_value['a']."&menuid=$parentid&pc_hash=$pc_hash".'&'.$_value['data']."' $classname><em>".L($_value['name'])."</em></a><span>|</span>";
+				
 			}
 		}
 		$string = substr($string,0,-14);
