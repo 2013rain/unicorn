@@ -45,11 +45,13 @@ test({
     "data": [{
         "id": "15",
         "cate_name": "外衣"
-        "intro_model": "" // 提示
+        "intro_model": "" // 类别提示
+        "intro_num": "" // 数量提示，如罐装等
     },{
         "id": "107",
         "cate_name": "家用吸尘器",
         "intro_model": "该类商品收取200.0元强制保险"
+        "intro_num": "" // 数量提示，如罐装等
     }
 ]);
 2.type=attr
