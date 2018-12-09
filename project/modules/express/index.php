@@ -307,7 +307,7 @@ class index extends foreground {
                 'fid' => $cat_id,
                 'status' => 1,
                 ];
-            $res = $this->category_db->select($where, 'id,cate_name');
+            $res = $this->category_db->select($where, 'id,cate_name,intro_model');
             $this->outRes(1, '', $res);
         } else {
             $where = [
