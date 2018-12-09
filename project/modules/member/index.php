@@ -1937,5 +1937,20 @@ class index extends foreground {
 		}
 		
 	}
+
+	public function public_province_ajax() {
+		$parentid = isset($_GET['parentid']) ? intval($_GET['parentid']): 0 ;
+		$memberinfo = $this->memberinfo;
+		$this->province_model = pc_base::load_model('province_model');
+		$infolist = $this->province_model->select(array('parentid'=>$parentid));
+		$return = array(
+			"code"=>"1",
+			"data"=>$infolist
+
+		);
+		echo json_encode($return);
+		exit();
+
+	}
 }
 ?>
