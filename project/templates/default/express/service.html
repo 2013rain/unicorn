@@ -27,7 +27,7 @@
 			<tr>
                 <td align="center"><input id="service" name="service[]" can_merge="{$info['can_merge']}" value="{$info['value']}" type="checkbox" class="input-text"></td>
             <td align="center">{$info['name']}</td>
-            <td align="center">{$info['desc']}<td>
+            <td align="center">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}<td>
 			</tr>
             {/loop}
 		    </tbody>

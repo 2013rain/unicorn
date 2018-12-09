@@ -89,5 +89,29 @@ class foreground {
 		$this->ipbanned = pc_base::load_model('ipbanned_model');
 		$this->ipbanned->check_ip();
  	}
+
+    /**
+     * json or array
+     */
+    public function outRes($suc, $msg = '', $data = null, $type = 'json') {
+        $res = [
+            'suc' => $suc,
+            'msg' => $msg,
+            'data' => $data,
+        ];
+        if ($type == 'json') {
+            $callback = isset($_GET['callback']) ? $_GET['callback'] : "";
+            if ($callback) {
+                header("Content-Type:application/x-javascript");
+                echo $callback . '(' . json_encode($res) . ');';
+            } else {
+                header("Content-Type:application/json");
+                echo json_encode($res);
+            }
+            exit();
+        } else {
+            return $res;
+        }
+    }
 	
 }

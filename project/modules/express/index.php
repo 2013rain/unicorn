@@ -9,11 +9,13 @@ pc_base::load_sys_class('form', '', 0);
 pc_base::load_app_func('global');
 
 class index extends foreground {
-	public $db, $goods_db;
+	public $db, $goods_db, $category_db, $goods_attr_db;
 	function __construct() {
 		parent::__construct();
 		$this->db = pc_base::load_model('member_express_model');
 		$this->goods_db = pc_base::load_model('member_express_goods_model');
+        $this->category_db = pc_base::load_model('goods_category_model');
+        $this->goods_attr_db = pc_base::load_model('goods_category_attr_model');
 	}
 
 	/**
@@ -65,13 +67,12 @@ class index extends foreground {
                 showmessage('入库成功', 'index.php?m=express&c=index&a=detail&id='.$express_id.'&t=3');
             } else {
                 $store = isset($_POST['store']) ? intval($_POST['store']) : 0;
-                if (!$store) {
-                    showmessage('入库仓库不能为空', HTTP_REFERER);
-                }
                 $company = isset($_POST['company']) ? trim($_POST['company']) : '';
-                if (!$company) {
-                    showmessage('快递公司不能为空', HTTP_REFERER);
+                $check = $this->checkStoreCompany($store, $company);
+                if (!$check['suc']) {
+                    showmessage($check['msg'], HTTP_REFERER);
                 }
+                $company = $check['data']['company_name'];
                 $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
                 if (!$expressno) {
                     showmessage('快递单号必填', HTTP_REFERER);
@@ -87,6 +88,10 @@ class index extends foreground {
                 $goods_sql = [];
                 $flag = true;
                 $time = time();
+                $count = count($express);
+                if ($count > 20) {
+                    showmessage('一次入库数量不能超过20件', HTTP_REFERER);
+                }
                 foreach ($express as $val) {
                     $name = isset($val['name']) ? trim($val['name']) : '';
                     $category = isset($val['category']) ? trim($val['category']) : '';
@@ -141,6 +146,12 @@ class index extends foreground {
                 $service_info = pc_base::load_config('express_service');
                 include template('express', 'service');
             } else {
+                $stores = pc_base::load_config('express_store');
+                $cat_where = [
+                    'fid' => 0,
+                    'status' => 1,
+                ];
+                $cats = $this->category_db->select($cat_where);
                 include template('express','putin');
             }
 		}
@@ -193,18 +204,96 @@ class index extends foreground {
         $where = [
             'id' => $express_id,
         ];
-        $res = $this->db->get_one($where);
-        if (!$res || $res['userid'] != $userid) {
+        $express = $this->db->get_one($where);
+        if (!$express || $express['userid'] != $userid) {
             showmessage('非法操作', 'index.php?m=express&c=index');
         }
-        $expressno = $res['expressno'];
+        $expressno = $express['expressno'];
         $where = [
             'userid' => $userid,
             'expressno' => $expressno
         ];
-        $goods = $this->goods_db->listinfo($where, '', 1, 1);
+        $page = isset($_GET['page']) && trim($_GET['page']) ? intval($_GET['page']) : 1;
+        $goods = $this->goods_db->listinfo($where, '', $page, 1);
+        $goods_num = 0;
+        foreach ($goods as $val) {
+            $goods_num += $val['num'];
+        }
+        $service = $express['service'];
+        if ($service[0] == '1') {
+            $express_mode = '货到即发';
+        } else {
+            $express_mode = '普通入库';
+        }
+        $service = $express['service'];
+        $service_arr = $this->decodeService($service);
+        $pages = $this->goods_db->pages;
         include template('express', 'detail');
     }
+    
+    /**
+     * 反解service
+     */
+    private function decodeService($serviceStr) {
+        $res = [];
+        $len = strlen($serviceStr);
+        $services = pc_base::load_config('express_service');
+        for ($i = 0; $i < $len; $i++) {
+            if ($serviceStr[$i] == '1' && isset($services[$i])) {
+                $res[] = $services[$i];
+            }
+        }
+        return $res;
+
+    }
+
+    function getcompany() {
+        $storeid = isset($_GET['storeid']) ? intval($_GET['storeid']) : 0;
+        if (!$storeid) {
+            $this->outRes(0,'请输入仓库Id');
+        }
+        $info = pc_base::load_config('express_store');
+        $res = [];
+        foreach ($info as $val) {
+            if ($val['id'] == $storeid) {
+                $res = $val['company'];
+                break;
+            }
+        }
+        $this->outRes(1, '', $res);
+    }
+
+    private function checkStoreCompany($storeid, $companyid) {
+        if (!$storeid) {
+            return $this->outRes(0, '仓库不能为空', null, 'array');
+        }
+        if (!$companyid) {
+            return $this->outRes(0, '快递公司不能为空', null, 'array');
+        }
+        
+        $info = pc_base::load_config('express_store');
+        $flag = true;
+        $res = [];
+        $company_name = '';
+        foreach ($info as $val) {
+            if ($val['id'] == $storeid) {
+                foreach ($val['company'] as $v) {
+                    if ($v['id'] == $companyid) {
+                        $company_name = $v['name'];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        if (!$company_name) {
+            return $this->outRes(0, '非法操作', null, 'array');
+        }
+        return $this->outRes(1, '', ['company_name'=>$company_name], 'array');
+
+    }
+
+
 
 
 	

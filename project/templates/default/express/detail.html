@@ -3,28 +3,80 @@
 {template 'express', 'left'}
 <div class="col-auto">
 	<div class="col-1 ">
-		<h5 class="title">等待入库</h5>
+		<h5 class="title">查看入库信息</h5>
+		<div class="content">
+		<div class="col-1 member-info">
+		<div class="content">
+		<table width="100%" cellspacing="0"  class="table-list">
+		    <tbody>
+			<tr>
+			<td width="8%" align="center">入库仓库:{$express['storeid']}</td>
+            <td  width="20%" align="center">快递单号：{$express['expressno']}</td>
+			<td width="15%" align="center">货物数量：{$goods_num}</td>
+			<td width="15%" align="center">入库方式：{$express_mode}</td>
+			</tr>
+		    </tbody>
+		    </table>
+		</div>
+	</div>
+	</div>
+    <table width="100%" cellspacing="0" class="table_form">
+        <tr>
+            <th width="100">入库仓库</th> 
+            <td>{$express['storeid']}</td>
+        </tr>
+
+        <tr>
+            <th width="100">快递公司</th> 
+            <td>{$express['company']}</td>
+        </tr>                                                                                                                           
+        <tr>
+            <th width="100">快递编号</th> 
+            <td>{$express['expressno']}</td>
+        </tr>
+        <tr>
+            <th width="100"></font>货物概述</th> 
+        <td>{$express['detail']}</td>
+        </tr>
+        <tr>
+            <th width="100">入库重量</th> 
+            <td>{$express['weight']}</td>
+        </tr>
+</table>
+<div class="status">
+{if $express['status']}
+<div>提交入库({format::date($express['createtime'], 1)})</div>
+{/if}
+<div><a target="_blank" href="https://www.ups.com/WebTracking/track">点击这里去快递公司官网查询包裹信息</a></div>
+</div>
+
+
+	</div>
+	<div class="col-1 ">
+		<h5 class="title">快递单中货物信息</h5>
 		<div class="content">
 		<div class="col-1 member-info">
 		<div class="content">
 		<table width="100%" cellspacing="0"  class="table-list">
 			<thead>
 			    <tr>
-			    <th width="8%">仓库</th>
-			    <th width="20%">快递单号</th>
-			    <th width="15%">货物概述</th>
-			    <th width="15%">入库时间</th>
-			    <th width="8%">操作</th>
+			    <th width="8%">商品名称</th>
+			    <th width="20%">商品类别</th>
+			    <th width="15%">商品品牌</th>
+			    <th width="15%">商品型号</th>
+			    <th width="8%">商品单价</th>
+			    <th width="8%">商品数量</th>
 			    </tr>
 			</thead>
 		    <tbody>
-			{loop $list $info}
+			{loop $goods $good}
 			<tr>
-			<td width="8%" align="center">{$info['storeid']}</td>
-			<td  width="20%" align="center">{format::date($info['creat_at'], 1)}</td>
-			<td width="15%" align="center">{$info['expressno']}</td>
-			<td width="15%" align="center">{format::date($info['createtime'], 1)}</td>
-			<td width="8%" align="center">操作</td>
+			<td width="8%" align="center">{$good['goodsname']}</td>
+            <td  width="20%" align="center">{$good['pcategory']} - {$good['scategory']}</td>
+			<td width="15%" align="center">{$good['productname']}</td>
+			<td width="15%" align="center">{$good['goodsmodel']}</td>
+			<td width="8%" align="center">{$good['uprice']}</td>
+			<td width="8%" align="center">{$good['num']}</td>
 			</tr>
 			{/loop}
 		    </tbody>
@@ -35,65 +87,26 @@
 	</div>
 	</div>
 	<div class="col-1 ">
-		<h5 class="title">当前库存</h5>
+		<h5 class="title">入库单增值服务</h5>
 		<div class="content">
 		<div class="col-1 member-info">
 		<div class="content">
 		<table width="100%" cellspacing="0"  class="table-list">
 			<thead>
 			    <tr>
-			    <th width="8%">仓库</th>
-			    <th width="20%">快递单号</th>
-			    <th width="15%">货物概述</th>
-			    <th width="15%">入库时间</th>
-			    <th width="8%">操作</th>
+			    <th width="8%">增值服务名称</th>
+			    <th width="20%">增值服务内容及完成情况</th>
 			    </tr>
 			</thead>
 		    <tbody>
-			{loop $list $info}
+            {loop $service_arr $service}
 			<tr>
-			<td width="8%" align="center">{$info['msg']}</td>
-			<td  width="20%" align="center">{format::date($info['creat_at'], 1)}</td>
-			<td width="15%" align="center">{if $info[type]==1}金钱{elseif $info[type]==2}积分{/if}</td>
-			<td width="15%" align="center">{$info['value']}</td>
-			<td width="8%" align="center">{$info['value']}</td>
-			</tr>
-			{/loop}
+			<td width="8%" align="center">{$service['name']}</td>
+			<td  width="20%" align="center">{$service['desc']}</td>
+            </tr>
+            {/loop}
 		    </tbody>
 		    </table>
-		<div id="pages"> {$pages}</div>
-		</div>
-	</div>
-	</div>
-	</div>
-	<div class="col-1 ">
-		<h5 class="title">已出库货物</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-			<thead>
-			    <tr>
-			    <th width="8%">仓库</th>
-			    <th width="20%">快递单号</th>
-			    <th width="15%">货物概述</th>
-			    <th width="15%">入库时间</th>
-			    <th width="8%">操作</th>
-			    </tr>
-			</thead>
-		    <tbody>
-			{loop $list $info}
-			<tr>
-			<td width="8%" align="center">{$info['msg']}</td>
-			<td  width="20%" align="center">{format::date($info['creat_at'], 1)}</td>
-			<td width="15%" align="center">{if $info[type]==1}金钱{elseif $info[type]==2}积分{/if}</td>
-			<td width="15%" align="center">{$info['value']}</td>
-			<td width="8%" align="center">{$info['value']}</td>
-			</tr>
-			{/loop}
-		    </tbody>
-		    </table>
-		<div id="pages"> {$pages}</div>
 		</div>
 	</div>
 	</div>

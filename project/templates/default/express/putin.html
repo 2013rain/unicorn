@@ -4,6 +4,10 @@
 <link href="{CSS_PATH}dialog.css" rel="stylesheet" type="text/css" />
 <script language="javascript" type="text/javascript" src="{JS_PATH}dialog.js"></script>
 <script language="JavaScript">
+    $(document).ready(function(){
+        $("#store").change(function(){
+        });
+    });
 </script>
 <div id="memberArea">
 	{template 'express', 'left'}
@@ -15,12 +19,14 @@
 				<table width="100%" cellspacing="0" class="table_form">
 					<tr>
 						<th width="100">请选择入库仓库</th> 
-						<td><input id="store" name="store" value="" type="text" class="input-text" size="30"></td>
+                        <td>{loop $stores $store}<input id="store" name="store" value="{$store['id']}" type="radio">{$store['name']}{/loop}</td>
 					</tr>
 
 					<tr>
 						<th width="100">快递公司</th> 
-						<td><input id="company" name="company" value="" type="text" class="input-text" size="30"></td>
+                        <td><select id="company" name="company"><option value="" selected="selected">请选择</option>
+                                <option value="1">UPS</option>
+                        </select></td>
 					</tr>
 					<tr>
 						<th width="100">快递编号</th> 
@@ -56,8 +62,18 @@
 		    <tbody>
 			<tr>
             <td align="center"><input style="width:110px;" id="name" name="express[0][name]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:110px" id="category" name="express[0][category]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:110px" id="category_child" name="express[0][category_child]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center">
+                <select id="category" name="express[0][category]">
+                    <option value="" selected="selected">请选择</option>
+                    {loop $cats $cat}<option value="{$cat['id']}">{$cat['cate_name']}</option>{/loop}
+                </select>
+            </td>
+            <td align="center">
+                <select id="category_child" name="express[0][category_child]">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="1">服装鞋帽</option>
+                </select>
+            </td>
             <td align="center"><input style="width:100px" id="brand" name="express[0][brand]" value="" type="text" class="input-text" size="30"></td>
             <td align="center"><input style="width:50px" id="model" name="express[0][model]" value="" type="text" class="input-text" size="30"></td>
             <td align="center"><input style="width:50px" id="dollar" name="express[0][dollar]" value="" type="text" class="input-text" size="30"></td>
