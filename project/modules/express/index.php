@@ -90,16 +90,38 @@ class index extends foreground {
                 $time = time();
                 $count = count($express);
                 if ($count > 20) {
-                    showmessage('一次入库数量不能超过20件', HTTP_REFERER);
+                    showmessage('一次入库数量不能超过20件,请分开入库', HTTP_REFERER);
                 }
+                $flag = true;
                 foreach ($express as $val) {
                     $name = isset($val['name']) ? trim($val['name']) : '';
+                    if (!$name) {
+                        $flag = false;
+                    }
                     $category = isset($val['category']) ? trim($val['category']) : '';
+                    if (!$category) {
+                        $flag = false;
+                    }
                     $category_child = isset($val['category_child']) ? trim($val['category_child']) : '';
+                    if (!$category_child) {
+                        $flag = false;
+                    }
                     $brand = isset($val['brand']) ? trim($val['brand']) : '';
+                    if (!$brand) {
+                        $flag = false;
+                    }
                     $model = isset($val['model']) ? trim($val['model']) : '';
+                    if (!$model) {
+                        $flag = false;
+                    }
                     $dollar = isset($val['dollar']) ? floatval($val['dollar']) : 0;
+                    if ($dollar <= 0) {
+                        $flag = false;
+                    }
                     $num = isset($val['num']) ? intval($val['num']) : 0;
+                    if ($num <= 0) {
+                        $flag = false;
+                    }
                     $goods_sql[] = [
                         'userid' => $userid,
                         'expressno' => $expressno,
@@ -112,6 +134,9 @@ class index extends foreground {
                         'num' => $num,
                         'createtime' => $time
                         ];
+                }
+                if (!$flag) {
+                    showmessage('物品栏不能留空', HTTP_REFERER);
                 }
                 $express_sql = [
                     'userid' => $userid,
@@ -315,24 +340,8 @@ class index extends foreground {
                 ];
             $res = $this->goods_attr_db->select($where, 'id,attr_name');
             $this->outRes(1, '', $res);
-
         }
     }
-
-    function getattrlist()
-    {
-        $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
-        if (!$cat_id) {
-            $this->outRes(0, '类别不能为空');
-        }
-        $where = [
-            'fid' => $pid,
-            'status' => 1,
-        ];
-        $res = $this->category_db->select($where, 'id,cate_name');
-        $this->outRes(1, '', $res);
-    }
-
 
 
 	
