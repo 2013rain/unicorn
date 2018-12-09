@@ -8,4 +8,5 @@ $LANG['wanggan'] = '会员数据导入';
 $LANG['business_centre'] = '商务中心';
 $LANG['ask_center'] = '问答中心';
 $LANG['mygoods'] = '我的货物';
+$LANG['member_address'] = '我的地址';
 ?>
