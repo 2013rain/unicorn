@@ -42,7 +42,7 @@ return array(
 'admin_founders' => '1', //网站创始人ID，多个ID逗号分隔
 'execution_sql' => 0, //EXECUTION_SQL
 
-'phpsso' => '1',	//是否使用phpsso
+'phpsso' => '0',	//是否使用phpsso
 'phpsso_appid' => '1',	//应用id	
 'phpsso_api_url' => 'http://unicorn.wangfuyu.com.cn/phpsso_server',	//接口地址
 'phpsso_auth_key' => '8RrxpgYsggc8dsuKfKzigG8wSnWgixUF', //加密密钥

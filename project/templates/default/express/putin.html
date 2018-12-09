@@ -1,0 +1,89 @@
+{template 'express', 'header'}
+<script type="text/javascript" src="{JS_PATH}formvalidator.js" charset="UTF-8"></script>
+<script type="text/javascript" src="{JS_PATH}formvalidatorregex.js" charset="UTF-8"></script>
+<link href="{CSS_PATH}dialog.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="{JS_PATH}dialog.js"></script>
+<script language="JavaScript">
+</script>
+<div id="memberArea">
+	{template 'express', 'left'}
+	<div class="col-auto">
+		<form method="post" action="" id="myform" name="myform">
+		<div class="col-1 ">
+			<h5 class="title">海外快递公司快递单信息</h5>           
+			<div class="content">			
+				<table width="100%" cellspacing="0" class="table_form">
+					<tr>
+						<th width="100">请选择入库仓库</th> 
+						<td><input id="store" name="store" value="" type="text" class="input-text" size="30"></td>
+					</tr>
+
+					<tr>
+						<th width="100">快递公司</th> 
+						<td><input id="company" name="company" value="" type="text" class="input-text" size="30"></td>
+					</tr>
+					<tr>
+						<th width="100">快递编号</th> 
+						<td><input id="expressno" name="expressno" value="" type="text" class="input-text" size="30"></td>
+					</tr>
+					<tr>
+						<th width="100"></font>货物概述</th> 
+						<td><input id="summary" name="summary" value="" type="text" class="input-text" size="30"></td>
+					</tr>
+				</table>
+
+			</div>
+			<span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span>
+		</div>
+		<div class="col-1 ">
+		<h5 class="title">快递单中商品信息</h5>
+		<div class="content">
+		<div class="col-1 member-info">
+		<div class="content">
+		<table class="table-list">
+			<thead>
+			    <tr>
+			    <th>中文名称</th>
+			    <th>类别</th>
+			    <th>子类别</th>
+			    <th>英文品牌</th>
+			    <th>型号</th>
+			    <th>美元单价</th>
+			    <th>数量</th>
+			    <th>操作</th>
+			    </tr>
+			</thead>
+		    <tbody>
+			<tr>
+            <td align="center"><input style="width:110px;" id="name" name="express[0][name]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:110px" id="category" name="express[0][category]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:110px" id="category_child" name="express[0][category_child]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:100px" id="brand" name="express[0][brand]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="model" name="express[0][model]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="dollar" name="express[0][dollar]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="num" name="express[0][num]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center">删除</td>
+			</tr>
+            <!--
+			<tr>
+            <td align="center"><input style="width:110px;" id="name" name="express[1][name]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:110px" id="category" name="express[1][category]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:110px" id="category_child" name="express[1][category_child]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:100px" id="brand" name="express[1][brand]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="model" name="express[1][model]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="dollar" name="express[1][dollar]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center"><input style="width:50px" id="num" name="express[1][num]" value="" type="text" class="input-text" size="30"></td>
+            <td align="center">删除</td>
+            </tr> -->
+		    </tbody>
+		    </table>
+		</div>
+	</div>
+	</div>
+	</div>
+	<div><input name="dosubmit" type="submit" id="dosubmit" value="提交" class="button"></div>
+	</form>
+	</div>
+</div>
+<div class="clear"></div>
+{template 'express', 'footer'}

@@ -1791,4 +1791,9 @@ function get_vid($contentid = 0, $catid = 0, $isspecial = 0) {
 	}
 
  } 
+ function dump($r) {
+	echo "<pre>";
+	var_dump($r);
+	echo "</pre>";
+ }
 ?>
