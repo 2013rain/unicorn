@@ -1846,5 +1846,111 @@ class index extends foreground {
 		sendmail($_SESSION['email'], '邮箱找回密码验证', $message);
 		echo '1';
 	}
+	public function address_list() {
+		$memberinfo = $this->memberinfo;
+		$this->member_address_model = pc_base::load_model('member_address_model');
+		$this->overseas_address_model = pc_base::load_model('overseas_address_model');
+		$overseas_address_list = $this->overseas_address_model->select();
+		$member_modelinfo_arr = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
+
+		$member_address_list = $this->member_address_model->select(array('member_id'=>$this->memberinfo['userid']));
+		include template('member', 'address_list');
+	}
+
+	public function address_edit() {
+		$memberinfo = $this->memberinfo;
+		$address_id = isset($_GET['address_id']) ?intval($_GET['address_id']) : 0 ;
+
+		$this->member_address_model = pc_base::load_model('member_address_model');
+
+		$member_modelinfo_arr = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
+
+		$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
+		
+		include template('member', 'address_edit');
+	}
+
+	public function address_save() {
+		$memberinfo = $this->memberinfo;
+		
+		if(isset($_POST['dosubmit'])) {
+			pc_base::load_sys_class('attachment','',0);
+			$this->member_address_model = pc_base::load_model('member_address_model');
+
+			$info = isset($_POST['info'])&&is_array($_POST['info']) ? $_POST['info']: array();
+			$mustkey = array('consignee','idcard','mobile','email','province','city','area','zipcode','addressinfo');
+			foreach ($mustkey as $mk) {
+				if (!isset($info[$mk]) || empty($info[$mk])) {
+					showmessage("信息不全");
+				}
+			}
+			$attachment = new attachment('index','110',1,"addresslist");
+			$attachment->set_userid($memberinfo['userid']);
+			$a = $attachment->upload('idfront',$attachment->imageexts, 1024*5,'',array(),0);
+			if (!$a) {
+				showmessage("正面照上传失败");
+			}
+			$a = $attachment->upload('idback',$attachment->imageexts, 1024*5,'',array(),0);
+			if (!$a) {
+				showmessage("国徽照上传失败");
+				
+			}
+			$idfronturl = $attachment->uploadedfiles[0]['filepath'];
+			$idbackurl = $attachment->uploadedfiles[1]['filepath'];
+
+			$address_id = isset($info['address_id']) ? intval($info['address_id']): 0;
+
+			$save_data = array(
+				'consignee'=>$info['consignee'],
+				'mobile'=>$info['mobile'],
+				'email'=>$info['email'],
+				'province'=>$info['province'],
+				'city'=>$info['city'],
+				'area'=>$info['area'],
+				'zipcode'=>$info['zipcode'],
+				'addressinfo'=>$info['addressinfo'],
+				'idfronturl'=>$idfronturl,
+				'idbackurl'=>$idbackurl ,
+				'updatetime'=>date('Y-m-d H:i:s'),
+				'auditstatus'=>0
+			);
+
+			$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
+
+			if (empty($member_address_info)) {
+				$member_address_list = $this->member_address_model->select(array('member_id'=>$this->memberinfo['userid']));
+				if (count($member_address_list)>=5) {
+					showmessage("收货地址已达到上限！",HTTP_REFERER,3000);
+				}
+				$in_data = $save_data;
+				$in_data['member_id']=$this->memberinfo['userid'];
+				$in_data['createtime']=date('Y-m-d H:i:s');
+				$this->member_address_model->insert($in_data);
+			}else{
+				$up_data = $save_data;
+				$this->member_address_model->update($up_data,array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
+			}
+			showmessage(L('operation_success'),'?m=member&c=index&a=address_list');
+			
+		} else {
+			showmessage("非法请求！",HTTP_REFERER,3000);
+		}
+		
+	}
+
+	public function public_province_ajax() {
+		$parentid = isset($_GET['parentid']) ? intval($_GET['parentid']): 0 ;
+		$memberinfo = $this->memberinfo;
+		$this->province_model = pc_base::load_model('province_model');
+		$infolist = $this->province_model->select(array('parentid'=>$parentid));
+		$return = array(
+			"code"=>"1",
+			"data"=>$infolist
+
+		);
+		echo json_encode($return);
+		exit();
+
+	}
 }
 ?>
