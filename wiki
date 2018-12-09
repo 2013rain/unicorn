@@ -1,0 +1,25 @@
+接口返回结构：
+{
+    "suc": 1,
+    "msg": "",
+    "data":
+}
+其中:
+suc：1 成功
+suc: 0 表示失败
+msg：表示返回信息，在suc=0时会返回错误信息。
+
+1.根据仓库id获取该仓库下的快递公司
+接口地址：index.php?m=express&c=index&a=getcompany&callback=test&storeid=1
+参数：
+    storeid:仓库id
+例子如：http://ldm.wangfuyu.com.cn/index.php?m=express&c=index&a=getcompany&callback=test&storeid=1
+返回值：
+{
+    "suc": 1,
+    "msg": "",
+    "data": [{
+        "id": 1,
+        "name": "UPS"
+    }]
+}
