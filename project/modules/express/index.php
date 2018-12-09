@@ -290,9 +290,48 @@ class index extends foreground {
             return $this->outRes(0, '非法操作', null, 'array');
         }
         return $this->outRes(1, '', ['company_name'=>$company_name], 'array');
-
     }
 
+    function getcatinfo()
+    {
+        $type = isset($_GET['type']) ? trim($_GET['type']) : '';
+        $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
+        if ($type != "cat" && $type != "attr") {
+            $this->outRes(0, '类别不对');
+        }
+        if (!$cat_id) {
+            $this->outRes(0, '分类Id不能为空');
+        }
+        if ($type == "cat") {
+            $where = [
+                'fid' => $cat_id,
+                'status' => 1,
+                ];
+            $res = $this->category_db->select($where, 'id,cate_name');
+            $this->outRes(1, '', $res);
+        } else {
+            $where = [
+                'cate_id' => $cat_id,
+                ];
+            $res = $this->goods_attr_db->select($where, 'id,attr_name');
+            $this->outRes(1, '', $res);
+
+        }
+    }
+
+    function getattrlist()
+    {
+        $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
+        if (!$cat_id) {
+            $this->outRes(0, '类别不能为空');
+        }
+        $where = [
+            'fid' => $pid,
+            'status' => 1,
+        ];
+        $res = $this->category_db->select($where, 'id,cate_name');
+        $this->outRes(1, '', $res);
+    }
 
 
 

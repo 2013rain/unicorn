@@ -12,6 +12,9 @@ msg：表示返回信息，在suc=0时会返回错误信息。
 1.根据仓库id获取该仓库下的快递公司
 接口地址：index.php?m=express&c=index&a=getcompany&callback=test&storeid=1
 参数：
+    m=express必填。固定写法
+    c=index 必填。固定写法
+    a=getcompany 必填。固定写法
     storeid:仓库id
 例子如：http://ldm.wangfuyu.com.cn/index.php?m=express&c=index&a=getcompany&callback=test&storeid=1
 返回值：
@@ -23,3 +26,47 @@ msg：表示返回信息，在suc=0时会返回错误信息。
         "name": "UPS"
     }]
 }
+
+2.根据分类id获取子分类&&根据子分类id获取子分类的属性
+接口地址：index.php?m=express&c=index&a=getcatinfo&cat_id=1
+参数：
+    m=express 固定必填
+    c=index 固定必填
+    a=getcatinfo 固定必填
+    type:必填。type=cat表示取分类，type=attr表示取子类属性
+    cat_id：必填。分类Id
+
+例子：http://ldm.wangfuyu.com.cn/index.php?m=express&c=index&a=getcatinfo&cat_id=1&type=cat
+返回值：
+1.type=cat
+test({
+    "suc": 1,
+    "msg": "",
+    "data": [{
+        "id": "15",
+        "cate_name": "外衣"
+    }]);
+2.type=attr
+test({
+    "suc": 1,
+    "msg": "",
+    "data": [{
+        "id": "1",
+        "attr_name": "S"
+    }, {
+        "id": "2",
+        "attr_name": "M"
+    }, {
+        "id": "3",
+        "attr_name": "L"
+    }, {
+        "id": "4",
+        "attr_name": "XL"
+    }, {
+        "id": "5",
+        "attr_name": "XXL"
+    }, {
+        "id": "6",
+        "attr_name": "XXXL"
+    }]
+});
