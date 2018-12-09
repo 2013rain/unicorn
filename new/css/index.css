@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2018-11-25 10:53:38
 * @Last Modified by:   Marte
-* @Last Modified time: 2018-11-28 15:06:09
+* @Last Modified time: 2018-12-03 14:27:45
 */
 
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
@@ -56,10 +56,14 @@ header .container .con_top {
         }
         header .container .con_center ul li {
             float: left;
-            padding:40px 35px 22px;
+            // padding:40px 35px 22px;
             color:#fff;
             font-size:14px;
             cursor:pointer;
+        }
+        header .container .con_center ul li a {
+            display: block;
+            padding:40px 35px 22px;
         }
         header .container .con_center ul .active {
             color:#ff6d37;
@@ -131,6 +135,7 @@ header .container .con_top {
             color: #fff;
             text-decoration:none;
         }
+        #navBar li a { color:#fff; text-decoration:none; }
 
         #booNavigation ol li:hover {
             background-color:rgba(255,109,55,1);
@@ -234,7 +239,7 @@ header .container .con_top {
             font-family: 微软雅黑;
             margin-bottom:60px;
         }
-        #wrapper .ban-center .con span {
+        #wrapper .ban-center .con a span {
             font-size: 14px;
             text-align:center;
             color: #fff;
@@ -243,18 +248,18 @@ header .container .con_top {
             border-radius: 5px;
             cursor:pointer;
         }
-        #wrapper .ban-center .con span:nth-child(3) {
+        #wrapper .ban-center .con a:nth-child(3) span {
             margin-left:434px;
             background-color:rgb(255, 109, 55);
         }
-        #wrapper .ban-center .con span:nth-child(4) {
+        #wrapper .ban-center .con a:nth-child(4) span {
             margin-left:30px;
             background-color: rgb(66,101,167);
         }
-        #wrapper .ban-center .con span:nth-child(3):hover {
+        #wrapper .ban-center .con a:nth-child(3) span:hover {
             background-color: rgb(66,101,167);
         }
-        #wrapper .ban-center .con span:nth-child(4):hover {
+        #wrapper .ban-center .con a:nth-child(4) span:hover {
             background-color:rgb(255, 109, 55);
         }
 
@@ -308,7 +313,10 @@ header .container .con_top {
             text-align:center;
             color: rgba(204,204,204,1);
         }
-        .section_1>div:nth-child(5) {
+        .section_1>a:nth-child(5) {
+            text-decoration:none;
+        }
+        .section_1>a:nth-child(5)>div {
             width: 177px;
             height: 52px;
             background-color:rgb(255, 109, 55);
@@ -321,10 +329,60 @@ header .container .con_top {
             box-sizing:border-box;
             cursor:pointer;
         }
-        .section_1>div:nth-child(5):hover {
+        .section_1>a:nth-child(5)>div:hover {
             background-color:rgb(255, 255, 255);
             color:rgb(255, 109, 55);
             border:1px solid rgb(255, 109, 55);
+        }
+        .section_1 .sec1-p {
+            cursor:pointer;
+            box-sizing:border-box;
+            margin-top:90px;
+        }
+        .section_1 .sec1-p:hover {
+            color:rgb(255,109,55);
+        }
+        .section_1 ul li {
+            // background: url(../images/logistics-233_08-03.jpg) no-repeat center top;
+            width: 200px;
+            height: 120px;
+            cursor:pointer;
+        }
+        .section_1 ul li:nth-child(1) {
+            background: url(../images/logistics-233_08-03.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(1):hover {
+            background: url(../images/logistics-233_08-03_63qx.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(2) {
+            background: url(../images/logistics-233_08-05.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(2):hover {
+            background: url(../images/logistics-233_08-05_k0q4.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(3) {
+            background: url(../images/logistics-233_08-04-02.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(3):hover {
+            background: url(../images/logistics-233_08-04-02-01.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(4) {
+            background: url(../images/logistics-233_08-04-01.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(4):hover {
+            background: url(../images/logistics-233_08-04-01-01.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(5) {
+            background: url(../images/logistics-233_08-04.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(5):hover {
+            background: url(../images/logistics-233_08-04_jdye.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(6) {
+            background: url(../images/logistics-233_08-06.jpg) no-repeat center top;
+        }
+        .section_1 ul li:nth-child(6):hover {
+            background: url(../images/logistics-233_08-06_hfet.jpg) no-repeat center top;
         }
 
         .section_2 {
@@ -386,7 +444,7 @@ header .container .con_top {
             text-indent:2rem;
             padding-bottom:25px;
         }
-        .section_2 .con div:nth-child(2) div {
+        .section_2 .con div:nth-child(2) a div {
             width: 177px;
             height: 52px;
             background-color:rgb(255, 255, 255);
@@ -399,7 +457,7 @@ header .container .con_top {
             box-sizing:border-box;
             cursor:pointer;
         }
-        .section_2 .con div:nth-child(2) div:hover {
+        .section_2 .con div:nth-child(2) a div:hover {
             background-color:rgba(255,109,55,0.5);
             color:rgb(255, 255, 255);
             border:1px solid rgb(255, 255, 255);
@@ -749,9 +807,9 @@ header .container .con_top {
             font-size:12px;
             /* padding-bottom:10px; */
         }
-        footer .con .l2 .p-li-first {
-            margin-top:20px;
-        }
+        // footer .con .l2 .p-li-first {
+        //     margin-bottom:20px;
+        // }
         footer .con .l2 .p-li {
             height: 36px;
             font-size:12px;
@@ -775,9 +833,9 @@ header .container .con_top {
         footer .con .l3 span:nth-child(2) {
             font-size:12px;
         }
-        footer .con .l3 .p-li-first {
-            margin-top:20px;
-        }
+        // footer .con .l3 .p-li-first {
+        //     margin-bottom:20px;
+        // }
         footer .con .l3 .p-li {
             height:30px;
             font-size:12px;
