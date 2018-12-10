@@ -27,9 +27,11 @@ class index extends foreground {
 			'userid' => $userid,
 			'status' => 0
 		];
+        $where = "userid=$userid and status in (0,1)";
 		$page = $_GET['page'] ? intval($_GET['page']) : '1';
-		$info = $this->db->listinfo('', '', $page, 10);
-		$pages = $this->db->pages;
+        //$list_wait = $this->db->listinfo('', '', $page, 10, '', 10, '', [], 'id,storeid,expressno,detail,createtime,status');
+		$list_wait = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status');
+        //$pages = $this->db->pages;
 		include template('express','main');
 	}
 	function site_notify() {}
@@ -88,10 +90,6 @@ class index extends foreground {
                 $goods_sql = [];
                 $flag = true;
                 $time = time();
-                $count = count($express);
-                if ($count > 20) {
-                    showmessage('一次入库数量不能超过20件,请分开入库', HTTP_REFERER);
-                }
                 $flag = true;
                 foreach ($express as $val) {
                     $name = isset($val['name']) ? trim($val['name']) : '';
@@ -239,7 +237,8 @@ class index extends foreground {
             'expressno' => $expressno
         ];
         $page = isset($_GET['page']) && trim($_GET['page']) ? intval($_GET['page']) : 1;
-        $goods = $this->goods_db->listinfo($where, '', $page, 1);
+        //$goods = $this->goods_db->listinfo($where, '', $page, 1);
+        $goods = $this->goods_db->select($where);
         $goods_num = 0;
         foreach ($goods as $val) {
             $goods_num += $val['num'];
