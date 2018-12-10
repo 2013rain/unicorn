@@ -47,6 +47,7 @@
 <div class="content_detail">
 <form accept-charset="UTF-8" action="" id="aspnetForm" method="post" novalidate="novalidate">
 	<input type="hidden" name="siteid" value="{$siteid}" />
+	<input type="hidden" name="dosubmit" value="dosubmit" />
     <div class="common_panel">
     <div class="panel_header">用户注册</div>
     <div class="panel_content">
@@ -95,6 +96,11 @@
           <td class="label">邀请码</td>
           <td class="item"><input class="textbox" id="admin_code" name="admin_code" type="text"></td>
         </tr>
+        <tr>
+          <td class="label">验证码</td>
+          <td class="item"><input class="textbox" id="code" name="code" type="text"><img src="/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=&0.05386923435944402" /></td>
+        </tr>
+
         <tr>
           <td class="label"></td>
           <td colspan="2"><a href="https://www.uszcn.com/misc/service" target="_blank">查看网站服务条款</a></td>

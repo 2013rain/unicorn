@@ -67,7 +67,7 @@ class index extends foreground {
 			$userinfo['email'] = (isset($_POST['email']) && is_email($_POST['email'])) ? $_POST['email'] : exit('0');
 			$userinfo['password'] = (isset($_POST['password']) && is_badword($_POST['password'])==false) ? $_POST['password'] : exit('0');
 			
-			$userinfo['email'] = (isset($_POST['email']) && is_email($_POST['email'])) ? $_POST['email'] : exit('0');
+			
 			$userinfo['enname'] = (isset($_POST['enname']) && is_username($_POST['enname'])) ? $_POST['enname'] : exit('0');
 
 			$userinfo['modelid'] = isset($_POST['modelid']) ? intval($_POST['modelid']) : 10;
@@ -79,6 +79,7 @@ class index extends foreground {
 			$userinfo['siteid'] = $siteid;
 			$userinfo['connectid'] = isset($_SESSION['connectid']) ? $_SESSION['connectid'] : '';
 			$userinfo['from'] = isset($_SESSION['from']) ? $_SESSION['from'] : '';
+			$userinfo['mobile'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
 			//手机强制验证
 			
 			if($member_setting[mobile_checktype]=='1'){
