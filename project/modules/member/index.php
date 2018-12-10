@@ -1886,6 +1886,16 @@ class index extends foreground {
 					showmessage("信息不全");
 				}
 			}
+			if (!is_idcard($info["idcard"])) {
+				showmessage("身份证号错误");
+			}
+			if (!is_mobile($info["mobile"])) {
+				showmessage("手机号错误");
+			}
+			if (!is_email($info["email"])) {
+				showmessage("邮箱错误");
+			}
+
 			$attachment = new attachment('index','110',1,"addresslist");
 			$attachment->set_userid($memberinfo['userid']);
 			$a = $attachment->upload('idfront',$attachment->imageexts, 1024*5,'',array(),0);
