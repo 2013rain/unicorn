@@ -23,15 +23,22 @@ class index extends foreground {
 	 */
 	function init() {
 		$userid = $this->memberinfo['userid'];
-		$where = [
-			'userid' => $userid,
-			'status' => 0
-		];
-        $where = "userid=$userid and status in (0,1)";
-		$page = $_GET['page'] ? intval($_GET['page']) : '1';
+        $where = "userid=$userid and status in (0,1,2,3)";
+        $list_wait = [];
+        $list_in_store = [];
+        $list_out_store = [];
+        //$page = $_GET['page'] ? intval($_GET['page']) : '1';
         //$list_wait = $this->db->listinfo('', '', $page, 10, '', 10, '', [], 'id,storeid,expressno,detail,createtime,status');
-		$list_wait = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status');
-        //$pages = $this->db->pages;
+		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time');
+        foreach ($lists as $val) {
+            if ($val['status'] == 0 || $val['status'] == 1) {
+                $list_wait[] = $val;
+            } elseif ($val['status']) {
+                $list_in_store[] = $val;
+            } else {
+                $list_out_store[] = $val;
+            }
+        }
 		include template('express','main');
 	}
 	function site_notify() {}

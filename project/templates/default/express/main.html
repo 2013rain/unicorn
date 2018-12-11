@@ -29,7 +29,6 @@
 			{/loop}
 		    </tbody>
 		    </table>
-		<div id="pages"> {$pages}</div>
 		</div>
 	</div>
 	</div>
@@ -39,29 +38,33 @@
 		<div class="content">
 		<div class="col-1 member-info">
 		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-			<thead>
-			    <tr>
-			    <th width="8%">仓库</th>
-			    <th width="20%">快递单号</th>
-			    <th width="15%">货物概述</th>
-			    <th width="15%">入库时间</th>
-			    <th width="8%">操作</th>
-			    </tr>
-			</thead>
-		    <tbody>
-			{loop $list $info}
-			<tr>
-			<td width="8%" align="center">{$info['msg']}</td>
-			<td  width="20%" align="center">{format::date($info['creat_at'], 1)}</td>
-			<td width="15%" align="center">{if $info[type]==1}金钱{elseif $info[type]==2}积分{/if}</td>
-			<td width="15%" align="center">{$info['value']}</td>
-			<td width="8%" align="center">{$info['value']}</td>
-			</tr>
-			{/loop}
-		    </tbody>
-		    </table>
-		<div id="pages"> {$pages}</div>
+            <div><a href="" target="blank">全部货物入库记录</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="" target="blank">已申请退货的货物</a></div>
+             {if empty($list_in_store)}
+             <div style="padding:30px;">目前仓库中没有货物</div>
+             {else}
+             <table width="100%" cellspacing="0"  class="table-list">
+                 <thead>
+                     <tr>
+                         <th width="8%">仓库</th>
+                         <th width="20%">快递单号</th>
+                         <th width="15%">货物概述</th>
+                         <th width="15%">入库时间</th>
+                         <th width="15%">入库重量</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                {loop $list_in_store $info}
+                <tr>
+                    <td width="8%" align="center">{$info['storeid']}</td>
+                    <td  width="20%" align="center">{$info['expressno']}</td>
+                    <td width="15%" align="center">{$info['detail']}</td>
+                    <td width="15%" align="center">{format::date($info['in_store_time'], 1)}</td>
+                    <td width="15%" align="center">{$info['weight']}</td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+             {/if}
 		</div>
 	</div>
 	</div>
@@ -71,28 +74,36 @@
 		<div class="content">
 		<div class="col-1 member-info">
 		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-			<thead>
-			    <tr>
-			    <th width="8%">仓库</th>
-			    <th width="20%">快递单号</th>
-			    <th width="15%">货物概述</th>
-			    <th width="15%">入库时间</th>
-			    <th width="8%">操作</th>
-			    </tr>
-			</thead>
-		    <tbody>
-			{loop $list $info}
-			<tr>
-			<td width="8%" align="center">{$info['msg']}</td>
-			<td  width="20%" align="center">{format::date($info['creat_at'], 1)}</td>
-			<td width="15%" align="center">{if $info[type]==1}金钱{elseif $info[type]==2}积分{/if}</td>
-			<td width="15%" align="center">{$info['value']}</td>
-			<td width="8%" align="center">{$info['value']}</td>
-			</tr>
-			{/loop}
-		    </tbody>
-		    </table>
+            <div><a href="" target="blank">全部货物转运记录</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="" target="blank">有税票出库单</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="" target="blank">有异常的货物</a></div>
+            {if empty($list_out_store)}
+                <div style="padding:30px;">目前没有出库的货物</div>
+            {else}
+            <table width="100%" cellspacing="0"  class="table-list">
+                <thead>
+                    <tr>
+                        <th width="8%">仓库</th>
+                        <th width="20%">快递单号</th>
+                        <th width="15%">货物概述</th>
+                        <th width="15%">入库时间</th>
+                        <th width="15%">出库时间</th>
+                        <th width="8%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list_out_store $info}
+                    <tr>
+                        <td width="8%" align="center">{$info['storeid']}</td>
+                        <td  width="20%" align="center">{$info['expressno']}</td>
+                        <td width="15%" align="center">{$info['detail']}</td>
+                        <td width="15%" align="center">{format::date($info['in_store_time'], 1)}</td>
+                        <td width="15%" align="center">{format::date($info['out_store_time'], 1)}</td>
+                        <td width="15%" align="center">{$info['weight']}</td>
+                    </tr>
+                    {/loop}
+                </tbody>
+            </table>
+
+            {/if}
 		<div id="pages"> {$pages}</div>
 		</div>
 	</div>
