@@ -1,0 +1,143 @@
+{template 'content', 'header'}
+<!-- 注册表单 -->
+<div id="content">
+<div class="content_detail">
+<form accept-charset="UTF-8" action="/index.php?m=member&c=index&a=address_save" id="aspnetForm" method="post" >
+	<input type="hidden" name="siteid" value="{$siteid}" />
+  <input type="hidden" name="address_id" value="{$address_id}" />
+	<input type="hidden" name="dosubmit" value="dosubmit" />
+    <div class="common_panel">
+    <div class="panel_header">编辑地址：</div>
+    <div class="panel_content">
+    <table class="common_form">
+      <tbody>
+        <tr>
+          <td class="label"><span style="color:red">(必填)</span>身份证人头照</td>
+          <td class="item"><input  name="idfront" type="file"></td>
+          <td class="info"></td>
+        </tr>
+         <tr>
+          <td class="label"><span style="color:red">(必填)</span>身份证国徽照</td>
+          <td class="item"><input  name="idback" type="file"></td>
+          <td class="info"></td>
+        </tr>
+
+        <tr>
+          <td class="label">consignee</td>
+          <td class="item"><input class="textbox"  name="info[consignee]" type="text" value="test"></td>
+          <td class="info"></td>
+        </tr>
+         <tr>
+          <td class="label">idcard</td>
+          <td class="item"><input class="textbox"  name="info[idcard]" type="text" value="idcard"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">mobile</td>
+          <td class="item"><input class="textbox"  name="info[mobile]" type="text" value="mobile"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">email</td>
+          <td class="item"><input class="textbox"  name="info[email]" type="text" value="email"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">province</td>
+          <td class="item"><input class="textbox"  name="info[province]" type="text" value="province"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">city</td>
+          <td class="item"><input class="textbox"  name="info[city]" type="text" value="city"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">area</td>
+          <td class="item"><input class="textbox"  name="info[area]" type="text" value="area"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">zipcode</td>
+          <td class="item"><input class="textbox"  name="info[zipcode]" type="text" value="zipcode"></td>
+          <td class="info"></td>
+        </tr>
+        <tr>
+          <td class="label">addressinfo</td>
+          <td class="item"><input class="textbox"  name="info[addressinfo]" type="text" value="addressinfo"></td>
+          <td class="info"></td>
+        </tr>
+
+
+       
+      </tbody>
+    </table>
+    </div>
+    <div class="panel_footer">
+      <div class="submit_button"><a href="javascript:__doPostBack(&#39;register_button&#39;, &#39;&#39;);" id="register_button"> 提交</a></div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+<!-- 注册表单 -->
+ <script type="text/javascript">
+  function __doPostBack(eventTarget, eventArgument) {
+  	document.forms['aspnetForm'].submit();
+  }
+ </script>
+
+<div id="memberArea">
+{template 'member', 'account_manage_left'}
+<div class="col-auto">
+	<div class="col-1 ">
+		<h5 class="title">我的地址：</h5>
+		<div class="content">
+		<div class="col-1 member-info">
+		<div class="col-1 ">
+		<h5 class="title">海外地址：</h5>
+		<div class="content">
+				<table width="100%" cellspacing="0" class="table_form">
+					{loop $overseas_address_list $v}
+					<tr>
+						<td >{$v['country_name']}</td>        
+						<td >{$v['intro']}</td>
+						<td >{$v['address']}</td>     
+						<td >{$v['city']}</td>     
+						<td >{$v['state']}</td>     
+						<td >{$v['county']}</td>     
+						<td >{$v['zipcode']}</td>    
+						<td >{$v['tellphone']}</td>   
+					</tr>
+					{/loop}
+				</table>
+		</div>
+	</div>
+	</div>
+
+	<div class="bk10"></div>	
+	<div class="col-1 ">
+		<h5 class="title">国内地址：</h5>
+		<div class="content">
+				<table width="100%" cellspacing="0" class="table_form">
+					{loop $member_address_list  $v}
+					<tr>
+						<td >{$v['consignee']}</td>        
+						<td >{$v['mobile']}</td>
+						<td >{$v['email']}</td>     
+						<td >{$v['province']}</td>     
+						<td >{$v['city']}</td>     
+						<td >{$v['area']}</td>     
+						<td >{$v['zipcode']}</td>    
+						<td >{$v['addressinfo']}</td>   
+						<td >{$v['used']}</td>   
+					</tr>
+					{/loop}
+				</table>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<div class="clear"></div>
+{template 'content', 'footer'}

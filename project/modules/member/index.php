@@ -79,7 +79,8 @@ class index extends foreground {
 			$userinfo['siteid'] = $siteid;
 			$userinfo['connectid'] = isset($_SESSION['connectid']) ? $_SESSION['connectid'] : '';
 			$userinfo['from'] = isset($_SESSION['from']) ? $_SESSION['from'] : '';
-			$userinfo['mobile'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+			$userinfo['mobile'] = isset($_POST['mobile']) && is_mobile($_POST['mobile']) ? $_POST['mobile']: '';
+			$userinfo['sex'] = isset($_POST['sex']) ? intval($_POST['sex']) : '0';
 			//手机强制验证
 			
 			if($member_setting[mobile_checktype]=='1'){
@@ -1887,6 +1888,7 @@ class index extends foreground {
 					showmessage("信息不全");
 				}
 			}
+			/*
 			if (!is_idcard($info["idcard"])) {
 				showmessage("身份证号错误");
 			}
@@ -1896,6 +1898,7 @@ class index extends foreground {
 			if (!is_email($info["email"])) {
 				showmessage("邮箱错误");
 			}
+			*/
 
 			$attachment = new attachment('index','110',1,"addresslist");
 			$attachment->set_userid($memberinfo['userid']);
@@ -1949,6 +1952,30 @@ class index extends foreground {
 			showmessage("非法请求！",HTTP_REFERER,3000);
 		}
 		
+	}
+
+	public function public_address_default_ajax() {
+		$address_id = isset($info['address_id']) ? intval($info['address_id']): 0;
+		$memberinfo = $this->memberinfo;
+		$this->member_address_model = pc_base::load_model('member_address_model');
+		$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
+
+		if (empty($member_address_info)) {
+			$return = array(
+				"code"=>"0",
+				"data"=>'',
+			);
+		} else {
+			$this->member_address_model->update(array("used"=>0),array('member_id'=>$this->memberinfo['userid']));
+			$this->member_address_model->update(array("used"=>1),array('member_id'=>$this->memberinfo['userid'], 'id'=> $address_id));
+			$return = array(
+				"code"=>"1",
+				"data"=>''
+			);
+		}	
+		echo json_encode($return);
+		exit();
+
 	}
 
 	public function public_province_ajax() {
