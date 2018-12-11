@@ -29,12 +29,12 @@ header {
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1080px;
+            min-width: 1200px;
             background-color: rgb(255, 109, 55);
         }
         header .container .con_center {
             height: 85px;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             background-color: transparent;
         }
@@ -99,7 +99,7 @@ header .container .con_top {
         header .container .con_top p {
             position:relative;
             display:block;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             line-height:37px;
             font-size:14px;
@@ -154,7 +154,7 @@ header .container .con_top {
         }
         #wrapper .wrapper_con {
             // width:100%;
-            min-width:1080px;
+            min-width:1200px;
             margin:0 auto;
         }
 
@@ -169,7 +169,7 @@ header .container .con_top {
             width:100%;
         }
         .banner-bottom .container {
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             height:200px;
             // padding-left:120px;
@@ -220,7 +220,7 @@ header .container .con_top {
             margin:0 auto;
         }
         #wrapper .ban-center .con {
-            width:1080px;
+            width:1200px;
             margin:0 auto;
         }
         #wrapper .ban-center .con p {
@@ -266,7 +266,7 @@ header .container .con_top {
 
 
         .section_1 {
-            min-width:1080px;
+            min-width:1200px;
         }
         .section_1>p:nth-child(1) {
             font-family: 'Microsoft YaHei';
@@ -277,7 +277,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             position:relative;
         }
@@ -303,7 +303,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_1>ul {
-            width:1080px;
+            width:1200px;
             height:170px;
             margin:0 auto;
         }
@@ -386,7 +386,7 @@ header .container .con_top {
         }
 
         .section_2 {
-            min-width: 1080px;
+            min-width: 1200px;
             height: 661px;
             background-color: transparent;
             background: url(../images/logistics-233_28.jpg) no-repeat;
@@ -402,7 +402,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -429,7 +429,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_2 .con {
-            width:1080px;
+            width:1200px;
             margin:88px auto 0;
         }
         .section_2 .con div {
@@ -464,13 +464,13 @@ header .container .con_top {
         }
 
         .section_3 {
-            min-width:1080px;
+            min-width:1200px;
             height:212px;
             background-color:rgb(66, 101, 167);
         }
         .section_3 .con  {
             position:relative;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
         }
         .section_3 .con .con-left div:nth-child(1) {
@@ -517,7 +517,7 @@ header .container .con_top {
 
 
         .section_4 {
-            min-width: 1080px;
+            min-width: 1200px;
             height: 890px;
         }
 
@@ -530,7 +530,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -557,7 +557,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_4 .con ul {
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
         }
         .section_4 .con ul>li {
@@ -695,7 +695,7 @@ header .container .con_top {
 
 
         .section_5 {
-            min-width: 1080px;
+            min-width: 1200px;
             height: 455px;
             background-color: transparent;
             background: url(../images/logistics-233_45.jpg) no-repeat;
@@ -704,7 +704,7 @@ header .container .con_top {
 
 
         .section_7 {
-            min-width: 1080px;
+            min-width: 1200px;
             height: 478px;
             background-color: rgb(255, 109, 55);
         }
@@ -718,7 +718,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -745,7 +745,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_7 .con ul {
-            width: 1080px;
+            width: 1200px;
             margin:0 auto;
         }
         .section_7 .con ul li {
@@ -768,12 +768,12 @@ header .container .con_top {
 
 
         footer{
-            min-width:1080px;
+            min-width:1200px;
             height: 275px;
             background-color: rgb(66, 101, 167);
         }
         footer .con{
-            width:1080px;
+            width:1200px;
             margin:0 auto;
         }
         footer .con ul {
@@ -847,7 +847,7 @@ header .container .con_top {
         }
         footer .footer-bottom {
             width:100%;
-            min-width:1080px;
+            min-width:1200px;
             height:30px;
             color:#fff;
             margin:0 auto;
