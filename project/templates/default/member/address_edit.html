@@ -2,7 +2,7 @@
 <!-- 注册表单 -->
 <div id="content">
 <div class="content_detail">
-<form accept-charset="UTF-8" action="/index.php?m=member&c=index&a=address_save" id="aspnetForm" method="post" >
+<form accept-charset="UTF-8" action="/index.php?m=member&c=index&a=address_save" id="aspnetForm" method="post" enctype="multipart/form-data" >
 	<input type="hidden" name="siteid" value="{$siteid}" />
   <input type="hidden" name="address_id" value="{$address_id}" />
 	<input type="hidden" name="dosubmit" value="dosubmit" />
@@ -24,47 +24,47 @@
 
         <tr>
           <td class="label">consignee</td>
-          <td class="item"><input class="textbox"  name="info[consignee]" type="text" value="test"></td>
+          <td class="item"><input class="textbox"  name="info[consignee]" type="text" value="{$member_address_info['consignee']}"></td>
           <td class="info"></td>
         </tr>
          <tr>
           <td class="label">idcard</td>
-          <td class="item"><input class="textbox"  name="info[idcard]" type="text" value="idcard"></td>
+          <td class="item"><input class="textbox"  name="info[idcard]" type="text" value="{$member_address_info['idcard']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">mobile</td>
-          <td class="item"><input class="textbox"  name="info[mobile]" type="text" value="mobile"></td>
+          <td class="item"><input class="textbox"  name="info[mobile]" type="text" value="{$member_address_info['mobile']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">email</td>
-          <td class="item"><input class="textbox"  name="info[email]" type="text" value="email"></td>
+          <td class="item"><input class="textbox"  name="info[email]" type="text" value="{$member_address_info['email']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">province</td>
-          <td class="item"><input class="textbox"  name="info[province]" type="text" value="province"></td>
+          <td class="item"><input class="textbox"  name="info[province]" type="text" value="{$member_address_info['province']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">city</td>
-          <td class="item"><input class="textbox"  name="info[city]" type="text" value="city"></td>
+          <td class="item"><input class="textbox"  name="info[city]" type="text" value="{$member_address_info['city']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">area</td>
-          <td class="item"><input class="textbox"  name="info[area]" type="text" value="area"></td>
+          <td class="item"><input class="textbox"  name="info[area]" type="text" value="{$member_address_info['area']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">zipcode</td>
-          <td class="item"><input class="textbox"  name="info[zipcode]" type="text" value="zipcode"></td>
+          <td class="item"><input class="textbox"  name="info[zipcode]" type="text" value="{$member_address_info['zipcode']}"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">addressinfo</td>
-          <td class="item"><input class="textbox"  name="info[addressinfo]" type="text" value="addressinfo"></td>
+          <td class="item"><input class="textbox"  name="info[addressinfo]" type="text" value="{$member_address_info['addressinfo']}"></td>
           <td class="info"></td>
         </tr>
 
@@ -87,57 +87,4 @@
   }
  </script>
 
-<div id="memberArea">
-{template 'member', 'account_manage_left'}
-<div class="col-auto">
-	<div class="col-1 ">
-		<h5 class="title">我的地址：</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="col-1 ">
-		<h5 class="title">海外地址：</h5>
-		<div class="content">
-				<table width="100%" cellspacing="0" class="table_form">
-					{loop $overseas_address_list $v}
-					<tr>
-						<td >{$v['country_name']}</td>        
-						<td >{$v['intro']}</td>
-						<td >{$v['address']}</td>     
-						<td >{$v['city']}</td>     
-						<td >{$v['state']}</td>     
-						<td >{$v['county']}</td>     
-						<td >{$v['zipcode']}</td>    
-						<td >{$v['tellphone']}</td>   
-					</tr>
-					{/loop}
-				</table>
-		</div>
-	</div>
-	</div>
-
-	<div class="bk10"></div>	
-	<div class="col-1 ">
-		<h5 class="title">国内地址：</h5>
-		<div class="content">
-				<table width="100%" cellspacing="0" class="table_form">
-					{loop $member_address_list  $v}
-					<tr>
-						<td >{$v['consignee']}</td>        
-						<td >{$v['mobile']}</td>
-						<td >{$v['email']}</td>     
-						<td >{$v['province']}</td>     
-						<td >{$v['city']}</td>     
-						<td >{$v['area']}</td>     
-						<td >{$v['zipcode']}</td>    
-						<td >{$v['addressinfo']}</td>   
-						<td >{$v['used']}</td>   
-					</tr>
-					{/loop}
-				</table>
-		</div>
-	</div>
-</div>
-</div>
-</div>
-<div class="clear"></div>
 {template 'content', 'footer'}

@@ -1888,7 +1888,7 @@ class index extends foreground {
 					showmessage("信息不全");
 				}
 			}
-			/*
+			
 			if (!is_idcard($info["idcard"])) {
 				showmessage("身份证号错误");
 			}
@@ -1898,15 +1898,15 @@ class index extends foreground {
 			if (!is_email($info["email"])) {
 				showmessage("邮箱错误");
 			}
-			*/
+			
 
 			$attachment = new attachment('index','110',1,"addresslist");
 			$attachment->set_userid($memberinfo['userid']);
-			$a = $attachment->upload('idfront',$attachment->imageexts, 1024*5,'',array(),0);
+			$a = $attachment->upload('idfront','jpeg|jpg', 1024*10*5,'',array(),0);
 			if (!$a) {
 				showmessage("正面照上传失败");
 			}
-			$a = $attachment->upload('idback',$attachment->imageexts, 1024*5,'',array(),0);
+			$a = $attachment->upload('idback','jpeg|jpg', 1024*10*5,'',array(),0);
 			if (!$a) {
 				showmessage("国徽照上传失败");
 				
