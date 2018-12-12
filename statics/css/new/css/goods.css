@@ -1,3 +1,9 @@
+/*
+* @Author: Marte
+* @Date:   2018-11-25 10:53:38
+* @Last Modified by:   Marte
+* @Last Modified time: 2018-12-07 16:30:21
+*/
 
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
 body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
@@ -31,9 +37,15 @@ header .container .con_top {
             height: 85px;
             width: 1200px;
             margin:0 auto;
+            // background-color: transparent;
+            // background-color: rgb(66, 101, 167);
 
         }
+        // header .container .con_center .con-inner {
+        //     width: 1200px;
+        //     margin:0 auto;
 
+        // }
         header .container .con_center div {
             display:inline-block;
             color:#fff;
@@ -195,6 +207,9 @@ header .container .con_top {
         footer .con .l3 span:nth-child(2) {
             font-size:12px;
         }
+        // footer .con .l3 .p-li-first {
+        //     margin-bottom:20px;
+        // }
         footer .con .l3 .p-li {
             height:30px;
             font-size:12px;
@@ -226,95 +241,28 @@ header .container .con_top {
         }
 
 
-// 用户注册
-
-#content {
-    width: 100%;
-    min-width: 1200px;
-    color: #555555;
-    // background: url(../images/content_bgs-1.png) repeat-y center top #f4f4f4;
-}
-#content .content_detail {
-    width: 1100px;
-    margin: 0 auto;
-    padding: 50px 50px 50px;
-    // background: url(../images/content_detail_bgs.png) no-repeat 0px bottom;
-    min-height: 400px;
-    font-size: 12px;
-    font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
-}
-#content .common_panel {
-    background: #ecf4fb;
-    border: 1px solid #afcdeb;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin-bottom: 35px;
-}
-#content .common_form tr td.label {
-    width: 16%;
-    text-align: right;
-    white-space: nowrap;
-}
-#content .common_form tr td {
-    padding: 5px 8px;
-    line-height: 30px;
-    vertical-align: top;
-}
-#content .common_form tr td.item input.textbox {
-    border: 1px solid #AAA;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    padding: 6px;
-    color: #666666;
-    width: 270px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffffff;
-}
-#content .common_panel .panel_header {
-    height: 20px;
-    border-bottom: 1px solid #afcdeb;
-    padding: 10px 15px;
-    font-size: 14px;
-    line-height: 20px;
-}
-#content .common_panel .panel_footer {
-    overflow: hidden;
-    padding: 10px 15px;
-    border-top: 1px solid #afcdeb;
-}
-#content .submit_button {
-    overflow: hidden;
-}
-#content .common_panel .panel_footer .common_button a, #content .common_panel .panel_footer .submit_button a, #content .common_panel .panel_header_buttons .common_button a, #content .common_panel .panel_header_buttons .submit_button a {
-    height: 12px;
-    line-height: 12px;
-    padding: 5px 16px 6px;
-    font-size: 12px;
-}
-#content .submit_button a {
-    height: 14px;
-    line-height: 14px;
-    display: inline-block;
-    margin-right: 8px;
-    padding: 6px 18px 7px;
-    background-color: #f68c25;
-    color: #ffffff;
-    font-size: 14px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    text-shadow: #666666 1px 1px 1px;
-    FILTER: Shadow(Color=#666, Direction=90, Strength=1);
-}
 
 
-  .panel_content { position:relative; }
-  .agreement-accr { width: 600px; height: 450px; display:block; position:absolute; top:-131%; left:20%; border: 1px solid rgba(0, 0, 0, .3)!important; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); background-color:#fff; padding-bottom:30px; }
-  .agreement-accr .agreement-top { width: 600px; height: 30px; background-color:rgb(66, 101, 167); line-height:30px; color:#fff; font-size: 14px; padding-left:5px; padding-right:15px; box-sizing:border-box; cursor:move; }
-  .agreement-accr .agreement-top span { float:right; cursor:pointer; }
-  .agreement-accr .agreement-bottom { width: 600px; height: 30px; }
-  .agreement-accr .agreement-bottom span { display:block; width: 60px; height: 30px; background-color:rgb(66, 101, 167); color:#fff; cursor:pointer; float:right; font-size:14px; line-height:30px; text-align:center; border-radius:5px; margin-right:10px; }
-  #agreement_l { color:red; }
+
+
+// goods style
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

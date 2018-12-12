@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}register.css">
 <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
 <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+<script src="{JS_PATH}jquery-ui.min.js"></script>
 
 <body>
     <!-- 头部 -->
@@ -20,7 +21,7 @@
                     <span>400-000-000</span>
                     <img src="{IMG_PATH}1_i9qh.png" alt="">
                     <span>xx@163.com</span>
-                    <span><a href="#">注册</a></span>/<span><a href="#">登录</a></span>
+                    <!-- <span><a href="#">注册</a></span>/<span><a href="#">登录</a></span> -->
                 </p>
             </div>
             <div class="con_center">
@@ -51,62 +52,67 @@
     <div class="common_panel">
     <div class="panel_header">用户注册</div>
     <div class="panel_content">
-    <table class="common_form">
-      <tbody>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>邮箱</td>
-          <td class="item"><input class="textbox" id="email" name="email" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>登录密码</td>
-          <td class="item"><input class="textbox" id="password" name="password" type="password"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>确认密码</td>
-          <td class="item"><input class="textbox" id="password_confirmation" name="password_confirmation" type="password"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>姓名</td>
-          <td class="item"><input class="textbox" id="cname" name="username" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>英文名</td>
-          <td class="item"><input class="textbox" id="ename" name="enname" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"></td>
-          <td colspan="2"> 注册后您的收货姓名为 英文名 + 中文名全拼，如Andy Liudehua；该收货姓名为用户身份重要识别标志，请慎重填写为保证货物安全，"姓名"请填写真实中文姓名</td>
-        </tr>
-        <tr>
-          <td class="label">性别</td>
-          <td class="item"><input id="gender__m" name="gender[]" type="radio" value="M">&nbsp;男&nbsp;&nbsp;&nbsp;<input id="gender__f" name="gender[]" type="radio" value="F">&nbsp;女&nbsp;&nbsp;&nbsp;<input checked="checked" id="gender__s" name="gender[]" type="radio" value="S">&nbsp;保密</td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>手机</td>
-          <td class="item"><input class="textbox" id="mobile" name="mobile" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label">邀请码</td>
-          <td class="item"><input class="textbox" id="admin_code" name="admin_code" type="text"></td>
-        </tr>
-        <tr>
-          <td class="label">验证码</td>
-          <td class="item"><input class="textbox" id="code" name="code" type="text"><img src="/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=&0.05386923435944402" /></td>
-        </tr>
+      <table class="common_form">
+        <tbody>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>邮箱</td>
+            <td class="item"><input class="textbox" id="email" name="email" type="text"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>登录密码</td>
+            <td class="item"><input class="textbox" id="password" name="password" type="password"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>确认密码</td>
+            <td class="item"><input class="textbox" id="password_confirmation" name="password_confirmation" type="password"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>姓名</td>
+            <td class="item"><input class="textbox" id="cname" name="username" type="text"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>英文名</td>
+            <td class="item"><input class="textbox" id="ename" name="enname" type="text"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"></td>
+            <td colspan="2"> 注册后您的收货姓名为 英文名 + 中文名全拼，如Andy Liudehua；该收货姓名为用户身份重要识别标志，请慎重填写为保证货物安全，"姓名"请填写真实中文姓名</td>
+          </tr>
+          <tr>
+            <td class="label">性别</td>
+            <td class="item"><input id="gender__m" name="gender[]" type="radio" value="1">&nbsp;男&nbsp;&nbsp;&nbsp;<input id="gender__f" name="gender[]" type="radio" value="2">&nbsp;女&nbsp;&nbsp;&nbsp;<input checked="checked" id="gender__s" name="gender[]" type="radio" value="0">&nbsp;保密</td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label"><span style="color:red">(必填)</span>手机</td>
+            <td class="item"><input class="textbox" id="mobile" name="mobile" type="text"></td>
+            <td class="info"></td>
+          </tr>
+          <tr>
+            <td class="label">邀请码</td>
+            <td class="item"><input class="textbox" id="admin_code" name="admin_code" type="text"></td>
+          </tr>
+          <tr>
+            <td class="label">验证码</td>
+            <td class="item"><input class="textbox" id="code" name="code" type="text"><img id="check_code_l" style="vertical-align: middle;" src="/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=&0.05386923435944402" onclick="this.src='/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=&0.05386923435944402?d='+Math.random();" /></td>
+          </tr>
 
-        <tr>
-          <td class="label"></td>
-          <td colspan="2"><a href="https://www.uszcn.com/misc/service" target="_blank">查看网站服务条款</a></td>
-        </tr>
-      </tbody>
-    </table>
+          <tr>
+            <td class="label"></td>
+            <td colspan="2"><a href="javascript:void();" id="agreement_l" target="_blank">查看网站服务条款</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="agreement-accr">
+          <div class="agreement-top">会员注册协议 <span>x</span></div>
+          <iframe src="http://unicorn.wangfuyu.com.cn/index.php?m=member&c=index&a=register&protocol=1" frameborder="0" width="600" scrolling="Yes" height="420" leftmargin="0" topmargin="0"></iframe>
+          <div class="agreement-bottom"><span>确定</span></div>
+      </div>
     </div>
     <div class="panel_footer">
       <div class="submit_button"><a href="javascript:__doPostBack(&#39;register_button&#39;, &#39;&#39;);" id="register_button"> 同意服务条款，提交</a></div>
@@ -207,13 +213,13 @@
           minlength: 6,
           equalTo: "#password"
         },
-        "cname": {
-          required: true,
-          isCName: true
-        },
-        "ename": {
+        "enname": {
           required: true,
           isEnName: true
+        },
+        "username": {
+          required: true,
+          isCName: true
         },
         "mobile": {
           required: true,
@@ -227,6 +233,20 @@
       }
     });
   })
+
+
+    $(function(){
+      //协议窗口展现/隐藏
+      $("#agreement_l").on("click",function(){
+        $(".agreement-accr").animate({top:'-9%'});
+      });
+      $(".agreement-top>span,.agreement-bottom>span").on("click",function(){
+        $(".agreement-accr").animate({top:'-131%'});
+      });
+
+      //拖动
+      $( ".agreement-accr" ).draggable();
+    })
 </script>
 </body>
 </html>
