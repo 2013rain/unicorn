@@ -10,12 +10,19 @@ pc_base::load_app_func('global');
 
 class index extends foreground {
 	public $db, $goods_db, $category_db, $goods_attr_db;
+    public static $store;
 	function __construct() {
 		parent::__construct();
 		$this->db = pc_base::load_model('member_express_model');
 		$this->goods_db = pc_base::load_model('member_express_goods_model');
         $this->category_db = pc_base::load_model('goods_category_model');
         $this->goods_attr_db = pc_base::load_model('goods_category_attr_model');
+        if (!self::$store) {
+            $info = pc_base::load_config('express_store');
+            foreach ($info as $val) {
+                self::$store[$val['id']] = $val;
+            }
+        }
 	}
 
 	/**
@@ -348,6 +355,26 @@ class index extends foreground {
             $this->outRes(1, '', $res);
         }
     }
+
+    function all_express() {
+        $userid = $this->memberinfo['userid'];
+        $page = $_GET['page'] ? intval($_GET['page']) : '1';
+        $expressno = isset($_GET['expressno']) ? $_GET['expressno'] : '';
+        $where = [];
+        $where['userid'] = $userid;
+        if ($expressno) {
+            $where['expressno'] = $expressno;
+        }
+        if (isset($_GET['clear'])) {
+            unset($where['expressno']);
+            $expressno = '';
+        }
+        $store = self::$store;
+        $list = $this->db->listinfo($where, '', $page, 10, '', 10, '', [], 'id,storeid,company,weight,expressno,detail,createtime,status');
+        $pages = $this->db->pages;
+        include template('express','all_express');
+    }
+
 
 
 	
