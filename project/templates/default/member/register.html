@@ -1,16 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}" />
+
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
+
 <title> {L('member','','member').L('manage_center')}</title>
+
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}register.css">
+
 <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+
 <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 
+
+
 <body>
-    <!-- 头部 -->
+
+     <!-- 头部 -->
     <header>
         <div class="container">
             <div class="con_top">
@@ -20,19 +32,20 @@
                     <span>400-000-000</span>
                     <img src="{IMG_PATH}1_i9qh.png" alt="">
                     <span>xx@163.com</span>
-                    <span><a href="#">注册</a></span>/<span><a href="#">登录</a></span>
+                    <span><a href="/index.php?m=member&c=index&a=register&siteid=1">注册</a></span>/<span><a href="/index.php?m=member&c=index&a=login">登录</a></span>
                 </p>
             </div>
             <div class="con_center">
-                    <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
-                    <div class="wow fadeInLeft">
-                        <p>橙子家海外物流转运</p>
-                        <p>The Orange</p>
-                    </div>
+                <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
+                <div class="wow fadeInLeft">
+                    <p>橙子家海外物流转运</p>
+                    <p>The Orange</p>
+                </div>
                     <ul id="navBar" class="con_ul wow fadeInRight">
-                        <li class="active active-jq"><a href="#">首页</a></li>
-                        <li><a href="#">关于我们</a></li>
-                        <li><a href="#">我的转运</a></li>
+                        <!--<li class="active active-jq"><a href="/index.php?">首页</a></li> -->
+                        <li ><a href="/index.php?">首页</a></li>
+                        <li><a href="/index.php?m=content&c=index&a=lists&catid=2">关于我们</a></li>
+                        <li><a href="/index.php?m=express&c=index&a=init">我的转运</a></li>
                         <li><a href="#">产品与服务</a></li>
                         <li><a href="#">会员计划</a></li>
                         <li><a href="#">联系我们</a></li>
@@ -42,191 +55,380 @@
     </header>
     <!-- /头部 -->
 
+
+
 <!-- 注册表单 -->
+
 <div id="content">
+
 <div class="content_detail">
+
 <form accept-charset="UTF-8" action="" id="aspnetForm" method="post" novalidate="novalidate">
+
 	<input type="hidden" name="siteid" value="{$siteid}" />
+
 	<input type="hidden" name="dosubmit" value="dosubmit" />
+
     <div class="common_panel">
+
     <div class="panel_header">用户注册</div>
+
     <div class="panel_content">
+
     <table class="common_form">
+
       <tbody>
+
         <tr>
+
           <td class="label"><span style="color:red">(必填)</span>邮箱</td>
+
           <td class="item"><input class="textbox" id="email" name="email" type="text"></td>
+
           <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>登录密码</td>
-          <td class="item"><input class="textbox" id="password" name="password" type="password"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>确认密码</td>
-          <td class="item"><input class="textbox" id="password_confirmation" name="password_confirmation" type="password"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>姓名</td>
-          <td class="item"><input class="textbox" id="cname" name="username" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>英文名</td>
-          <td class="item"><input class="textbox" id="ename" name="enname" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"></td>
-          <td colspan="2"> 注册后您的收货姓名为 英文名 + 中文名全拼，如Andy Liudehua；该收货姓名为用户身份重要识别标志，请慎重填写为保证货物安全，"姓名"请填写真实中文姓名</td>
-        </tr>
-        <tr>
-          <td class="label">性别</td>
-          <td class="item"><input id="gender__m" name="gender[]" type="radio" value="M">&nbsp;男&nbsp;&nbsp;&nbsp;<input id="gender__f" name="gender[]" type="radio" value="F">&nbsp;女&nbsp;&nbsp;&nbsp;<input checked="checked" id="gender__s" name="gender[]" type="radio" value="S">&nbsp;保密</td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label"><span style="color:red">(必填)</span>手机</td>
-          <td class="item"><input class="textbox" id="mobile" name="mobile" type="text"></td>
-          <td class="info"></td>
-        </tr>
-        <tr>
-          <td class="label">邀请码</td>
-          <td class="item"><input class="textbox" id="admin_code" name="admin_code" type="text"></td>
-        </tr>
-        <tr>
-          <td class="label">验证码</td>
-          <td class="item"><input class="textbox" id="code" name="code" type="text"><img src="/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=&0.05386923435944402" /></td>
+
         </tr>
 
         <tr>
-          <td class="label"></td>
-          <td colspan="2"><a href="https://www.uszcn.com/misc/service" target="_blank">查看网站服务条款</a></td>
+
+          <td class="label"><span style="color:red">(必填)</span>登录密码</td>
+
+          <td class="item"><input class="textbox" id="password" name="password" type="password"></td>
+
+          <td class="info"></td>
+
         </tr>
+
+        <tr>
+
+          <td class="label"><span style="color:red">(必填)</span>确认密码</td>
+
+          <td class="item"><input class="textbox" id="password_confirmation" name="password_confirmation" type="password"></td>
+
+          <td class="info"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label"><span style="color:red">(必填)</span>姓名</td>
+
+          <td class="item"><input class="textbox" id="cname" name="username" type="text"></td>
+
+          <td class="info"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label"><span style="color:red">(必填)</span>英文名</td>
+
+          <td class="item"><input class="textbox" id="ename" name="enname" type="text"></td>
+
+          <td class="info"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label"></td>
+
+          <td colspan="2"> 注册后您的收货姓名为 英文名 + 中文名全拼，如Andy Liudehua；该收货姓名为用户身份重要识别标志，请慎重填写为保证货物安全，"姓名"请填写真实中文姓名</td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label">性别</td>
+
+          <td class="item"><input id="gender__m" name="sex" type="radio" value="1">&nbsp;男&nbsp;&nbsp;&nbsp;<input id="gender__f" name="sex" type="radio" value="2">&nbsp;女&nbsp;&nbsp;&nbsp;<input checked="checked" id="gender__s" name="sex" type="radio" value="0">&nbsp;保密</td>
+
+          <td class="info"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label"><span style="color:red">(必填)</span>手机</td>
+
+          <td class="item"><input class="textbox" id="mobile" name="mobile" type="text"></td>
+
+          <td class="info"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label">邀请码</td>
+
+          <td class="item"><input class="textbox" id="admin_code" name="admin_code" type="text"></td>
+
+        </tr>
+
+        <tr>
+
+          <td class="label">验证码</td>
+
+          <td class="item"><input class="textbox" id="code" name="code" type="text"><img onclick="this.src=this.src+'&'+Math.random()" src="/api.php?op=checkcode&code_len=5&font_size=14&width=120&height=26&font_color=&background=" /></td>
+
+        </tr>
+
+
+
+        <tr>
+
+          <td class="label"></td>
+
+          <td colspan="2"><a href="https://www.uszcn.com/misc/service" target="_blank">查看网站服务条款</a></td>
+
+        </tr>
+
       </tbody>
+
     </table>
+
     </div>
+
     <div class="panel_footer">
+
       <div class="submit_button"><a href="javascript:__doPostBack(&#39;register_button&#39;, &#39;&#39;);" id="register_button"> 同意服务条款，提交</a></div>
+
     </div>
+
   </div>
+
 </form>
+
 </div>
+
 </div>
+
 <!-- 注册表单 -->
+
+
+
 
 
     <!-- 底部 -->
+
     <footer style="clear:both;">
+
         <div class="con">
+
             <ul>
+
                 <li class="l1">
+
                     <p>关注我们</p>
+
                     <a href="#"><img src="{IMG_PATH}logistics-233_80.jpg" alt="" /></a>
+
                     <a href="#"><img src="{IMG_PATH}logistics-233_78.jpg" alt="" /></a>
+
                     <a href="#"><img src="{IMG_PATH}logistics-233_84.jpg" alt="" /></a>
+
                     <a href="#"><img src="{IMG_PATH}logistics-233_82.jpg" alt="" /></a>
+
                     <a href="#"><img src="{IMG_PATH}logistics-233_86.jpg" alt="" /></a>
+
                 </li>
+
                 <li class="l2">
+
                     <p>联系我们</p>
+
                     <span class="p-li-first">CONTACT US</span>
+
                     <p class="p-li"><img src="{IMG_PATH}2_s35q.png" alt="" /><span>联系电话：400-000-0000 / 012345678</span></p>
+
                     <p class="p-li"><img src="{IMG_PATH}1_i9qh.png" alt="" /><span>企业邮箱：123@qq.com</span></p>
+
                     <p class="p-li"><img src="{IMG_PATH}3_gybl.png" alt="" /><span>公司传真：+86-12345678</span></p>
+
                     <p class="p-li"><img src="{IMG_PATH}4_dysi.png" alt="" /><span>公司地址：xx省xx市xx区xx路xx号​</span></p>
+
                 </li>
+
                 <li class="l3">
+
                     <p>较新资讯</p>
+
                     <span class="p-li-first">THE LATEST INFORMATION</span>
+
                     <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+
                     <p class="p-li"><span><a href="#">[自助服务] 国家邮政局关于2013年上半年邮政行业经济运行情况的通报</a></span><span class="span-last">2017-11-26</span></p>
+
                     <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+
                     <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+
                 </li>
+
             </ul>
+
         </div>
+
         <div class="footer-bottom">© 2011-2018 橙子家海外物流转运 京ICP备12000641号</div>
+
     </footer>
+
     <!-- /底部 -->
 
 
 
+
+
+
+
 <script>
+
         $(document).ready(function(){
+
             $(".con_ul li").mouseenter(function(){
+
                 $(this).addClass("active").siblings().removeClass("active");
+
             }).mouseout(function() {
+
                 $(".active-jq").addClass("active ").siblings().removeClass("active");
+
             });
+
             $(".con_ul li").click(function(){
+
                 $(this).addClass("active-jq").siblings().removeClass("active-jq");
+
             });
+
         });
 
+
+
     </script>
+
     <script type="text/javascript">
+
   var theForm = document.forms['aspnetForm'];
+
   if (!theForm) {
+
       theForm = document.aspnetForm;
-  }
-  function __doPostBack(eventTarget, eventArgument) {
-      if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-          theForm.__EVENTTARGET.value = eventTarget;
-          theForm.__EVENTARGUMENT.value = eventArgument;
-          theForm.submit();
-      }
+
   }
 
+  function __doPostBack(eventTarget, eventArgument) {
+
+      if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+
+          theForm.__EVENTTARGET.value = eventTarget;
+
+          theForm.__EVENTARGUMENT.value = eventArgument;
+
+          theForm.submit();
+
+      }
+
+  }
+
+
+
   $(function(){
+
     jQuery.validator.addMethod("isMobile", function (value, element) {
+
       var length = value.length;
+
       var mobile = /^((1[0-9]{2})+\d{8})$/;
+
       return this.optional(element) || (length == 11 && mobile.test(value));
+
     }, "请正确填写您的手机号码");
+
     jQuery.validator.addMethod("isEnName", function (value, element) {
+
       return this.optional(element) || /^[a-z," "]+$/i.test(value);
+
     }, "请输入英文名称");
+
     jQuery.validator.addMethod("isCName", function (value, element) {
+
       return this.optional(element) || /^[\u4E00-\u9FA5]+$/.test(value);
+
     }, "请输入中文名称");
+
     $("#aspnetForm").validate({
+
       rules: {
+
         "email": {
+
           required: true,
+
           email: true
+
         },
+
         "password": {
+
           required: true,
+
           minlength: 6
+
         },
+
         "password_confirmation": {
+
           required: true,
+
           minlength: 6,
+
           equalTo: "#password"
+
         },
+
         "cname": {
+
           required: true,
+
           isCName: true
+
         },
+
         "ename": {
+
           required: true,
+
           isEnName: true
+
         },
+
         "mobile": {
+
           required: true,
+
           isMobile: true
+
         }
+
       }
+
     });
+
     $("#register_button").click(function () {
+
       if($("#aspnetForm").valid()){
+
         $(this).closest('form').submit();
+
       }
+
     });
+
   })
+
 </script>
+
 </body>
+
 </html>

@@ -13,7 +13,7 @@ sub{ vertical-align:text-bottom; }
 legend { color:#000; }
 fieldset, img { border:0; }
 button, input, select, textarea { font-size:100%; }
-table { border-collapse:collapse; border-spacing:0; }
+table { border-collapse:collapse; border-spacing:0; margin:0 auto; }
 
 
 header {
@@ -226,39 +226,67 @@ header .container .con_top {
         }
 
 
-// 用户注册
-
+// 添加/编辑地址
 #content {
     width: 100%;
     min-width: 1200px;
     color: #555555;
-    // background: url(../images/content_bgs-1.png) repeat-y center top #f4f4f4;
+    margin-top:40px;
+    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
 }
 #content .content_detail {
     width: 1100px;
     margin: 0 auto;
-    padding: 50px 50px 50px;
-    // background: url(../images/content_detail_bgs.png) no-repeat 0px bottom;
+    padding: 10px 50px 50px;
+    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
     min-height: 400px;
-    font-size: 12px;
-    font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
 }
 #content .common_panel {
     background: #ecf4fb;
     border: 1px solid #afcdeb;
     -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     border-radius: 3px;
     margin-bottom: 35px;
+}
+#content .common_panel .panel_header {
+    height: 20px;
+    border-bottom: 1px solid #afcdeb;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+}
+#content .common_panel .panel_content {
+    background: #ffffff;
+    font-size: 12px;
+    overflow: hidden;
+}
+#content .common_form {
+    margin: 5px 0;
+    width: 100%;
+}
+#content .common_form tr td {
+    padding: 5px 8px;
+    line-height: 30px;
+    vertical-align: top;
+}
+#content .common_form {
+    margin: 5px 0;
+    width: 100%;
+}
+fieldset, img {
+    border: 0;
 }
 #content .common_form tr td.label {
     width: 16%;
     text-align: right;
     white-space: nowrap;
 }
-#content .common_form tr td {
-    padding: 5px 8px;
-    line-height: 30px;
-    vertical-align: top;
+#content .common_form tr td.label em {
+    color: #e55;
+}
+#content .common_form tr td.item {
+    width: 300px;
 }
 #content .common_form tr td.item input.textbox {
     border: 1px solid #AAA;
@@ -272,13 +300,6 @@ header .container .con_top {
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background: #ffffff;
-}
-#content .common_panel .panel_header {
-    height: 20px;
-    border-bottom: 1px solid #afcdeb;
-    padding: 10px 15px;
-    font-size: 14px;
-    line-height: 20px;
 }
 #content .common_panel .panel_footer {
     overflow: hidden;
@@ -308,4 +329,10 @@ header .container .con_top {
     border-radius: 3px;
     text-shadow: #666666 1px 1px 1px;
     FILTER: Shadow(Color=#666, Direction=90, Strength=1);
+}
+#content .common_form tr td.info span.alert {
+    color: #e55;
+}
+:link, :visited, ins {
+    text-decoration: none;
 }
