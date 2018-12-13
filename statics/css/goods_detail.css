@@ -228,25 +228,165 @@ header .container .con_top {
 
 
 
-
-// goods style
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 查看快递信息
+#content {
+    width: 100%;
+    min-width: 1000px;
+    color: #555555;
+    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
+}
+#content .content_detail {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px 50px 50px;
+    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
+    min-height: 400px;
+}
+#content .header_intro_panel {
+    border: 1px solid #afcdeb;
+    margin-bottom: 25px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+#content .header_intro_panel table {
+    width: 100%;
+}
+#content .header_intro_panel table tbody tr td {
+    height: 30px;
+    border-right: 1px solid #afcdeb;
+    padding: 8px 12px;
+}
+#content .header_intro_panel table tbody tr td .label {
+    color: #AAA;
+    font-size: 12px;
+    line-height: 14px;
+}
+#content .header_intro_panel table tbody tr td .value {
+    color: #666;
+    font-size: 18px;
+    line-height: 22px;
+}
+fieldset, img {
+    border: 0;
+}
+#content .header_intro_panel table tbody tr td.status {
+    width: 17%;
+    border: 0;
+    background-color: #ecf4fb;
+    white-space: nowrap;
+}
+#content .header_intro_panel table tbody tr td.status .value {
+    color: #F68C25;
+}
+#content .detail_info_panel {
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 30px;
+}
+#content .detail_info_panel dl.list_info {
+    width: 400px;
+    float: left;
+    margin-left: 40px;
+    font-size: 12px;
+    line-height: 20px;
+}
+#content .detail_info_panel dl.list_info dd {
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+#content .detail_info_panel dl.list_info dd .label {
+    width: 80px;
+    float: left;
+    text-align: right;
+}
+#content .detail_info_panel dl.list_info dd .value {
+    width: 305px;
+    float: right;
+    color: #999;
+}
+#content .detail_info_panel dl.chart_info {
+    width: 525px;
+    float: left;
+    margin-top: -8px;
+    margin-left: 47px;
+}
+#content .detail_info_panel dl.chart_info dd.one {
+    background-position: 0px -189px;
+}
+#content .detail_info_panel dl.chart_info dd {
+    background: url(/statis/images/content_items.png) no-repeat 0px -130px;
+    font-size: 12px;
+    line-height: 30px;
+    height: 30px;
+    padding: 0 0 0 25px;
+    overflow: hidden;
+}
+#content .detail_info_panel dl.chart_info dd em {
+    color: #999;
+}
+#content .common_panel {
+    background: #ecf4fb;
+    border: 1px solid #afcdeb;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 35px;
+}
+#content .common_panel .panel_header {
+    height: 20px;
+    border-bottom: 1px solid #afcdeb;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+}
+#content .common_panel .panel_content {
+    background: #ffffff;
+    font-size: 12px;
+    overflow: hidden;
+}
+#content .common_list {
+    width: 100%;
+}
+#content .common_list thead {
+    background: #ecf4fb;
+}
+#content .common_list thead tr {
+    border-bottom: 1px solid #afcdeb;
+}
+#content .common_list thead tr th {
+    text-align: center;
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 8px 5px;
+    white-space: nowrap;
+}
+#content .common_list thead tr th.last {
+    border-right: 0;
+}
+#content .common_list tbody {
+    background: #ffffff;
+}
+#content .common_list tbody tr.last td {
+    border-bottom: 0;
+}
+#content .common_list tbody tr td {
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    text-align: center;
+    padding: 8px 5px;
+}
+#content .common_list tbody tr td.last {
+    border-right: 0;
+}
+#content .common_panel .panel_content .empty {
+    text-align: center;
+    padding: 20px 0;
+}
+#content .common_panel .panel_content .text {
+    text-align: left;
+    padding: 14px 15px;
+    line-height: 18px;
+}

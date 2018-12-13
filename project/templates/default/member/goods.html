@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>橙子家海外物流转运</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}goods.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+</head>
+<style type="text/css">
+
+    .wait-in-store table {
+        border-collapse: collapse;
+        margin:50px auto;
+        width: 1000px;
+    }
+
+    .wait-in-store table, td, th {
+        border: 1px solid #ddd;
+        text-align:center;
+        padding:5px;
+        color:#777;
+    }
+    .wait-in-store table td a{
+        color:#777;
+    }
+    .wait-in-store table th a{
+        color:#337ab7;
+    }
+</style>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="con_top">
+                <p>
+                    <span>欢迎来到橙子家！</span>
+                    <img src="{IMG_PATH}w_erwu.png" alt="">
+                    <span>400-000-000</span>
+                    <img src="{IMG_PATH}1_i9qh.png" alt="">
+                    <span>xx@163.com</span>
+                    <span><a href="#">注册</a></span>/<span><a href="#">登录</a></span>
+                </p>
+            </div>
+            <div class="con_center">
+                    <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
+                    <div class="wow fadeInLeft">
+                        <p>橙子家海外物流转运</p>
+                        <p>The Orange</p>
+                    </div>
+                    <ul id="navBar" class="con_ul wow fadeInRight">
+                        <li class="active active-jq"><a href="#">首页</a></li>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">我的转运</a></li>
+                        <li><a href="#">产品与服务</a></li>
+                        <li><a href="#">会员计划</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+            </div>
+        </div>
+    </header>
+    <!-- /头部 -->
+
+<!-- 等待入库 -->
+<div class="wait-in-store">
+    <table>
+      <tr>
+        <th class="t1" colspan="5" style="text-align: left; border:none; padding-left: 15px; font-size: 24px;">等待入库 <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">我要入库</a></th>
+      </tr>
+      <tr>
+        <th>仓库</th>
+        <th>快递单号</th>
+        <th>货物概述</th>
+        <th>添加时间</th>
+        <th>操作</th>
+      </tr>
+      <tr>
+        <td>日本</td>
+        <td><a href="#">OTHER 112898298</a></td>
+        <td>世界零距离</td>
+        <td>2018-11-21 22:47:51</td>
+        <td><a href="#">删除</a></td>
+      </tr>
+      <tr>
+        <td>美国</td>
+        <td><a href="#">OTHER 112898298</a></td>
+        <td>近期过关</td>
+        <td>2018-11-22 22:47:51</td>
+        <td><a href="#">删除</a></td>
+      </tr>
+    </table>
+</div>
+<!-- /等待入库 -->
+
+<!-- 当前库存 -->
+<div class="wait-in-store now-in-store">
+    <table>
+      <tr>
+        <th class="t1" colspan="7" style="text-align: left; border:none; padding-left: 15px; font-size: 24px;">当前库存 <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">已申请退货的包裹</a><a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">入库记录</a></th>
+      </tr>
+      <tr>
+        <th>入库仓库</th>
+        <th>快递单号</th>
+        <th>货物概述</th>
+        <th>快递公司</th>
+        <th>当前状态</th>
+        <th>入库日期</th>
+        <th>重量</th>
+      </tr>
+      <tr>
+        <td>JP日本千叶</td>
+        <td><a href="#">112898298</a></td>
+        <td>世界零距离</td>
+        <td>OTHER</td>
+        <td>新创建</td>
+        <td>2018-11-21 22:47:51</td>
+        <td>0.92</td>
+      </tr>
+      <tr>
+        <td>OR美国免税州</td>
+        <td><a href="#">1ZA69A790364630346</a></td>
+        <td>鞋子</td>
+        <td>UPS</td>
+        <td>完成已生成发递单</td>
+        <td>2018-11-21 22:47:51</td>
+        <td>0.97</td>
+      </tr>
+    </table>
+</div>
+<!-- /当前库存 -->
+
+<!-- 已出库货物 -->
+<div class="wait-in-store out-in-store">
+    <table>
+      <tr>
+        <th class="t1" colspan="6" style="text-align: left; border:none; padding-left: 15px; font-size: 24px;">已出库货物 <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:13px;">有异常的货物</a><a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">有税票出库单</a><a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">全部货物转运记录</a></th>
+      </tr>
+      <tr>
+        <th>出库仓库</th>
+        <th>出库单号</th>
+        <th>货物概述</th>
+        <th>当前状态</th>
+        <th>出库日期</th>
+        <th>重量</th>
+      </tr>
+      <tr>
+        <td>OR美国免税州</td>
+        <td><a href="#">0120313485131082</a></td>
+        <td>小孩衣服</td>
+        <td>已评价收货</td>
+        <td>2018-11-21 22:47:51</td>
+        <td>0.92</td>
+      </tr>
+    </table>
+</div>
+<!-- /已出库货物 -->
+
+    <!-- 底部 -->
+    <footer style="clear:both;">
+        <div class="con">
+            <ul>
+                <li class="l1">
+                    <p>关注我们</p>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_80.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_78.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_84.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_82.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_86.jpg" alt="" /></a>
+                </li>
+                <li class="l2">
+                    <p>联系我们</p>
+                    <span class="p-li-first">CONTACT US</span>
+                    <p class="p-li"><img src="{IMG_PATH}2_s35q.png" alt="" /><span>联系电话：400-000-0000 / 012345678</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}1_i9qh.png" alt="" /><span>企业邮箱：123@qq.com</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}3_gybl.png" alt="" /><span>公司传真：+86-12345678</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}4_dysi.png" alt="" /><span>公司地址：xx省xx市xx区xx路xx号​</span></p>
+                </li>
+                <li class="l3">
+                    <p>较新资讯</p>
+                    <span class="p-li-first">THE LATEST INFORMATION</span>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局关于2013年上半年邮政行业经济运行情况的通报</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-bottom">© 2011-2018 橙子家海外物流转运 京ICP备12000641号</div>
+    </footer>
+    <!-- /底部 -->
+
+    <script>
+        $(document).ready(function(){
+            $(".con_ul li").mouseenter(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+            }).mouseout(function() {
+                $(".active-jq").addClass("active ").siblings().removeClass("active");
+            });
+            $(".con_ul li").click(function(){
+                $(this).addClass("active-jq").siblings().removeClass("active-jq");
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>
