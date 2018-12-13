@@ -1,10 +1,3 @@
-/*
-* @Author: Marte
-* @Date:   2018-11-25 10:53:38
-* @Last Modified by:   Marte
-* @Last Modified time: 2018-12-03 14:27:45
-*/
-
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
 body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
 h1, h2, h3, h4, h5, h6{ font-size:100%; }
@@ -25,19 +18,23 @@ table { border-collapse:collapse; border-spacing:0; }
 header {
     position: relative;
     z-index: 999999;
-    height: 111px;
+    height: 121px;
+    // background-color: rgb(66, 101, 167);
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1200px;
+            min-width: 1000px;
             background-color: rgb(255, 109, 55);
+            box-sizing:border-box;
         }
         header .container .con_center {
             height: 85px;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
-            background-color: transparent;
+            box-sizing:border-box;
+
         }
+
         header .container .con_center div {
             display:inline-block;
             color:#fff;
@@ -56,14 +53,15 @@ header .container .con_top {
         }
         header .container .con_center ul li {
             float: left;
-            // padding:40px 35px 22px;
             color:#fff;
             font-size:14px;
             cursor:pointer;
         }
         header .container .con_center ul li a {
             display: block;
-            padding:40px 35px 22px;
+            padding:40px 16px 22px;
+            color:#fff;
+            text-decoration:none;
         }
         header .container .con_center ul .active {
             color:#ff6d37;
@@ -99,7 +97,7 @@ header .container .con_top {
         header .container .con_top p {
             position:relative;
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             line-height:37px;
             font-size:14px;
@@ -135,6 +133,104 @@ header .container .con_top {
             color: #fff;
             text-decoration:none;
         }
+
+        footer{
+            min-width:1000px;
+            height: 275px;
+            background-color: rgb(66, 101, 167);
+        }
+        footer .con{
+            width:1000px;
+            margin:0 auto;
+        }
+        footer .con ul {
+            height:255px;
+        }
+        footer .con ul li {
+            float: left;
+        }
+        footer .con .l1{
+            width: 240px;
+            padding-top:20px;
+            color:#fff;
+            font-size:18px;
+            line-height: 140%;
+        }
+        footer .con .l1 p{
+            padding-bottom: 40px;
+        }
+        footer .con .l1 a{
+            margin-right:5px;
+        }
+        footer .con .l2 {
+            width: 290px;
+            padding-top:20px;
+            color:#fff;
+        }
+        footer .con .l2 p:nth-child(1) {
+            font-size:18px;
+        }
+        footer .con .l2 span:nth-child(2) {
+            font-size:12px;
+        }
+        footer .con .l2 .p-li {
+            height: 36px;
+            font-size:12px;
+            line-height:36px;
+            position:relative;
+            padding-left:28px;
+        }
+        footer .con .l2 .p-li img {
+            position:absolute;
+            top:8px;
+            left:0;
+        }
+        footer .con .l3 {
+            width: 460px;
+            padding-top:20px;
+            color:#fff;
+        }
+        footer .con .l3 p:nth-child(1) {
+            font-size:18px;
+        }
+        footer .con .l3 span:nth-child(2) {
+            font-size:12px;
+        }
+        footer .con .l3 .p-li {
+            height:30px;
+            font-size:12px;
+            line-height:30px;
+            border-bottom: 1px dashed #c6c6c6;
+        }
+        footer .con .l3 .span-last {
+            float:right;
+        }
+        footer .footer-bottom {
+            width:100%;
+            min-width:1000px;
+            height:30px;
+            color:#fff;
+            margin:0 auto;
+            text-align:center;
+            font-size:12px;
+            background-color: rgb(66, 101, 167);
+        }
+
+
+        footer .con .l3 a {
+            text-decoration:none;
+            out-line: none;
+            color:#fff;
+        }
+        footer .con .l3 a:hover {
+            color:rgb(255, 109, 55);
+        }
+
+
+
+
+
+
         #navBar li a { color:#fff; text-decoration:none; }
 
         #booNavigation ol li:hover {
@@ -169,13 +265,13 @@ header .container .con_top {
             width:100%;
         }
         .banner-bottom .container {
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             height:200px;
             // padding-left:120px;
         }
         .banner-bottom .container div {
-            width: 400px;
+            width: 333px;
             height: 240px;
             float:left;
             filter: alpha(opacity=70);
@@ -277,7 +373,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             position:relative;
         }
@@ -286,7 +382,7 @@ header .container .con_top {
             color:rgb(255, 109, 55);
             font-size:30px;
             position:absolute;
-            left:470px;
+            left:400px;
         }
         .section_1>p:nth-child(2) {
             font-family: 'Microsoft YaHei';
@@ -303,7 +399,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_1>ul {
-            width:1200px;
+            width:1000px;
             height:170px;
             margin:0 auto;
         }
@@ -343,8 +439,7 @@ header .container .con_top {
             color:rgb(255,109,55);
         }
         .section_1 ul li {
-            // background: url(../images/logistics-233_08-03.jpg) no-repeat center top;
-            width: 200px;
+            width: 166px;
             height: 120px;
             cursor:pointer;
         }
@@ -386,7 +481,7 @@ header .container .con_top {
         }
 
         .section_2 {
-            min-width: 1200px;
+            min-width: 1000px;
             height: 661px;
             background-color: transparent;
             background: url(../images/logistics-233_28.jpg) no-repeat;
@@ -412,7 +507,7 @@ header .container .con_top {
             color:rgb(255, 255, 255);
             font-size:30px;
             position:absolute;
-            left:500px;
+            left:410px;
         }
         .section_2>p:nth-child(2) {
             font-family: 'Microsoft YaHei';
@@ -464,13 +559,13 @@ header .container .con_top {
         }
 
         .section_3 {
-            min-width:1200px;
+            min-width:1000px;
             height:212px;
             background-color:rgb(66, 101, 167);
         }
         .section_3 .con  {
             position:relative;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
         }
         .section_3 .con .con-left div:nth-child(1) {
@@ -718,7 +813,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -728,7 +823,7 @@ header .container .con_top {
             color:rgb(255, 255, 255);
             font-size:30px;
             position:absolute;
-            left:500px;
+            left:412px;
         }
         .section_7>p:nth-child(2) {
             font-family: 'Microsoft YaHei';
@@ -745,7 +840,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_7 .con ul {
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
         }
         .section_7 .con ul li {
@@ -756,112 +851,10 @@ header .container .con_top {
             color:#fff;
             margin-left:5px;
         }
-        /* .section_7 .con ul li img {
-            width: 100%;
-            margin:0 auto 10px;
-        } */
+
         .section_7 .con ul li.con-li-bef {
-            width:60px;
+            width:27px;
             border-top: 1px dashed #ffffff;
             margin-top:50px;
         }
 
-
-        footer{
-            min-width:1200px;
-            height: 275px;
-            background-color: rgb(66, 101, 167);
-        }
-        footer .con{
-            width:1200px;
-            margin:0 auto;
-        }
-        footer .con ul {
-            height:255px;
-        }
-        footer .con ul li {
-            float: left;
-        }
-        footer .con .l1{
-            width: 290px;
-            padding-top:20px;
-            color:#fff;
-            font-size:18px;
-            line-height: 140%;
-        }
-        footer .con .l1 p{
-            padding-bottom: 40px;
-        }
-        footer .con .l1 a{
-            margin-right:5px;
-        }
-        footer .con .l2 {
-            width: 430px;
-            padding-top:20px;
-            color:#fff;
-        }
-        footer .con .l2 p:nth-child(1) {
-            font-size:18px;
-        }
-        footer .con .l2 span:nth-child(2) {
-            font-size:12px;
-            /* padding-bottom:10px; */
-        }
-        // footer .con .l2 .p-li-first {
-        //     margin-bottom:20px;
-        // }
-        footer .con .l2 .p-li {
-            height: 36px;
-            font-size:12px;
-            line-height:36px;
-            position:relative;
-            padding-left:28px;
-        }
-        footer .con .l2 .p-li img {
-            position:absolute;
-            top:8px;
-            left:0;
-        }
-        footer .con .l3 {
-            width: 460px;
-            padding-top:20px;
-            color:#fff;
-        }
-        footer .con .l3 p:nth-child(1) {
-            font-size:18px;
-        }
-        footer .con .l3 span:nth-child(2) {
-            font-size:12px;
-        }
-        // footer .con .l3 .p-li-first {
-        //     margin-bottom:20px;
-        // }
-        footer .con .l3 .p-li {
-            height:30px;
-            font-size:12px;
-            line-height:30px;
-            border-bottom: 1px dashed #c6c6c6;
-        }
-        footer .con .l3 .span-last {
-            float:right;
-        }
-        footer .footer-bottom {
-            width:100%;
-            min-width:1200px;
-            height:30px;
-            color:#fff;
-            margin:0 auto;
-            text-align:center;
-            font-size:12px;
-            background-color: rgb(66, 101, 167);
-        }
-
-
-        footer .con .l3 a {
-            text-decoration:none;
-            out-line: none;
-            color:#fff;
-        }
-        footer .con .l3 a:hover {
-            color:rgb(255, 109, 55);
-        }
