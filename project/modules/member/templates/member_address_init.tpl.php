@@ -39,8 +39,8 @@
 		<td align="center"><?php echo $v['city']?></td>
 		<td align="center"><?php echo $v['area']?></td>
 		<td align="center"><?php echo $v['zipcode']?></td>
-		<td align="center" onclick="javascript:edit('<?php echo $v["idfronturl"]?>');">查看图片</td>
-		<td align="center" onclick="javascript:edit('<?php echo $v["idbackurl"]?>');">查看图片</td>
+		<td align="center" onclick="javascript:edit('<?php echo $upload_url.$v["idfronturl"]?>');">查看图片</td>
+		<td align="center" onclick="javascript:edit('<?php echo $upload_url.$v["idbackurl"]?>');">查看图片</td>
     </tr>
 <?php
 	}

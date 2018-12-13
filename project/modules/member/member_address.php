@@ -22,7 +22,7 @@ class member_address extends admin {
 		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 		$member_address_list = $this->db->listinfo('auditstatus=0', '', $page, 15);
 		$this->member_db = pc_base::load_model('member_model');
-
+		$upload_url = pc_base::load_config('system','upload_url');
 		foreach ($member_address_list as $k=>$v) {
 			$memberinfo = $this->member_db->get_one(array('userid'=>$v['member_id']));
 			$member_address_list[$k]['username'] = $memberinfo["username"];

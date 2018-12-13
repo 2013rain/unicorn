@@ -10,12 +10,19 @@ pc_base::load_app_func('global');
 
 class index extends foreground {
 	public $db, $goods_db, $category_db, $goods_attr_db;
+    public static $store;
 	function __construct() {
 		parent::__construct();
 		$this->db = pc_base::load_model('member_express_model');
 		$this->goods_db = pc_base::load_model('member_express_goods_model');
         $this->category_db = pc_base::load_model('goods_category_model');
         $this->goods_attr_db = pc_base::load_model('goods_category_attr_model');
+        if (!self::$store) {
+            $info = pc_base::load_config('express_store');
+            foreach ($info as $val) {
+                self::$store[$val['id']] = $val;
+            }
+        }
 	}
 
 	/**
@@ -23,15 +30,22 @@ class index extends foreground {
 	 */
 	function init() {
 		$userid = $this->memberinfo['userid'];
-		$where = [
-			'userid' => $userid,
-			'status' => 0
-		];
-        $where = "userid=$userid and status in (0,1)";
-		$page = $_GET['page'] ? intval($_GET['page']) : '1';
+        $where = "userid=$userid and status in (0,1,2,3)";
+        $list_wait = [];
+        $list_in_store = [];
+        $list_out_store = [];
+        //$page = $_GET['page'] ? intval($_GET['page']) : '1';
         //$list_wait = $this->db->listinfo('', '', $page, 10, '', 10, '', [], 'id,storeid,expressno,detail,createtime,status');
-		$list_wait = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status');
-        //$pages = $this->db->pages;
+		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time');
+        foreach ($lists as $val) {
+            if ($val['status'] == 0 || $val['status'] == 1) {
+                $list_wait[] = $val;
+            } elseif ($val['status']) {
+                $list_in_store[] = $val;
+            } else {
+                $list_out_store[] = $val;
+            }
+        }
 		include template('express','main');
 	}
 	function site_notify() {}
@@ -341,6 +355,26 @@ class index extends foreground {
             $this->outRes(1, '', $res);
         }
     }
+
+    function all_express() {
+        $userid = $this->memberinfo['userid'];
+        $page = $_GET['page'] ? intval($_GET['page']) : '1';
+        $expressno = isset($_GET['expressno']) ? $_GET['expressno'] : '';
+        $where = [];
+        $where['userid'] = $userid;
+        if ($expressno) {
+            $where['expressno'] = $expressno;
+        }
+        if (isset($_GET['clear'])) {
+            unset($where['expressno']);
+            $expressno = '';
+        }
+        $store = self::$store;
+        $list = $this->db->listinfo($where, '', $page, 10, '', 10, '', [], 'id,storeid,company,weight,expressno,detail,createtime,status');
+        $pages = $this->db->pages;
+        include template('express','all_express');
+    }
+
 
 
 	

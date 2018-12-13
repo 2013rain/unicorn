@@ -1,24 +1,86 @@
-<div class="footer">
-<p class="info">
-{pc:content action="category" catid="1" num="15" siteid="$siteid" order="listorder ASC"}
-{loop $data $r}
-<a href="{$r[url]}" target="_blank">{$r[catname]}</a> |  
-{/loop}
-{/pc}
-<a href="{APP_PATH}index.php?m=link" target="_blank">友情链接</a>
-<br />
-Powered by <strong><a href="http://www.phpcms.cn" target="_blank">PHPCMS</a></strong> <em>{get_pc_version(1)}</em> &copy; 2017 <img src="{IMG_PATH}copyright.gif"/>{tjcode()}{php echo runhook('glogal_footer')}
-</p>
-</div>
-<script type="text/javascript">
-$(function(){
-	$(".picbig").each(function(i){
-		var cur = $(this).find('.img-wrap').eq(0);
-		var w = cur.width();
-		var h = cur.height();
-	   $(this).find('.img-wrap img').LoadImage(true, w, h,'{IMG_PATH}msg_img/loading.gif');
-	});
-})
-</script>
+    <!-- /服务流程 -->
+    <!-- 底部 -->
+    <footer>
+        <div class="con">
+            <ul>
+                <li class="l1">
+                    <p>关注我们</p>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_80.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_78.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_84.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_82.jpg" alt="" /></a>
+                    <a href="#"><img src="{IMG_PATH}logistics-233_86.jpg" alt="" /></a>
+                </li>
+                <li class="l2">
+                    <p>联系我们</p>
+                    <span class="p-li-first">CONTACT US</span>
+                    <p class="p-li"><img src="{IMG_PATH}2_s35q.png" alt="" /><span>联系电话：400-000-0000 / 012345678</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}1_i9qh.png" alt="" /><span>企业邮箱：123@qq.com</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}3_gybl.png" alt="" /><span>公司传真：+86-12345678</span></p>
+                    <p class="p-li"><img src="{IMG_PATH}4_dysi.png" alt="" /><span>公司地址：xx省xx市xx区xx路xx号​</span></p>
+                </li>
+                <li class="l3">
+                    <p>较新资讯</p>
+                    <span class="p-li-first">THE LATEST INFORMATION</span>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局关于2013年上半年邮政行业经济运行情况的通报</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-bottom">© 2011-2018 橙子家海外物流转运 京ICP备12000641号</div>
+    </footer>
+    <!-- /底部 -->
+
+
+
+    <script type="text/javascript" src="{JS_PATH}jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}shutter.js"></script>
+    <script type="text/javascript" src="{JS_PATH}velocity.js"></script>
+    <script>
+        $(function () {
+            // $(window).resize(function(){
+                  $('.shutter').shutter({
+                    shutterW: $(window).width(), // 容器宽度
+                    shutterH: 954, // 容器高度
+                    isAutoPlay: true, // 是否自动播放
+                    playInterval: 3000, // 自动播放时间
+                    curDisplay: 3, // 当前显示页
+                    fullPage: false // 是否全屏展示
+                  });
+              // });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(".con_ul li").mouseenter(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+            }).mouseout(function() {
+                $(".active-jq").addClass("active ").siblings().removeClass("active");
+            });
+            $(".con_ul li").click(function(){
+                $(this).addClass("active-jq").siblings().removeClass("active-jq");
+            });
+        });
+
+
+
+        if (window.navigator.userAgent.indexOf("MSIE")>=1) {
+          }else{
+                $(function(){
+                  var wow = new WOW({
+                      boxClass: 'wow',
+                      animateClass: 'animated',
+                      offset: 0,
+                      mobile: true,
+                      live: true
+                  });
+                  wow.init();
+                })
+        }
+    </script>
+
+
 </body>
 </html>
