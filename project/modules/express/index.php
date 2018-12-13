@@ -34,8 +34,6 @@ class index extends foreground {
         $list_wait = [];
         $list_in_store = [];
         $list_out_store = [];
-        //$page = $_GET['page'] ? intval($_GET['page']) : '1';
-        //$list_wait = $this->db->listinfo('', '', $page, 10, '', 10, '', [], 'id,storeid,expressno,detail,createtime,status');
 		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time');
         foreach ($lists as $val) {
             if ($val['status'] == 0 || $val['status'] == 1) {
@@ -48,8 +46,6 @@ class index extends foreground {
         }
 		include template('express','main');
 	}
-	function site_notify() {}
-	function pay() {}
 	function in_storage() {
 		$show_validator = true;
         $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
@@ -374,6 +370,27 @@ class index extends foreground {
         $pages = $this->db->pages;
         include template('express','all_express');
     }
+
+    function delete() {
+        $userid = $this->memberinfo['userid'];
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        if (!$id) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        $where = [
+            'id' => $id
+        ];
+        $res = $this->db->get_one($where, 'userid,status');
+        if (!$res) {
+            showmessage('查无此单', HTTP_REFERER);
+        }
+        if ($res['userid'] != $userid || !in_array($res['status'], [0,1])) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        //$res = $this->db->delete($where);
+        showmessage('删除成功', HTTP_REFERER);
+    }
+
 
 
 
