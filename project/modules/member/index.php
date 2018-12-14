@@ -1854,6 +1854,7 @@ class index extends foreground {
 		$memberinfo = $this->memberinfo;
 		$this->member_address_model = pc_base::load_model('member_address_model');
 		$this->overseas_address_model = pc_base::load_model('overseas_address_model');
+		
 		$overseas_address_list = $this->overseas_address_model->select();
 		$member_modelinfo_arr = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
 
@@ -1866,11 +1867,29 @@ class index extends foreground {
 		$address_id = isset($_GET['address_id']) ?intval($_GET['address_id']) : 0 ;
 
 		$this->member_address_model = pc_base::load_model('member_address_model');
+		$this->province_model = pc_base::load_model('province_model');
 
 		$member_modelinfo_arr = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
 
 		$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
-		
+
+		$province_list = $this->province_model->select(array('parentid'=>0));
+		$city_list = array();
+		$area_list = array();
+		if (isset($member_modelinfo_arr['province'])) {
+			$province_info = $this->province_model->get_one(array('cityname'=>$member_modelinfo_arr['province']));
+			if ($province_info['codeid']>0) {
+				$city_list = $this->province_model->select(array('parentid'=>$province_info['codeid']));
+			}
+		}
+		if (isset($member_modelinfo_arr['city'])) {
+			$city_info = $this->province_model->get_one(array('cityname'=>$member_modelinfo_arr['city']));
+			if ($city_info['codeid']>0) {
+				$area_list = $this->province_model->select(array('parentid'=>$city_info['codeid']));
+			}
+		}
+
+
 		include template('member', 'address_edit');
 	}
 
@@ -1979,10 +1998,13 @@ class index extends foreground {
 	}
 
 	public function public_province_ajax() {
-		$parentid = isset($_GET['parentid']) ? intval($_GET['parentid']): 0 ;
+		$fname = isset($_GET['fname'])  ? trim($_GET['fname']): '' ;
 		$memberinfo = $this->memberinfo;
 		$this->province_model = pc_base::load_model('province_model');
-		$infolist = $this->province_model->select(array('parentid'=>$parentid));
+		$province_info = $this->province_model->get_one(array('cityname'=>$fname));
+
+		$infolist = $this->province_model->select(array('parentid'=>$province_info['codeid']));
+
 		$return = array(
 			"code"=>"1",
 			"data"=>$infolist
