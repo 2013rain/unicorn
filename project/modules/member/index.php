@@ -52,7 +52,7 @@ class index extends foreground {
 		if(isset($_POST['dosubmit'])) {
 			if($member_setting['enablcodecheck']=='1'){//开启验证码
 				if ((empty($_SESSION['connectid']) && $_SESSION['code'] != strtolower($_POST['code']) && $_POST['code']!==NULL) || empty($_SESSION['code'])) {
-					showmessage(L('code_error'));
+					// showmessage(L('code_error'));
 				} else {
 					$_SESSION['code'] = '';
 				}
@@ -146,9 +146,11 @@ class index extends foreground {
 				$_POST['info'] = array_map('new_html_special_chars',$_POST['info']);
 				$user_model_info = $member_input->get($_POST['info']);				        				
 			}
+
 			if(pc_base::load_config('system', 'phpsso')) {
 				$this->_init_phpsso();
 				$status = $this->client->ps_member_register($userinfo['username'], $userinfo['password'], $userinfo['email'], $userinfo['regip'], $userinfo['encrypt']);
+
 				if($status > 0) {
 					$userinfo['phpssouid'] = $status;
 					$userinfo['admin_userid']=$admin_userid;
@@ -207,6 +209,7 @@ class index extends foreground {
 			} else {
 				showmessage(L('enable_register').L('enable_phpsso'), 'index.php?m=member&c=index&a=login');
 			}
+			
 			showmessage(L('operation_failure'), HTTP_REFERER);
 		} else {
 			if(!pc_base::load_config('system', 'phpsso')) {
@@ -627,7 +630,8 @@ class index extends foreground {
 				$_SESSION['code'] = '';
 			}
 			
-			$username = isset($_POST['username']) && is_username($_POST['username']) ? trim($_POST['username']) : showmessage(L('username_empty'), HTTP_REFERER);
+			// $username = isset($_POST['username']) && is_username($_POST['username']) ? trim($_POST['username']) : showmessage(L('username_empty'), HTTP_REFERER);
+			$email = isset($_POST['email']) && is_email($_POST['email']) ? trim($_POST['email']) : showmessage("邮箱不能为空", HTTP_REFERER);
 			$password = isset($_POST['password']) && trim($_POST['password']) ? trim($_POST['password']) : showmessage(L('password_empty'), HTTP_REFERER);
 			is_password($_POST['password']) && is_badword($_POST['password'])==false ? trim($_POST['password']) : showmessage(L('password_format_incorrect'), HTTP_REFERER);
 			$cookietime = intval($_POST['cookietime']);
@@ -635,7 +639,8 @@ class index extends foreground {
 			
 			if(pc_base::load_config('system', 'phpsso')) {
 				$this->_init_phpsso();
-				$status = $this->client->ps_member_login($username, $password);
+				$status = $this->client->ps_member_login($email, $password,1);
+
 				$memberinfo = unserialize($status);
 				
 				if(isset($memberinfo['uid'])) {
@@ -683,6 +688,7 @@ class index extends foreground {
 				}
 				
 			} else {
+				showmessage(L('enable_phpsso'), 'index.php?m=member&c=index&a=login');
 				//密码错误剩余重试次数
 				$this->times_db = pc_base::load_model('times_model');
 				$rtime = $this->times_db->get_one(array('username'=>$username));
@@ -1876,14 +1882,15 @@ class index extends foreground {
 		$province_list = $this->province_model->select(array('parentid'=>0));
 		$city_list = array();
 		$area_list = array();
-		if (isset($member_modelinfo_arr['province'])) {
-			$province_info = $this->province_model->get_one(array('cityname'=>$member_modelinfo_arr['province']));
+		if (isset($member_address_info['province'])) {
+
+			$province_info = $this->province_model->get_one(array('cityname'=>$member_address_info['province']));
 			if ($province_info['codeid']>0) {
 				$city_list = $this->province_model->select(array('parentid'=>$province_info['codeid']));
 			}
 		}
-		if (isset($member_modelinfo_arr['city'])) {
-			$city_info = $this->province_model->get_one(array('cityname'=>$member_modelinfo_arr['city']));
+		if (isset($member_address_info['city'])) {
+			$city_info = $this->province_model->get_one(array('cityname'=>$member_address_info['city']));
 			if ($city_info['codeid']>0) {
 				$area_list = $this->province_model->select(array('parentid'=>$city_info['codeid']));
 			}
@@ -1902,6 +1909,7 @@ class index extends foreground {
 
 			$info = isset($_POST['info'])&&is_array($_POST['info']) ? $_POST['info']: array();
 			$mustkey = array('consignee','idcard','mobile','email','province','city','area','zipcode','addressinfo');
+
 			foreach ($mustkey as $mk) {
 				if (!isset($info[$mk]) || empty($info[$mk])) {
 					showmessage("信息不全");
@@ -1933,12 +1941,13 @@ class index extends foreground {
 			$idfronturl = $attachment->uploadedfiles[0]['filepath'];
 			$idbackurl = $attachment->uploadedfiles[1]['filepath'];
 
-			$address_id = isset($info['address_id']) ? intval($info['address_id']): 0;
+			$address_id = isset($_POST['address_id']) ? intval($_POST['address_id']): 0;
 
 			$save_data = array(
 				'consignee'=>$info['consignee'],
 				'mobile'=>$info['mobile'],
 				'email'=>$info['email'],
+				'idcard'=>$info['idcard'],
 				'province'=>$info['province'],
 				'city'=>$info['city'],
 				'area'=>$info['area'],

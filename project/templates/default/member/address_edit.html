@@ -9,44 +9,16 @@
     <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
     <script src="{JS_PATH}card.js"></script>
     <script src="{JS_PATH}common.js"></script>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
  <!-- 头部 -->
-    <header>
-        <div class="container">
-            <div class="con_top">
-                <p>
-                    <span>欢迎来到橙子家！</span>
-                    <img src="{IMG_PATH}w_erwu.png" alt="">
-                    <span>400-000-000</span>
-                    <img src="{IMG_PATH}1_i9qh.png" alt="">
-                    <span>xx@163.com</span>
-                    <span><a href="/index.php?m=member&c=index&a=register&siteid=1">注册</a></span>/<span><a href="/index.php?m=member&c=index&a=login">登录</a></span>
-                </p>
-            </div>
-            <div class="con_center">
-                <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
-                <div class="wow fadeInLeft">
-                    <p>橙子家海外物流转运</p>
-                    <p>The Orange</p>
-                </div>
-                    <ul id="navBar" class="con_ul wow fadeInRight">
-                        <!--<li class="active active-jq"><a href="/index.php?">首页</a></li> -->
-                        <li ><a href="/index.php?">首页</a></li>
-                        <li><a href="/index.php?m=content&c=index&a=lists&catid=2">关于我们</a></li>
-                        <li><a href="/index.php?m=express&c=index&a=init">我的转运</a></li>
-                        <li><a href="#">产品与服务</a></li>
-                        <li><a href="#">会员计划</a></li>
-                        <li><a href="#">联系我们</a></li>
-                    </ul>
-            </div>
-        </div>
-    </header>
+ {template 'content', 'banner'} 
 <!-- 添加/编辑地址 -->
 <div id="content" style="margin-top:50px;">
 <div class="content_detail">
 <div class="common_panel">
 <div class="panel_header">添加国内收货地址</div>
-<form accept-charset="UTF-8" action="" class="new_user_address" enctype="multipart/form-data" id="new_user_address" method="post" novalidate="novalidate">
+<form accept-charset="UTF-8" action="/index.php?m=member&c=index&a=address_save" class="new_user_address" enctype="multipart/form-data" name="new_user_address" id="new_user_address" method="post" novalidate="novalidate">
   <div style="display:none">
     <input type="hidden" name="siteid" value="{$siteid}" />
   <input type="hidden" name="address_id" value="{$address_id}" />
@@ -97,20 +69,20 @@
                     <select id="region_city_selector_region" name="info[province]">
                       <option value="">请选择</option>
                       {loop $province_list  $p}           
-                      <option value="{$p['cityname']}" "{if $p['cityname'] eq {$member_address_info['province']} } selected {/if}" >{$p['cityname']}</option>
+                      <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['province'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
                     </select>
                     <select id="region_city_selector_city" name="info[city]" >
                       <option value="">请选择</option>
                       {loop $city_list  $p}           
-                      <option value="{$p['cityname']}" "{if $p['cityname'] eq {$member_address_info['city']} } selected {/if}" >{$p['cityname']}</option>
+                      <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['city'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
         
                     </select>
                     <select id="region_city_selector_district" name="info[area]" >
                       <option value="">请选择</option>
                        {loop $area_list  $p}           
-                      <option value="{$p['cityname']}" "{if $p['cityname'] eq {$member_address_info['area']} } selected {/if}" >{$p['cityname']}</option>
+                      <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['area'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
                     </select>
                   </td>
@@ -175,6 +147,7 @@
     </script>
 
 <script type="text/javascript">
+
   $(function () {
     jQuery.validator.addMethod("isMobile", function (value, element) {
       var length = value.length;
@@ -194,7 +167,7 @@
       return /^[\u4DAE\u4E00-\u9FA5]+$/.test(value);
     }, "请选择收货省市辖区");
 
-    $("form:first").validate({
+    $("#new_user_address").validate({
       ignore : '',
       rules: {
         "user_address[cname]": {
@@ -251,8 +224,9 @@
       }
     })
     $("#submit").click(function () {
-      if ($("form:first").valid() && check_identity_card_path()) {
-        $("form:first").submit();
+
+      if ($("#new_user_address").valid() && check_identity_card_path()) {
+        $("#new_user_address").submit();
       }
       return false;
     });
@@ -281,17 +255,18 @@ $(function() {
 
              type: "GET",
 
-             url: "/index.php?m=member&c=index&a=public_province_ajax&fname="+fname,
+             url: "/index.php?m=member&c=index&a=public_province_ajax&",
 
-             data: {},
+             data: {fname:fname},
 
              dataType: "json",
 
              success: function(data){
 
                          if (data.data) {
+
                             var html = '<option>请选择</option>'; 
-                              $.each(data, function(commentIndex, comment){
+                              $.each(data.data, function(commentIndex, comment){
                                    html += '<option value="'+comment['cityname']+'">'+comment['cityname']+'</option>';
                              });
                             obj.html(html);
@@ -300,6 +275,7 @@ $(function() {
                       }
 
          });
+       };
 
   $region_city_selector_region.change(function() {
     var region_name = $region_city_selector_region.val();
@@ -315,6 +291,7 @@ $(function() {
       funChangeSelect($region_city_selector_district,city_name)
     }
   });
+});
   
 </script>
 {template 'content', 'footer'}

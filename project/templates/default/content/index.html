@@ -1,4 +1,17 @@
-{template "content","header"}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}index.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}shutter.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+<body>
+{template "content","banner"}
     <!-- 轮播图 -->
     <div id="wrapper">
         <div class="shutter">

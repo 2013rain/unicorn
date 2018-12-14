@@ -9,38 +9,11 @@
 <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
 <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 <script src="{JS_PATH}jquery-ui.min.js"></script>
+ <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
 <body>
-    <!-- 头部 -->
-    <header>
-        <div class="container">
-            <div class="con_top">
-                <p>
-                    <span>欢迎来到橙子家！</span>
-                    <img src="{IMG_PATH}w_erwu.png" alt="">
-                    <span>400-000-000</span>
-                    <img src="{IMG_PATH}1_i9qh.png" alt="">
-                    <span>xx@163.com</span>
-                    <!-- <span><a href="#">注册</a></span>/<span><a href="#">登录</a></span> -->
-                </p>
-            </div>
-            <div class="con_center">
-                    <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
-                    <div class="wow fadeInLeft">
-                        <p>橙子家海外物流转运</p>
-                        <p>The Orange</p>
-                    </div>
-                    <ul id="navBar" class="con_ul wow fadeInRight">
-                        <li class="active active-jq"><a href="#">首页</a></li>
-                        <li><a href="#">关于我们</a></li>
-                        <li><a href="#">我的转运</a></li>
-                        <li><a href="#">产品与服务</a></li>
-                        <li><a href="#">会员计划</a></li>
-                        <li><a href="#">联系我们</a></li>
-                    </ul>
-            </div>
-        </div>
-    </header>
+
+ {template 'content', 'banner'}   
     <!-- /头部 -->
 
 <!-- 注册表单 -->
@@ -122,42 +95,6 @@
 </div>
 </div>
 <!-- 注册表单 -->
-
-
-    <!-- 底部 -->
-    <footer style="clear:both;">
-        <div class="con">
-            <ul>
-                <li class="l1">
-                    <p>关注我们</p>
-                    <a href="#"><img src="{IMG_PATH}logistics-233_80.jpg" alt="" /></a>
-                    <a href="#"><img src="{IMG_PATH}logistics-233_78.jpg" alt="" /></a>
-                    <a href="#"><img src="{IMG_PATH}logistics-233_84.jpg" alt="" /></a>
-                    <a href="#"><img src="{IMG_PATH}logistics-233_82.jpg" alt="" /></a>
-                    <a href="#"><img src="{IMG_PATH}logistics-233_86.jpg" alt="" /></a>
-                </li>
-                <li class="l2">
-                    <p>联系我们</p>
-                    <span class="p-li-first">CONTACT US</span>
-                    <p class="p-li"><img src="{IMG_PATH}2_s35q.png" alt="" /><span>联系电话：400-000-0000 / 012345678</span></p>
-                    <p class="p-li"><img src="{IMG_PATH}1_i9qh.png" alt="" /><span>企业邮箱：123@qq.com</span></p>
-                    <p class="p-li"><img src="{IMG_PATH}3_gybl.png" alt="" /><span>公司传真：+86-12345678</span></p>
-                    <p class="p-li"><img src="{IMG_PATH}4_dysi.png" alt="" /><span>公司地址：xx省xx市xx区xx路xx号​</span></p>
-                </li>
-                <li class="l3">
-                    <p>较新资讯</p>
-                    <span class="p-li-first">THE LATEST INFORMATION</span>
-                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
-                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局关于2013年上半年邮政行业经济运行情况的通报</a></span><span class="span-last">2017-11-26</span></p>
-                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
-                    <p class="p-li"><span><a href="#">[自助服务] 国家邮政局：上半年快递服务满意度提升</a></span><span class="span-last">2017-11-26</span></p>
-                </li>
-            </ul>
-        </div>
-        <div class="footer-bottom">© 2011-2018 橙子家海外物流转运 京ICP备12000641号</div>
-    </footer>
-    <!-- /底部 -->
-
 
 
 <script>
@@ -248,6 +185,4 @@
       $( ".agreement-accr" ).draggable();
     })
 </script>
-</body>
-
-</html>
+{template 'content', 'footer'}
