@@ -1,56 +1,170 @@
-{template 'content', 'header'}
-<!-- 注册表单 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}address.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}inbound.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}inbound.js"></script>
+    <script src="{JS_PATH}address.js"></script>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+<!-- 我的地址 -->
 <div id="content">
-<div class="content_detail">
-<div class="col-1 ">
-		<h5 class="title">我的地址：</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="col-1 ">
-		<h5 class="title">海外地址：</h5>
-		<div class="content">
-				<table width="100%" cellspacing="0" class="table_form">
-					{loop $overseas_address_list $v}
-					<tr>
-						<td >{$v['country_name']}</td>        
-						<td >{$v['intro']}</td>
-						<td >{$v['address']}</td>     
-						<td >{$v['city']}</td>     
-						<td >{$v['state']}</td>     
-						<td >{$v['county']}</td>     
-						<td >{$v['zipcode']}</td>    
-						<td >{$v['tellphone']}</td>   
-					</tr>
-					{/loop}
-				</table>
-		</div>
-	</div>
-	</div>
+  <div class="content_detail">
+    <div class="common_panel">
+      <div class="panel_header">海外收货地址</div>
+      <div class="panel_content" style="padding:5px 10px;">
+        <table class="common_form">
+          <tbody>
+            <tr>
+              <td class="item" style="width:auto;">
+                <dl class="inbound_warehouse_select">
+                {loop $overseas_address_list $k $v}
+                  <dd class="{$v['warehouse_code']} {if $k==0}current{/if}" warehouse_code="{$v['warehouse_code']}">{$v['overseas_name']}</dd>
+                {/loop}
 
-	<div class="bk10"></div>	
-	<div class="col-1 ">
-		<h5 class="title">国内地址：</h5>
-		<div class="content">
-				<table width="100%" cellspacing="0" class="table_form">
-					{loop $member_address_list  $v}
-					<tr>
-						<td >{$v['consignee']}</td>        
-						<td >{$v['mobile']}</td>
-						<td >{$v['email']}</td>     
-						<td >{$v['province']}</td>     
-						<td >{$v['city']}</td>     
-						<td >{$v['area']}</td>     
-						<td >{$v['zipcode']}</td>    
-						<td >{$v['addressinfo']}</td>   
-						<td >{$v['used']}</td>   
-					</tr>
-					{/loop}
-				</table>
-		</div>
-	</div>
+                </dl>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {loop $overseas_address_list $k $v}
+
+      <div class="address_panel address_panel_{$v['warehouse_code']} panel_content" style="{if $k==0}display:block;{else}display:none;{/if}" >
+        <dl class="my_address_panel">
+        <dt>{$v['overseas_name']}收货地址 <span style="color:red;">{$v['intro']}</span></dt>
+        <dd class="first_name">
+          <div class="label">英文名(First Name)</div>
+          <div class="value">{$member_modelinfo_arr['enname']}</div>
+        </dd>
+        <dd class="last_name">
+          <div class="label">中文名全拼(Last Name)</div>
+          <div class="value">{$member_modelinfo_arr['username']}</div>
+        </dd>
+        <dd class="inline_hint">
+          <div class="label">&nbsp;</div>
+          <div class="value">您在购物网站上的的收货姓名为 First Name + Last Name 即 英文名 + 中文名全拼<br>该收货姓名为用户身份重要识别标志，请在购物网站规范填写</div>
+        </dd>
+        <dd class="address_line_1">
+          <div class="label">地址(Address)</div>
+          <div class="value">{$v['address']}</div>
+        </dd>
+        <dd class="inline_hint">
+          <div class="label">&nbsp;</div>
+          <div class="value">一般网站地址栏会有两行，请按此格式填写，确保C/O后的编号能够打印到快递单上<br>如果购物时网站不认可收货地址的话请删除C/O字母，保留3位字母加3位数字的组合</div>
+        </dd>
+        <dd class="city">
+          <div class="label">城市(City)</div>
+          <div class="value">{$v['city']}</div>
+        </dd>
+        <dd class="state">
+          <div class="label">州(State)</div>
+          <div class="value">{$v['state']}</div>
+        </dd>
+        <dd class="county">
+          <div class="label">县/郡(County)</div>
+          <div class="value">{$v['county']}</div>
+        </dd>
+        <dd class="country">
+          <div class="label">国家(Country)</div>
+          <div class="value">{$v['country_name']}</div>
+        </dd>
+        <dd class="zipcode">
+          <div class="label">邮编(ZipCode)</div>
+          <div class="value">{$v['zipcode']}</div>
+          <div class="copy" style="display: none;"><a href="#this">复制</a></div>
+        </dd>
+        <dd class="telephone">
+          <div class="label">电话(Tel)</div>
+          <div class="value">{$v['tellphone']}</div>
+        </dd>
+        </dl>
+      </div>
+       {/loop}
+
+    </div>
+    <div class="common_panel">
+      <div class="panel_header">国内收货地址</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+            <th>&nbsp;</th>
+            <th>姓名</th>
+            <th>省份</th>
+            <th>城市</th>
+            <th>辖区</th>
+            <th>地址</th>
+            <th>邮编</th>
+            <th>手机</th>
+            <th>电话</th>
+            <th class="last">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          	{loop $member_address_list $k $v}
+            <tr>
+            	{if $v['auditstatus']==0}
+            	<td><span style="color:#ff7e00;font-weight:bold;text-decoration:underline;">待审核</span>
+            	</td>
+            	{elseif $v['auditstatus']=="-1"}
+				<td><span style="color:#ff7e00;font-weight:bold;text-decoration:underline;">审核未通过</span>
+            	</td>
+            	{elseif $v['auditstatus']==1&&$v['used']==1}
+				<td>默认地址</td>
+            	{else}
+				<td>&nbsp;&nbsp;</td>
+				{/if}
+              <td>{$v['consignee']}</td>
+              <td>{$v['province']}</td>
+              <td>{$v['city']}</td>
+              <td>{$v['area']}</td>
+              <td>{$v['addressinfo']}</td>
+              <td>{$v['zipcode']}</td>
+              <td>{$v['mobile']}</td>
+              <td></td>
+              <td class="nowrap last">
+              	{if $v['auditstatus']==1&&$v['used']==0}
+              	<a data-method="set_default" href="/index.php?m=member&c=index&a=address_default&address_id={$v['id']}" rel="nofollow">设置默认</a>
+              	{/if}
+              	<a href="/index.php?m=member&c=index&a=address_edit&address_id={$v['id']}">修改</a>
+              	<a onclick="return confirm('确定删除该收货地址么？');" data-method="delete" href="/index.php?m=member&c=index&a=address_delete&address_id={$v['id']}" rel="nofollow">删除</a>
+              </td>
+            </tr>
+            {/loop}
+
+          </tbody>
+        </table>
+      </div>
+      <div class="panel_footer">
+      <div class="common_button"><a href="/index.php?m=member&c=index&a=address_edit"> 添加国内收货地址</a></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        $(function() {
+          Address.init();
+        });
+    </script>
+  </div>
 </div>
-</div>
-</div>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".con_ul li").mouseenter(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+        }).mouseout(function() {
+            $(".active-jq").addClass("active ").siblings().removeClass("active");
+        });
+        $(".con_ul li").click(function(){
+            $(this).addClass("active-jq").siblings().removeClass("active-jq");
+        });
+    });
+
+</script>
 
 {template 'content', 'footer'}

@@ -1856,15 +1856,23 @@ class index extends foreground {
 		sendmail($_SESSION['email'], '邮箱找回密码验证', $message);
 		echo '1';
 	}
+
 	public function address_list() {
 		$memberinfo = $this->memberinfo;
 		$this->member_address_model = pc_base::load_model('member_address_model');
 		$this->overseas_address_model = pc_base::load_model('overseas_address_model');
 		
 		$overseas_address_list = $this->overseas_address_model->select();
+
+
+		foreach ($overseas_address_list as $key => $value) {
+		 	
+			$overseas_address_list[$key]['warehouse_code']='overseas_'.$value['id'];
+		}
 		$member_modelinfo_arr = $this->db->get_one(array('userid'=>$this->memberinfo['userid']));
 
 		$member_address_list = $this->member_address_model->select(array('member_id'=>$this->memberinfo['userid']));
+
 		include template('member', 'address_list');
 	}
 
@@ -1982,29 +1990,34 @@ class index extends foreground {
 		
 	}
 
-	public function public_address_default_ajax() {
-		$address_id = isset($info['address_id']) ? intval($info['address_id']): 0;
+	public function address_default() {
+		$address_id = isset($_GET['address_id']) ? intval($_GET['address_id']): 0;
 		$memberinfo = $this->memberinfo;
 		$this->member_address_model = pc_base::load_model('member_address_model');
 		$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
 
 		if (empty($member_address_info)) {
-			$return = array(
-				"code"=>"0",
-				"data"=>'',
-			);
+			showmessage("非法请求！",HTTP_REFERER,3000);
 		} else {
 			$this->member_address_model->update(array("used"=>0),array('member_id'=>$this->memberinfo['userid']));
 			$this->member_address_model->update(array("used"=>1),array('member_id'=>$this->memberinfo['userid'], 'id'=> $address_id));
-			$return = array(
-				"code"=>"1",
-				"data"=>''
-			);
+			showmessage(L('operation_success'),'?m=member&c=index&a=address_list');
 		}	
-		echo json_encode($return);
-		exit();
-
 	}
+	public function address_delete() {
+		$address_id = isset($_GET['address_id']) ? intval($_GET['address_id']): 0;
+		$memberinfo = $this->memberinfo;
+		$this->member_address_model = pc_base::load_model('member_address_model');
+		$member_address_info = $this->member_address_model->get_one(array('member_id'=>$this->memberinfo['userid'],'id'=> $address_id));
+
+		if (empty($member_address_info)) {
+			showmessage("非法请求！",HTTP_REFERER,3000);
+		} else {
+			$this->member_address_model->delete(array('member_id'=>$this->memberinfo['userid'], 'id'=> $address_id));
+			showmessage(L('operation_success'),'?m=member&c=index&a=address_list');
+		}	
+	}
+
 
 	public function public_province_ajax() {
 		$fname = isset($_GET['fname'])  ? trim($_GET['fname']): '' ;

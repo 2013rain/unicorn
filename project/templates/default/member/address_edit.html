@@ -12,12 +12,12 @@
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
  <!-- 头部 -->
- {template 'content', 'banner'} 
+ {template 'member', 'banner'} 
 <!-- 添加/编辑地址 -->
 <div id="content" style="margin-top:50px;">
 <div class="content_detail">
 <div class="common_panel">
-<div class="panel_header">添加国内收货地址</div>
+<div class="panel_header">{if $siteid>0}编辑{else}添加{/if}国内收货地址</div>
 <form accept-charset="UTF-8" action="/index.php?m=member&c=index&a=address_save" class="new_user_address" enctype="multipart/form-data" name="new_user_address" id="new_user_address" method="post" novalidate="novalidate">
   <div style="display:none">
     <input type="hidden" name="siteid" value="{$siteid}" />

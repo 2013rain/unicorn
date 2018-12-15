@@ -1,0 +1,41 @@
+    <!-- 头部 -->
+<header>
+    <div class="container">
+        <div class="con_top">
+            <p>
+                <span>欢迎来到橙子家！</span>
+                <img src="{IMG_PATH}w_erwu.png" alt="">
+                <span>400-000-000</span>
+                <img src="{IMG_PATH}1_i9qh.png" alt="">
+                <span>xx@163.com</span>
+                <span>{L('hellow')} {get_nickname()}<span>&nbsp;/&nbsp;<span>
+                <span><a href="/index.php?m=member&c=index&a=logout">{L('logout')}</a> </span>
+
+            </p>
+        </div>
+        <div class="con_center">
+            <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
+            <div class="wow fadeInLeft">
+                <p>橙子家海外物流转运</p>
+                <p>The Orange</p>
+            </div>
+            {php $siteinfo = siteinfo($this->memberinfo['siteid']);}
+            {php $this->menu_db = pc_base::load_model('member_menu_model');}
+            {php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 20 , 'listorder');}
+                <ul id="navBar" class="con_ul wow fadeInRight">
+                    <!--<li class="active active-jq"><a href="/index.php?">首页</a></li> -->
+                    <li ><a href="/?">首页</a></li>
+                    {loop $menu $k $v}
+
+                    <li>
+                        {if $v['isurl']}
+                            <a href="{$v['url']}" target="_blank"><span>{L($v['name'], '', 'member_menu')}</a>
+                        {else}
+                        <a href="index.php?m={$v['m']}&c={$v['c']}&a={$v['a']}&{$v['data']}" {if $k==$_GET['t']}class="on"{/if}>{L($v['name'], '', 'member_menu')}</a>
+                        {/if}
+                    </li>
+                    {/loop}
+                </ul>
+        </div>
+    </div>
+</header>
