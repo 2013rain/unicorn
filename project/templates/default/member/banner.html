@@ -15,7 +15,7 @@
         </div>
         <div class="con_center">
             <img class="wow fadeInLeft" src="{IMG_PATH}logo.ico" alt="" style="width: 5%;">
-            <div class="wow fadeInLeft">
+            <div class="wow fadeInLeft" onclick="location.href='/'">
                 <p>橙子家海外物流转运</p>
                 <p>The Orange</p>
             </div>
@@ -24,7 +24,6 @@
             {php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 20 , 'listorder');}
                 <ul id="navBar" class="con_ul wow fadeInRight">
                     <!--<li class="active active-jq"><a href="/index.php?">首页</a></li> -->
-                    <li ><a href="/?">首页</a></li>
                     {loop $menu $k $v}
 
                     <li>

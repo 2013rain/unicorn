@@ -1,9 +1,3 @@
-/*
-* @Author: Marte
-* @Date:   2018-11-25 10:53:38
-* @Last Modified by:   Marte
-* @Last Modified time: 2018-12-07 16:30:21
-*/
 
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
 body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
@@ -30,22 +24,18 @@ header {
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1200px;
+            min-width: 1000px;
             background-color: rgb(255, 109, 55);
+            box-sizing:border-box;
         }
         header .container .con_center {
             height: 85px;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
-            // background-color: transparent;
-            // background-color: rgb(66, 101, 167);
+            box-sizing:border-box;
 
         }
-        // header .container .con_center .con-inner {
-        //     width: 1200px;
-        //     margin:0 auto;
 
-        // }
         header .container .con_center div {
             display:inline-block;
             color:#fff;
@@ -70,7 +60,7 @@ header .container .con_top {
         }
         header .container .con_center ul li a {
             display: block;
-            padding:40px 35px 22px;
+            padding:40px 16px 22px;
             color:#fff;
             text-decoration:none;
         }
@@ -108,7 +98,7 @@ header .container .con_top {
         header .container .con_top p {
             position:relative;
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             line-height:37px;
             font-size:14px;
@@ -146,12 +136,12 @@ header .container .con_top {
         }
 
         footer{
-            min-width:1200px;
+            min-width:1000px;
             height: 275px;
             background-color: rgb(66, 101, 167);
         }
         footer .con{
-            width:1200px;
+            width:1000px;
             margin:0 auto;
         }
         footer .con ul {
@@ -161,7 +151,7 @@ header .container .con_top {
             float: left;
         }
         footer .con .l1{
-            width: 290px;
+            width: 240px;
             padding-top:20px;
             color:#fff;
             font-size:18px;
@@ -174,7 +164,7 @@ header .container .con_top {
             margin-right:5px;
         }
         footer .con .l2 {
-            width: 430px;
+            width: 290px;
             padding-top:20px;
             color:#fff;
         }
@@ -207,9 +197,6 @@ header .container .con_top {
         footer .con .l3 span:nth-child(2) {
             font-size:12px;
         }
-        // footer .con .l3 .p-li-first {
-        //     margin-bottom:20px;
-        // }
         footer .con .l3 .p-li {
             height:30px;
             font-size:12px;
@@ -221,7 +208,7 @@ header .container .con_top {
         }
         footer .footer-bottom {
             width:100%;
-            min-width:1200px;
+            min-width:1000px;
             height:30px;
             color:#fff;
             margin:0 auto;
@@ -242,27 +229,84 @@ header .container .con_top {
 
 
 
-
-
-
-// goods style
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 全部货物入库记录
+#content {
+    width: 100%;
+    min-width: 1200px;
+    color: #555555;
+    margin-top:50px;
+    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
+}
+#content .content_detail {
+    width: 1100px;
+    margin: 0 auto;
+    padding: 10px 50px 50px;
+    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
+    min-height: 400px;
+}
+#content .common_panel {
+    background: #ecf4fb;
+    border: 1px solid #afcdeb;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 35px;
+}
+#content .common_panel .panel_header {
+    height: 20px;
+    border-bottom: 1px solid #afcdeb;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+}
+#content .common_panel .panel_content {
+    background: #ffffff;
+    font-size: 12px;
+    overflow: hidden;
+}
+#content .common_list {
+    width: 100%;
+}
+#content .common_list thead {
+    background: #ecf4fb;
+}
+#content .common_list thead tr {
+    border-bottom: 1px solid #afcdeb;
+}
+#content .common_list thead tr th {
+    text-align: center;
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 8px 5px;
+    white-space: nowrap;
+}
+#content .common_list thead tr th.last {
+    border-right: 0;
+}
+#content .common_list tbody {
+    background: #ffffff;
+}
+#content .common_list tbody tr td.nowrap {
+    white-space: nowrap;
+}
+#content .common_list tbody tr td {
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    text-align: center;
+    padding: 8px 5px;
+}
+#content .common_list tbody tr td.last {
+    border-right: 0;
+}
+#content .common_list tbody tr.last td {
+    border-bottom: 0;
+}
+#content .common_panel .panel_content a {
+    color: #336699;
+}
+#content .pager_button {
+    overflow: hidden;
+    text-align: center;
+}

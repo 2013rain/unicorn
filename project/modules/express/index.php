@@ -52,12 +52,14 @@ class index extends foreground {
         $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
         $userid = $this->memberinfo['userid'];
 		if(isset($_POST['dosubmit'])) {
+
             if (isset($_POST['set_service']) && $_POST['set_service'] == 'service') {
                 $service = isset($_POST['service']) ? $_POST['service'] : [];
-                $service = $this->formatService($service);
-                if (!$service) {
-                    showmessage('服务非法操作', HTTP_REFERER);
-                }
+                //需要跟进ldm
+                // $service = $this->formatService($service);
+                // if (!$service) {
+                //     showmessage('服务非法操作', HTTP_REFERER);
+                // }
                 $express_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                 if (!$express_id) {
                     showmessage('非法订单', 'index.php?m=express&c=index');
@@ -66,6 +68,7 @@ class index extends foreground {
                     'id' => $express_id,
                 ];
                 $res = $this->db->get_one($where, 'userid,status');
+                
                 if (!$res || $res['userid'] != $userid || $res['status'] != 0) {
                     showmessage('非法操作', 'index.php?m=express&c=index');
                 }
@@ -79,12 +82,14 @@ class index extends foreground {
                 $res = $this->db->update($data, $where);
                 showmessage('入库成功', 'index.php?m=express&c=index&a=detail&id='.$express_id.'&t=3');
             } else {
+                
                 $store = isset($_POST['store']) ? intval($_POST['store']) : 0;
                 $company = isset($_POST['company']) ? trim($_POST['company']) : '';
-                $check = $this->checkStoreCompany($store, $company);
-                if (!$check['suc']) {
-                    showmessage($check['msg'], HTTP_REFERER);
-                }
+                //暂时注释，数据源头找一下ldm
+                // $check = $this->checkStoreCompany($store, $company);
+                // if (!$check['suc']) {
+                //     showmessage($check['msg'], HTTP_REFERER);
+                // }
                 $company = $check['data']['company_name'];
                 $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
                 if (!$expressno) {
@@ -94,17 +99,33 @@ class index extends foreground {
                 if (!$summary) {
                     showmessage('货物概述必填', HTTP_REFERER);
                 }
-                $express = isset($_POST['express']) ? $_POST['express'] : '';
+                // $express = isset($_POST['express']) ? $_POST['express'] : '';
+                //使用新界面，前端不太好弄
+
+                $express = isset($_POST['inbound']) ? $_POST['inbound'] : '';
                 if (!is_array($express)) {
+                    var_dump($_POST);
+                    var_dump($express);exit();
                     showmessage('非法操作', HTTP_REFERER);
                 }
+                $express=$express['inbound_items_attributes'];
+
                 $goods_sql = [];
                 $flag = true;
                 $time = time();
                 if (count($express) > 100) {
                     showmessage('物品添加不能超过100', HTTP_REFERER);
                 }
+                $this->goods_category_model = pc_base::load_model('goods_category_model');
                 foreach ($express as $val) {
+                    $lu_category_id = isset($val['lu_category_id']) ? intval($val['lu_category_id']) : '0';
+                    if ($lu_category_id>0) {
+                        $clild_cat = $this->goods_category_model->get_one(array('id'=>$lu_category_id));
+                        $cate_cat = $this->goods_category_model->get_one(array('id'=>$clild_cat['fid']));
+                        $val['category']=$cate_cat['cate_name'];
+                        $val['category_child']=$clild_cat['cate_name'];
+                    }
+
                     $name = isset($val['name']) ? trim($val['name']) : '';
                     if (!$name) {
                         $flag = false;
@@ -183,9 +204,57 @@ class index extends foreground {
                     showmessage('非法操作', 'index.php?m=express&c=index');
                 }
                 $service_info = pc_base::load_config('express_service');
+                $service_info = array(
+                    array('value'=>'1','name'=>'货物清点','desc'=>'清点包裹内件数量','price_desc'=>'price_desc','can_merge'),
+                    array('value'=>'2','name'=>'货物拍照','desc'=>'为您的货物拍照','price_desc'=>'price_desc','can_merge'),
+                    array('value'=>'3','name'=>'取出发票','desc'=>'为用户取出内件发票','price_desc'=>'price_desc','can_merge'),
+                );
                 include template('express', 'service');
             } else {
+                $this->overseas_address_model = pc_base::load_model('overseas_address_model');
+                $overseas_address_list = $this->overseas_address_model->select();
                 $stores = pc_base::load_config('express_store');
+                $stores = array();
+                foreach ($overseas_address_list as $key => $value) {
+                    $value['name']=$value['overseas_name'];
+                    $stores[]=$value;
+                }
+                $info = pc_base::load_config('express_store');
+                //仓库和仓库包含的公司对应关系，ldm需要提供下
+                $info['1']=array(array('id'=>'1','name'=>'SEO'),array('id'=>'2','name'=>'SEO2'));
+                $info['2']=array(array('id'=>'3','name'=>'SEO3'),array('id'=>'4','name'=>'SEO4'));
+                $expresses = json_encode($info);
+                unset($info);
+                //尺码
+                $this->goods_category_model = pc_base::load_model('goods_category_model');
+                $this->goods_category_attr_model = pc_base::load_model('goods_category_attr_model');
+                $goods_category = $this->goods_category_model->select(array('fid'=>0));
+                foreach($goods_category as $k=>&$val) {
+                    $child_category = $this->goods_category_model->select(array('fid'=>$val['id']));
+                    $val['name']=$val['cate_name'];
+                    $sub_categories=array();
+                    foreach($child_category as $k2=>$v2) {
+                        $child_attr = $this->goods_category_attr_model->select(array('cate_id'=>$v2['id']));
+                        $v2['name']=$v2['cate_name'];
+                        $attr_name = array_column($child_attr, 'attr_name');
+                        $model_selection_string = "型号||". implode(",,", $attr_name);
+                        if (count($attr_name)==0) {
+                            $model_selection_string="";
+                        }
+
+                        $v2['force_insurance_amount']='0.0';
+                        $v2['require_brand']=false;
+                        $v2['require_model']=false;
+                        $v2['model_selection_string']=$model_selection_string;
+                        $sub_categories[]=$v2;
+                    }
+                    $val['sub_categories']=$sub_categories;
+                }
+                unset($val);
+                $goods_category = json_encode($goods_category);
+
+
+
                 $cat_where = [
                     'fid' => 0,
                     'status' => 1,

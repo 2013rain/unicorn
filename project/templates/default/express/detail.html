@@ -1,116 +1,134 @@
-{template 'express', 'header'}
-<div id="memberArea">
-{template 'express', 'left'}
-<div class="col-auto">
-	<div class="col-1 ">
-		<h5 class="title">查看入库信息</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-		    <tbody>
-			<tr>
-			<td width="8%" align="center">入库仓库:{$express['storeid']}</td>
-            <td  width="20%" align="center">快递单号：{$express['expressno']}</td>
-			<td width="15%" align="center">货物数量：{$goods_num}</td>
-			<td width="15%" align="center">入库方式：{$express_mode}</td>
-			</tr>
-		    </tbody>
-		    </table>
-		</div>
-	</div>
-	</div>
-    <table width="100%" cellspacing="0" class="table_form">
-        <tr>
-            <th width="100">入库仓库</th> 
-            <td>{$express['storeid']}</td>
-        </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}detail.css">
 
-        <tr>
-            <th width="100">快递公司</th> 
-            <td>{$express['company']}</td>
-        </tr>                                                                                                                           
-        <tr>
-            <th width="100">快递编号</th> 
-            <td>{$express['expressno']}</td>
-        </tr>
-        <tr>
-            <th width="100"></font>货物概述</th> 
-        <td>{$express['detail']}</td>
-        </tr>
-        <tr>
-            <th width="100">入库重量</th> 
-            <td>{$express['weight']}</td>
-        </tr>
-</table>
-<div class="status">
-{if $express['status']}
-<div>提交入库({format::date($express['createtime'], 1)})</div>
-{/if}
-<div><a target="_blank" href="https://www.ups.com/WebTracking/track">点击这里去快递公司官网查询包裹信息</a></div>
-</div>
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+	
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
 
-
-	</div>
-	<div class="col-1 ">
-		<h5 class="title">快递单中货物信息</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-			<thead>
-			    <tr>
-			    <th width="8%">商品名称</th>
-			    <th width="20%">商品类别</th>
-			    <th width="15%">商品品牌</th>
-			    <th width="15%">商品型号</th>
-			    <th width="8%">商品单价</th>
-			    <th width="8%">商品数量</th>
-			    </tr>
-			</thead>
-		    <tbody>
-			{loop $goods $good}
-			<tr>
-			<td width="8%" align="center">{$good['goodsname']}</td>
-            <td  width="20%" align="center">{$good['pcategory']} - {$good['scategory']}</td>
-			<td width="15%" align="center">{$good['productname']}</td>
-			<td width="15%" align="center">{$good['goodsmodel']}</td>
-			<td width="8%" align="center">{$good['uprice']}</td>
-			<td width="8%" align="center">{$good['num']}</td>
-			</tr>
-			{/loop}
-		    </tbody>
-		    </table>
-		<div id="pages"> {$pages}</div>
-		</div>
-	</div>
-	</div>
-	</div>
-	<div class="col-1 ">
-		<h5 class="title">入库单增值服务</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table width="100%" cellspacing="0"  class="table-list">
-			<thead>
-			    <tr>
-			    <th width="8%">增值服务名称</th>
-			    <th width="20%">增值服务内容及完成情况</th>
-			    </tr>
-			</thead>
-		    <tbody>
-            {loop $service_arr $service}
-			<tr>
-			<td width="8%" align="center">{$service['name']}</td>
-			<td  width="20%" align="center">{$service['desc']}</td>
+<!-- 查看快递信息 -->
+<div id="content" style="margin-top: 50px;">
+  <div class="content_detail">
+    <div class="header_intro_panel">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div class="label">入库仓库：</div>
+              <div class="value">
+                {$express['storeid']}
+              </div>
+            </td>
+            <td>
+              <div class="label">快递单号：</div>
+              <div class="value">{$express['expressno']}</div>
+            </td>
+            <td>
+              <div class="label">货物数量：</div>
+              <div class="value">{$goods_num}</div>
+            </td>
+            <td class="status">
+              <div class="label">入库方式：</div>
+              <div class="value">{$express_mode}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail_info_panel">
+      <dl class="list_info">
+        <dd>
+          <div class="label">入库仓库</div>
+          <div class="value">{$express['storeid']}</div>
+        </dd>
+        <dd>
+          <div class="label">快递公司</div>
+          <div class="value">{$express['company']}</div>
+        </dd>
+        <dd>
+          <div class="label">快递单号</div>
+          <div class="value">{$express['expressno']}</div>
+        </dd>
+        <dd>
+          <div class="label">货物概述</div>
+          <div class="value">{$express['detail']}</div>
+        </dd>
+        <dd>
+          <div class="label">入库重量</div>
+          <div class="value">{$express['weight']}</div>
+        </dd>
+      </dl>
+      {if $express['status']}
+      <dl class="chart_info" express_id="other" express_number="12344566AAAA">
+        <dd class="one">提交入库&nbsp;<em>({format::date($express['createtime'], 1)})</em></dd>
+      </dl>
+      {/if}
+    </div>
+    <div class="common_panel">
+      <div class="panel_header">快递单中货物信息</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="35%">商品名称</th>
+              <th width="20%">商品类别</th>
+              <th width="10%">商品品牌</th>
+              <th width="10%">商品型号</th>
+              <th width="15%">商品单价</th>
+              <th width="10%" class="last">商品数量</th>
+            </tr>
+          </thead>
+          <tbody>
+          	{loop $goods $good}
+            <tr class="last">
+            	<td >{$good['goodsname']}</td>
+            <td  >{$good['pcategory']} - {$good['scategory']}</td>
+			<td>{$good['productname']}</td>
+			<td >{$good['goodsmodel']}</td>
+			<td>{$good['uprice']}</td>
+			<td class="last">{$good['num']}</td>
             </tr>
             {/loop}
-		    </tbody>
-		    </table>
-		</div>
-	</div>
-	</div>
-	</div>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="common_panel">
+      <div class="panel_header">入库单增值服务</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+              <tr>
+                <th width="20%">增值服务名称</th>
+                <th class="last">增值服务内容及完成情况</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{loop $service_arr $service}
+              <tr class="last">
+                <td>{$service['name']}</td>
+                <td class="last">{$service['desc']}</td>
+              </tr>
+              {/loop}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="common_panel">
+      <div class="panel_header">备注信息</div>
+      <div class="panel_content"><div class="text">{$express['user_remark']}</div></div>
+    </div>
+  </div>
 </div>
-<div class="clear"></div>
+<!-- 查看快递信息 -->
+
+
 {template 'member', 'footer'}

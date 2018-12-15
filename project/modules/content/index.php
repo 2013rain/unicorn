@@ -218,6 +218,7 @@ class index {
 
 		if(!$catid) showmessage(L('category_not_exists'),'blank');
 		$siteids = getcache('category_content','commons');
+
 		$siteid = $siteids[$catid];
 		$CATEGORYS = getcache('category_content_'.$siteid,'commons');
 		if(!isset($CATEGORYS[$catid])) showmessage(L('category_not_exists'),'blank');
@@ -233,7 +234,7 @@ class index {
 
 		$template = $setting['category_template'] ? $setting['category_template'] : 'category';
 		$template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
-		
+
 		if($type==0) {
 			$template = $child ? $template : $template_list;
 			$arrparentid = explode(',', $arrparentid);
@@ -275,6 +276,7 @@ class index {
 			array_shift($arrchild_arr);
 			$keywords = $keywords ? $keywords : $setting['meta_keywords'];
 			$SEO = seo($siteid, 0, $title,$setting['meta_description'],$keywords);
+
 			include template('content',$template);
 		}
 	}
