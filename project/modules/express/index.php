@@ -35,6 +35,7 @@ class index extends foreground {
         $list_in_store = [];
         $list_out_store = [];
 		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time');
+        $store = self::$store;
         foreach ($lists as $val) {
             if ($val['status'] == 0 || $val['status'] == 1) {
                 $list_wait[] = $val;
@@ -147,6 +148,9 @@ class index extends foreground {
                 }
                 if (!$flag) {
                     showmessage('物品栏不能留空', HTTP_REFERER);
+                }
+                if (!$goods_sql) {
+                    showmessage('物品不能为空', HTTP_REFERER);
                 }
                 $express_sql = [
                     'userid' => $userid,
@@ -471,43 +475,6 @@ class index extends foreground {
                 if ($summary != $info['detail']) {
                     $express_data['detail'] = $summary;
                 }
-                if ($express_data) {
-                    $express_data['updatetime'] = time();
-                    $res = $this->db->update($express_data,['id'=>$id]);
-                    if (!$res) {
-                        showmessage('快递单号被占用', HTTP_REFERER);
-                    }
-                }
-                if ($del_goods_id || isset($express_data['expressno'])) {
-                    $where = [
-                        'userid' => $userid,
-                        'expressno' => $info['expressno'],
-                        ];
-                    $goods = $this->goods_db->select($where,'id');
-                    $goods_ids = [];
-                    foreach ($goods as $val) {
-                        $goods_ids[] = $val['id'];
-                    }
-                    $remain_goods_ids = $goods_ids;
-                    if ($del_goods_id) {
-                        $diff = array_diff($del_goods_id, $goods_ids);
-                        $remain_goods_ids = array_diff($goods_ids, $del_goods_id);
-                        if ($diff) {
-                            showmessage('非法操作', HTTP_REFERER);
-                        }
-                        $ids = implode(',', $del_goods_id);
-                        $where = "id in ($ids)";
-                        $res = $this->goods_db->delete($where);
-                    }
-                    if (isset($express_data['expressno']) && $remain_goods_ids) {
-                        $ids = implode(',', $remain_goods_ids);
-                        $where = "id in ($ids)";
-                        $data = [
-                            'expressno' => $express_data['expressno']
-                            ];
-                        $res = $this->goods_db->update($data,$where);
-                    }
-                }
                 $express = isset($_POST['express']) ? $_POST['express'] : '';
                 $goods_sql = [];
                 if (is_array($express)) {
@@ -559,15 +526,58 @@ class index extends foreground {
                         showmessage('物品栏不能留空', HTTP_REFERER);
                     }
                 }
-                if ($del_goods_id && empty($remain_goods_ids)) {
-                    showmessage('物品栏不能为空', HTTP_REFERER);
+                $check_del_flag = true;
+                $remain_goods_ids = [];
+                if ($del_goods_id || isset($express_data['expressno'])) {
+                    $where = [
+                        'userid' => $userid,
+                        'expressno' => $info['expressno'],
+                        ];
+                    $goods = $this->goods_db->select($where,'id');
+                    $goods_ids = [];
+                    foreach ($goods as $val) {
+                        $goods_ids[] = $val['id'];
+                    }
+                    $remain_goods_ids = $goods_ids;
+                    if ($del_goods_id) {
+                        $diff = array_diff($del_goods_id, $goods_ids);
+                        $remain_goods_ids = array_diff($goods_ids, $del_goods_id);
+                        if ($diff) {
+                            $check_del_flag = false;
+                        }
+                    }
+                }
+                if (!$check_del_flag) {
+                    showmessage('非法操作', HTTP_REFERER);
+                }
+                if ($del_goods_id && empty($remain_goods_ids) && empty($goods_sql)) {
+                    showmessage('物品不能为空', HTTP_REFERER);
+                }
+                if ($express_data) {
+                    $express_data['updatetime'] = time();
+                    $res = $this->db->update($express_data,['id'=>$id]);
+                    if (!$res) {
+                        showmessage('快递单号被占用', HTTP_REFERER);
+                    }
+                }
+                if ($del_goods_id) {
+                    $ids = implode(',', $del_goods_id);
+                    $where = "id in ($ids)";
+                    $res = $this->goods_db->delete($where);
+                }
+                if (isset($express_data['expressno']) && $remain_goods_ids) {
+                    $ids = implode(',', $remain_goods_ids);
+                    $where = "id in ($ids)";
+                    $data = [
+                        'expressno' => $express_data['expressno']
+                        ];
+                    $res = $this->goods_db->update($data,$where);
                 }
                 foreach ($goods_sql as $sql) {
                     $res = $this->goods_db->insert($sql);
                 }
                 showmessage('保存成功', 'index.php?m=express&c=index&a=edit&id='.$id.'&show_service=1&t=3');
             }
-            
         } else {
             $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
             if ($show_service == 1) {
