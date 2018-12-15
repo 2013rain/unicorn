@@ -21,10 +21,10 @@
 			{loop $list_wait $info}
 			<tr>
 			<td width="8%" align="center">{$info['storeid']}</td>
-            <td  width="20%" align="center"><a style="color:blue" target="blank" href="index.php?m=express&c=index&a=detail&id={$info['id']}&t=3">{$info['expressno']}</a></td>
+            <td  width="20%" align="center"><a style="color:blue" target="_blank" href="index.php?m=express&c=index&a=detail&id={$info['id']}&t=3">{$info['expressno']}</a></td>
 			<td width="15%" align="center">{$info['detail']}</td>
 			<td width="15%" align="center">{format::date($info['createtime'], 1)}</td>
-            <td width="8%" align="center">{if $info['status']==0}<a style="" target="blank" href="index.php?m=express&c=index&a=edit&id={$info['id']}&t=3">完善信息</a>{/if} &nbsp;&nbsp;<a href="index.php?m=express&c=index&a=delete&id={$info['id']}&t=3">删除</a></td>
+            <td width="8%" align="center">{if $info['status']==0}<a style="" href="index.php?m=express&c=index&a=edit&id={$info['id']}&t=3">完善信息</a>{/if} &nbsp;&nbsp;<a href="index.php?m=express&c=index&a=delete&id={$info['id']}&t=3">删除</a></td>
 			</tr>
 			{/loop}
 		    </tbody>

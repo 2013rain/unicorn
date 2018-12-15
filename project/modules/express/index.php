@@ -100,7 +100,9 @@ class index extends foreground {
                 $goods_sql = [];
                 $flag = true;
                 $time = time();
-                $flag = true;
+                if (count($express) > 100) {
+                    showmessage('物品添加不能超过100', HTTP_REFERER);
+                }
                 foreach ($express as $val) {
                     $name = isset($val['name']) ? trim($val['name']) : '';
                     if (!$name) {
@@ -161,7 +163,7 @@ class index extends foreground {
                 foreach ($goods_sql as $sql) {
                     $res = $this->goods_db->insert($sql);
                 }
-                showmessage('', 'index.php?m=express&c=index&a=in_storage&id='.$express_insert_id.'&show_service=1&t=3', 0);
+                showmessage('保存成功', 'index.php?m=express&c=index&a=in_storage&id='.$express_insert_id.'&show_service=1&t=3');
             }
 		} else {
             if ($show_service == 1) {
@@ -389,6 +391,199 @@ class index extends foreground {
         }
         //$res = $this->db->delete($where);
         showmessage('删除成功', HTTP_REFERER);
+    }
+
+    function edit() {
+        $userid = $this->memberinfo['userid'];
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        if (!$id) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        $where = [
+            'id' => $id
+        ];
+        $info = $this->db->get_one($where, 'id,userid,storeid,expressno,company,detail,status');
+        if (!$info) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        if ($info['userid'] != $userid || $info['status'] != 0) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+		if(isset($_POST['dosubmit'])) {
+            if (isset($_POST['set_service']) && $_POST['set_service'] == 'service') {
+                $service = isset($_POST['service']) ? $_POST['service'] : [];
+                $service = $this->formatService($service);
+                if (!$service) {
+                    showmessage('非法操作', HTTP_REFERER);
+                }
+                $where = [
+                    'id' => $id,
+                ];
+                $user_remark = isset($_POST['remark']) ? trim($_POST['remark']) : '';
+                $data = [];
+                $data['status'] = 1;
+                $data['service'] = $service;
+                if ($user_remark) {
+                    $data['user_remark'] = $user_remark;
+                }
+                $res = $this->db->update($data, $where);
+                showmessage('入库成功', 'index.php?m=express&c=index&a=detail&id='.$id.'&t=3');
+            } else {
+                $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
+                if (!$expressno) {
+                    showmessage('快递单号必填', HTTP_REFERER);
+                }
+                $company = isset($_POST['company']) ? intval($_POST['company']) : 0;
+                $check = $this->checkStoreCompany($info['storeid'], $company);
+                if (!$check['suc']) {
+                    showmessage($check['msg'], HTTP_REFERER);
+                }
+                $company = $check['data']['company_name'];
+                $summary = isset($_POST['summary']) ? trim($_POST['summary']) : '';
+                if (!$summary) {
+                    showmessage('货物概述必填', HTTP_REFERER);
+                }
+                $del_goods = isset($_POST['del_goods']) ? $_POST['del_goods'] : [];
+                if (!is_array($del_goods)) {
+                    showmessage('非法操作', HTTP_REFERER);
+                }
+                $del_goods_id = [];
+                $del_flag = true;
+                foreach ($del_goods as $val) {
+                    $id = intval($val);
+                    if (!$id) {
+                        $del_flag = false;
+                        break;
+                    } else {
+                        $del_goods_id[] = $id;
+                    }
+                }
+                if (!$del_flag) {
+                    showmessage('非法操作', HTTP_REFERER);
+                }
+                $express_data = [];
+                if ($expressno != $info['expressno']) {
+                    $express_data['expressno'] = $expressno;
+                }
+                if ($company != $info['company']) {
+                    $express_data['company'] = $company;
+                }
+                if ($summary != $info['detail']) {
+                    $express_data['detail'] = $summary;
+                }
+                if ($express_data) {
+                    $express_data['updatetime'] = time();
+                    $res = $this->db->update($express_data,['id'=>$id]);
+                    if (!$res) {
+                        showmessage('快递单号被占用', HTTP_REFERER);
+                    }
+                }
+                if ($del_goods_id || isset($express_data['expressno'])) {
+                    $where = [
+                        'userid' => $userid,
+                        'expressno' => $info['expressno'],
+                        ];
+                    $goods = $this->goods_db->select($where,'id');
+                    $goods_ids = [];
+                    foreach ($goods as $val) {
+                        $goods_ids[] = $val['id'];
+                    }
+                    $remain_goods_ids = $goods_ids;
+                    if ($del_goods_id) {
+                        $diff = array_diff($del_goods_id, $goods_ids);
+                        $remain_goods_ids = array_diff($goods_ids, $del_goods_id);
+                        if ($diff) {
+                            showmessage('非法操作', HTTP_REFERER);
+                        }
+                        $ids = implode(',', $del_goods_id);
+                        $where = "id in ($ids)";
+                        $res = $this->goods_db->delete($where);
+                    }
+                    if (isset($express_data['expressno']) && $remain_goods_ids) {
+                        $ids = implode(',', $remain_goods_ids);
+                        $where = "id in ($ids)";
+                        $data = [
+                            'expressno' => $express_data['expressno']
+                            ];
+                        $res = $this->goods_db->update($data,$where);
+                    }
+                }
+                $express = isset($_POST['express']) ? $_POST['express'] : '';
+                $goods_sql = [];
+                if (is_array($express)) {
+                    $flag = true;
+                    $time = time();
+                    foreach ($express as $val) {
+                        $name = isset($val['name']) ? trim($val['name']) : '';
+                        if (!$name) {
+                            $flag = false;
+                        }
+                        $category = isset($val['category']) ? trim($val['category']) : '';
+                        if (!$category) {
+                            $flag = false;
+                        }
+                        $category_child = isset($val['category_child']) ? trim($val['category_child']) : '';
+                        if (!$category_child) {
+                            $flag = false;
+                        }
+                        $brand = isset($val['brand']) ? trim($val['brand']) : '';
+                        if (!$brand) {
+                            $flag = false;
+                        }
+                        $model = isset($val['model']) ? trim($val['model']) : '';
+                        if (!$model) {
+                            $flag = false;
+                        }
+                        $dollar = isset($val['dollar']) ? floatval($val['dollar']) : 0;
+                        if ($dollar <= 0) {
+                            $flag = false;
+                        }
+                        $num = isset($val['num']) ? intval($val['num']) : 0;
+                        if ($num <= 0) {
+                            $flag = false;
+                        }
+                        $goods_sql[] = [
+                            'userid' => $userid,
+                            'expressno' => $expressno,
+                            'goodsname' => $name,
+                            'pcategory' => $category,
+                            'scategory' => $category_child,
+                            'productname' => $brand,
+                            'goodsmodel' => $model,
+                            'uprice' => $dollar,
+                            'num' => $num,
+                            'createtime' => $time
+                            ];
+                    }
+                    if (!$flag) {
+                        showmessage('物品栏不能留空', HTTP_REFERER);
+                    }
+                }
+                if ($del_goods_id && empty($remain_goods_ids)) {
+                    showmessage('物品栏不能为空', HTTP_REFERER);
+                }
+                foreach ($goods_sql as $sql) {
+                    $res = $this->goods_db->insert($sql);
+                }
+                showmessage('保存成功', 'index.php?m=express&c=index&a=edit&id='.$id.'&show_service=1&t=3');
+            }
+            
+        } else {
+            $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
+            if ($show_service == 1) {
+                $service_info = pc_base::load_config('express_service');
+                include template('express', 'edit_service');
+            } else {
+                $store = self::$store[$info['storeid']];
+                $where = [
+                    'userid' => $userid,
+                    'expressno' => $info['expressno'],
+                    ];
+                $goods = $this->goods_db->select($where);
+                include template('express','edit');
+            }
+        }
+
     }
 
 
