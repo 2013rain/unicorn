@@ -1,5 +1,5 @@
     <!-- 头部 -->
-    
+
 <header>
     <div class="container">
         <div class="con_top">
@@ -21,12 +21,12 @@
             {if count($CATEGORYS)>0}
                 <ul id="navBar" class="con_ul wow fadeInRight">
                     <!--<li class="active active-jq"><a href="/index.php?">首页</a></li> -->
-                    <li ><a href="/?">首页</a></li>
+                    <li class="active active-jq" ><a href="/?">首页</a></li>
                     {loop $CATEGORYS $cate}
                     {if $cate['ismenu']=='1' && $cate['parentid']=='1'}
                     <li><a href="{$cate['url']}">{$cate['catname']}</a></li>
                     {/if}
-                    {/loop}    
+                    {/loop}
                 </ul>
             {/if}
         </div>
