@@ -226,19 +226,17 @@ header .container .con_top {
         }
 
 
-// 用户注册
+// 用户登录
 
 #content {
     width: 100%;
     min-width: 1200px;
     color: #555555;
-    // background: url(../images/content_bgs-1.png) repeat-y center top #f4f4f4;
 }
 #content .content_detail {
     width: 1100px;
     margin: 0 auto;
     padding: 50px 50px 50px;
-    // background: url(../images/content_detail_bgs.png) no-repeat 0px bottom;
     min-height: 200px;
     font-size: 12px;
     font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
@@ -312,3 +310,4 @@ header .container .con_top {
     text-shadow: #666666 1px 1px 1px;
     FILTER: Shadow(Color=#666, Direction=90, Strength=1);
 }
+#code_img { vertical-align: middle; }
