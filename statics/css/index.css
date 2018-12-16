@@ -250,7 +250,7 @@ header .container .con_top {
         }
         #wrapper .wrapper_con {
             // width:100%;
-            min-width:1200px;
+            min-width:1000px;
             margin:0 auto;
         }
 
@@ -316,7 +316,7 @@ header .container .con_top {
             margin:0 auto;
         }
         #wrapper .ban-center .con {
-            width:1200px;
+            width:1000px;
             margin:0 auto;
         }
         #wrapper .ban-center .con p {
@@ -362,7 +362,7 @@ header .container .con_top {
 
 
         .section_1 {
-            min-width:1200px;
+            min-width:1000px;
         }
         .section_1>p:nth-child(1) {
             font-family: 'Microsoft YaHei';
@@ -497,7 +497,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -524,7 +524,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_2 .con {
-            width:1200px;
+            width:1000px;
             margin:88px auto 0;
         }
         .section_2 .con div {
@@ -612,7 +612,7 @@ header .container .con_top {
 
 
         .section_4 {
-            min-width: 1200px;
+            min-width: 1000px;
             height: 890px;
         }
 
@@ -625,7 +625,7 @@ header .container .con_top {
             text-align:center;
             position
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             padding-top:40px;
             position:relative;
@@ -652,7 +652,7 @@ header .container .con_top {
             margin:16px auto 50px;
         }
         .section_4 .con ul {
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
         }
         .section_4 .con ul>li {
@@ -790,7 +790,7 @@ header .container .con_top {
 
 
         .section_5 {
-            min-width: 1200px;
+            min-width: 1000px;
             height: 455px;
             background-color: transparent;
             background: url(../images/logistics-233_45.jpg) no-repeat;
@@ -799,7 +799,7 @@ header .container .con_top {
 
 
         .section_7 {
-            min-width: 1200px;
+            min-width: 1000px;
             height: 478px;
             background-color: rgb(255, 109, 55);
         }
