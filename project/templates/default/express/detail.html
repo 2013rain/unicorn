@@ -24,7 +24,7 @@
             <td>
               <div class="label">入库仓库：</div>
               <div class="value">
-                {$express['storeid']}
+                {$store[$express['storeid']]['name']}
               </div>
             </td>
             <td>
@@ -47,7 +47,7 @@
       <dl class="list_info">
         <dd>
           <div class="label">入库仓库</div>
-          <div class="value">{$express['storeid']}</div>
+          <div class="value">{$store[$express['storeid']]['name']}</div>
         </dd>
         <dd>
           <div class="label">快递公司</div>

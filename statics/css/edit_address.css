@@ -24,12 +24,12 @@ header {
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1200px;
+            min-width: 1000px;
             background-color: rgb(255, 109, 55);
         }
         header .container .con_center {
             height: 85px;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
 
         }
@@ -96,7 +96,7 @@ header .container .con_top {
         header .container .con_top p {
             position:relative;
             display:block;
-            width: 1200px;
+            width: 1000px;
             margin:0 auto;
             line-height:37px;
             font-size:14px;
@@ -134,12 +134,12 @@ header .container .con_top {
         }
 
         footer{
-            min-width:1200px;
+            min-width:1000px;
             height: 275px;
             background-color: rgb(66, 101, 167);
         }
         footer .con{
-            width:1200px;
+            width:1000px;
             margin:0 auto;
         }
         footer .con ul {
@@ -206,7 +206,7 @@ header .container .con_top {
         }
         footer .footer-bottom {
             width:100%;
-            min-width:1200px;
+            min-width:1000px;
             height:30px;
             color:#fff;
             margin:0 auto;
@@ -229,7 +229,7 @@ header .container .con_top {
 // 添加/编辑地址
 #content {
     width: 100%;
-    min-width: 1200px;
+    min-width: 1000px;
     color: #555555;
     margin-top:40px;
     // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;

@@ -23,7 +23,7 @@
       {else}
       {loop $list_wait $info}
       <tr>
-        <td>{$info['storeid']}</td>
+        <td>{$store[$info['storeid']]['name']}</td>
         <td><a style="color:blue"  href="index.php?m=express&c=index&a=detail&id={$info['id']}&t=3">{$info['expressno']}</a>
         </td>
         <td>{$info['detail']}</td>
@@ -84,7 +84,7 @@
       {else}
       {loop $list_in_store $info}
       <tr>
-        <td>{$info['storeid']}</td>
+        <td>{$store[$info['storeid']]['name']}</td>
         <td><a style="color:blue"  href="index.php?m=express&c=index&a=detail&id={$info['id']}&t=3">{$info['expressno']}</a>
         </td>
         <td>{$info['detail']}</td>
@@ -127,7 +127,7 @@
       {else}
       {loop $list_out_store $info}
       <tr>
-        <td>{$info['storeid']}</td>
+        <td>{$store[$info['storeid']]['name']}</td>
         <td>{$info['expressno']}</td>
         <td>{$info['detail']}</td>
         <td>{format::date($info['in_store_time'], 1)}</td>

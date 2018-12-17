@@ -13,6 +13,7 @@ class index extends foreground {
     public static $store;
 	function __construct() {
 		parent::__construct();
+
 		$this->db = pc_base::load_model('member_express_model');
 		$this->goods_db = pc_base::load_model('member_express_goods_model');
         $this->category_db = pc_base::load_model('goods_category_model');
@@ -55,11 +56,11 @@ class index extends foreground {
 
             if (isset($_POST['set_service']) && $_POST['set_service'] == 'service') {
                 $service = isset($_POST['service']) ? $_POST['service'] : [];
-                //需要跟进ldm
-                // $service = $this->formatService($service);
-                // if (!$service) {
-                //     showmessage('服务非法操作', HTTP_REFERER);
-                // }
+                
+                $service = $this->formatService($service);
+                if (!$service) {
+                    showmessage('服务非法操作', HTTP_REFERER);
+                }
                 $express_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                 if (!$express_id) {
                     showmessage('非法订单', 'index.php?m=express&c=index');
@@ -86,15 +87,20 @@ class index extends foreground {
                 $store = isset($_POST['store']) ? intval($_POST['store']) : 0;
                 $company = isset($_POST['company']) ? trim($_POST['company']) : '';
                 //暂时注释，数据源头找一下ldm
-                // $check = $this->checkStoreCompany($store, $company);
-                // if (!$check['suc']) {
-                //     showmessage($check['msg'], HTTP_REFERER);
-                // }
+                $check = $this->checkStoreCompany($store, $company);
+                if (!$check['suc']) {
+                    showmessage($check['msg'], HTTP_REFERER);
+                }
                 $company = $check['data']['company_name'];
                 $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
                 if (!$expressno) {
                     showmessage('快递单号必填', HTTP_REFERER);
                 }
+                $row = $this->db->get_one(array('expressno'=>$expressno));
+                if (!empty($row)) {
+                    showmessage('快递单号已被使用', HTTP_REFERER);
+                }
+
                 $summary = isset($_POST['summary']) ? trim($_POST['summary']) : '';
                 if (!$summary) {
                     showmessage('货物概述必填', HTTP_REFERER);
@@ -104,8 +110,7 @@ class index extends foreground {
 
                 $express = isset($_POST['inbound']) ? $_POST['inbound'] : '';
                 if (!is_array($express)) {
-                    var_dump($_POST);
-                    var_dump($express);exit();
+
                     showmessage('非法操作', HTTP_REFERER);
                 }
                 $express=$express['inbound_items_attributes'];
@@ -204,27 +209,26 @@ class index extends foreground {
                     showmessage('非法操作', 'index.php?m=express&c=index');
                 }
                 $service_info = pc_base::load_config('express_service');
-                $service_info = array(
-                    array('value'=>'1','name'=>'货物清点','desc'=>'清点包裹内件数量','price_desc'=>'price_desc','can_merge'),
-                    array('value'=>'2','name'=>'货物拍照','desc'=>'为您的货物拍照','price_desc'=>'price_desc','can_merge'),
-                    array('value'=>'3','name'=>'取出发票','desc'=>'为用户取出内件发票','price_desc'=>'price_desc','can_merge'),
-                );
+                // $service_info = array(
+                //     array('value'=>'1','name'=>'货物清点','desc'=>'清点包裹内件数量','price_desc'=>'price_desc','can_merge'),
+                //     array('value'=>'2','name'=>'货物拍照','desc'=>'为您的货物拍照','price_desc'=>'price_desc','can_merge'),
+                //     array('value'=>'3','name'=>'取出发票','desc'=>'为用户取出内件发票','price_desc'=>'price_desc','can_merge'),
+                // );
                 include template('express', 'service');
             } else {
-                $this->overseas_address_model = pc_base::load_model('overseas_address_model');
-                $overseas_address_list = $this->overseas_address_model->select();
+               
                 $stores = pc_base::load_config('express_store');
-                $stores = array();
-                foreach ($overseas_address_list as $key => $value) {
-                    $value['name']=$value['overseas_name'];
-                    $stores[]=$value;
+                if (count($stores)>4) {
+                    $stores = array_slice($stores, 0,4);
                 }
-                $info = pc_base::load_config('express_store');
-                //仓库和仓库包含的公司对应关系，ldm需要提供下
-                $info['1']=array(array('id'=>'1','name'=>'SEO'),array('id'=>'2','name'=>'SEO2'));
-                $info['2']=array(array('id'=>'3','name'=>'SEO3'),array('id'=>'4','name'=>'SEO4'));
-                $expresses = json_encode($info);
-                unset($info);
+                $express = array();
+                foreach ($stores as $key => $va) {
+                    $express[$va['id']]=$va['company'];
+
+                }
+              
+                $expresses = json_encode($express);
+
                 //尺码
                 $this->goods_category_model = pc_base::load_model('goods_category_model');
                 $this->goods_category_attr_model = pc_base::load_model('goods_category_attr_model');
@@ -309,6 +313,7 @@ class index extends foreground {
         if (!$express_id) {
             showmessage('非法订单', 'index.php?m=express&c=index');
         }
+        $store = self::$store;
         $where = [
             'id' => $express_id,
         ];
@@ -659,6 +664,53 @@ class index extends foreground {
                     'expressno' => $info['expressno'],
                     ];
                 $goods = $this->goods_db->select($where);
+
+                $stores = pc_base::load_config('express_store');
+                if (count($stores)>4) {
+                    $stores = array_slice($stores, 0,4);
+                }
+                $express = array();
+                foreach ($stores as $key => $va) {
+                    $express[$va['id']]=$va['company'];
+
+                }
+              
+                $expresses = json_encode($express);
+                //尺码
+                $this->goods_category_model = pc_base::load_model('goods_category_model');
+                $this->goods_category_attr_model = pc_base::load_model('goods_category_attr_model');
+                $categorys = $this->goods_category_model->select(array('fid'=>0));
+                
+
+                foreach($categorys as $k=>&$val) {
+                    $child_category = $this->goods_category_model->select(array('fid'=>$val['id']));
+                    $val['name']=$val['cate_name'];
+                    $sub_categories=array();
+                    foreach($child_category as $k2=>$v2) {
+                        $child_attr = $this->goods_category_attr_model->select(array('cate_id'=>$v2['id']));
+                        $v2['name']=$v2['cate_name'];
+                        $attr_name = array_column($child_attr, 'attr_name');
+                        $model_selection_string = "型号||". implode(",,", $attr_name);
+                        if (count($attr_name)==0) {
+                            $model_selection_string="";
+                        }
+
+                        $v2['force_insurance_amount']='0.0';
+                        $v2['require_brand']=false;
+                        $v2['require_model']=false;
+                        $v2['model_selection_string']=$model_selection_string;
+                        $sub_categories[]=$v2;
+                    }
+                    $val['sub_categories']=$sub_categories;
+                }
+                unset($val);
+                
+                $goods_category = json_encode($categorys);
+                foreach ($goods as $key => $v) {
+                    $one_cate = $this->goods_category_model->get_one(array('cate_name'=>$v['scategory']));
+                    $goods[$ke]['lu_category_id']=@$one_cate['id'];
+                }
+
                 include template('express','edit');
             }
         }
