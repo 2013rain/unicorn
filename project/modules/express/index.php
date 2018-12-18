@@ -499,7 +499,7 @@ class index extends foreground {
                 $service = isset($_POST['service']) ? $_POST['service'] : [];
                 $service = $this->formatService($service);
                 if (!$service) {
-                    showmessage('非法操作', HTTP_REFERER);
+                    showmessage('非法操作', 'index.php?m=express&c=index&a=init');
                 }
                 $where = [
                     'id' => $id,
