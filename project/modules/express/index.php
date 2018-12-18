@@ -11,6 +11,7 @@ pc_base::load_app_func('global');
 class index extends foreground {
 	public $db, $goods_db, $category_db, $goods_attr_db;
     public static $store;
+    private static $service;
 	function __construct() {
 		parent::__construct();
 
@@ -22,6 +23,12 @@ class index extends foreground {
             $info = pc_base::load_config('express_store');
             foreach ($info as $val) {
                 self::$store[$val['id']] = $val;
+            }
+        }
+        if (!self::$service) {
+            $info = pc_base::load_config('express_service');
+            foreach ($info as $val) {
+                self::$service[$val['value']] = $val;
             }
         }
 	}
@@ -208,7 +215,7 @@ class index extends foreground {
                 if (!$res || $res['userid'] != $userid || $res['status'] != 0) {
                     showmessage('非法操作', 'index.php?m=express&c=index');
                 }
-                $service_info = pc_base::load_config('express_service');
+                $service_info = self::$service;
                 // $service_info = array(
                 //     array('value'=>'1','name'=>'货物清点','desc'=>'清点包裹内件数量','price_desc'=>'price_desc','can_merge'),
                 //     array('value'=>'2','name'=>'货物拍照','desc'=>'为您的货物拍照','price_desc'=>'price_desc','can_merge'),
@@ -274,7 +281,7 @@ class index extends foreground {
             return '00000000';
         }
         $origin = '00000000';
-        $infos = pc_base::load_config('express_service');
+        $infos = self::$service;
         $can_not_merge_service = [];
         $can_merge_service = [];
         foreach ($infos as $val) {
@@ -351,10 +358,10 @@ class index extends foreground {
     private function decodeService($serviceStr) {
         $res = [];
         $len = strlen($serviceStr);
-        $services = pc_base::load_config('express_service');
         for ($i = 0; $i < $len; $i++) {
-            if ($serviceStr[$i] == '1' && isset($services[$i])) {
-                $res[] = $services[$i];
+            $index = $i + 1;
+            if ($serviceStr[$i] == '1' && isset(self::$service[$index])) {
+                $res[] = self::$service[$index];
             }
         }
         return $res;
@@ -467,7 +474,7 @@ class index extends foreground {
         if ($res['userid'] != $userid || !in_array($res['status'], [0,1])) {
             showmessage('非法操作', HTTP_REFERER);
         }
-        //$res = $this->db->delete($where);
+        $res = $this->db->delete($where);
         showmessage('删除成功', HTTP_REFERER);
     }
 
@@ -655,7 +662,7 @@ class index extends foreground {
         } else {
             $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
             if ($show_service == 1) {
-                $service_info = pc_base::load_config('express_service');
+                $service_info = self::$service;
                 include template('express', 'edit_service');
             } else {
                 $store = self::$store[$info['storeid']];
