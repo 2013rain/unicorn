@@ -10,22 +10,27 @@
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
+<style type="text/css">
+  body { background-image:url('{IMG_PATH}/aa.jpg'); background-size:cover; }
+</style>
  <!-- 头部 -->
- {template 'content', 'banner'}
+ <body>
+
 <!-- 登录表单 -->
-<div id="content">
+<div id="content" style="margin-top: 100px;">
 <div class="content_detail">
 <form accept-charset="UTF-8" action="" id="aspnetForm" method="post" novalidate="novalidate">
 	<input type="hidden" name="forward"  value="{$forward}">
 	<input type="hidden" name="dosubmit"  value="{L('login')}">
     <div class="common_panel">
-    <div class="panel_header">{L('member').L('login')}</div>
+    <div class="panel_header">{L('member').L('login')}<span>（没有账号？ <a href="/index.php?m=member&c=index&a=register&siteid=1">注册</a>）</span></div>
     <div class="panel_content">
     <table class="common_form">
       <tbody>
         <tr>
           <td class="label">{L('username')}</td>
           <td class="item"><input class="textbox" id="email" name="email" type="text" placeholder="请输入您的注册邮箱"></td>
+          <!-- <p style="margin-left: 102px; position: relative; top: 75px;"><label for="email" class="error" style=""></label></p> -->
           <td class="info"></td>
         </tr>
         <tr>
@@ -98,6 +103,3 @@
         });
       })
   </script>
-
-
-{template 'content', 'footer'}

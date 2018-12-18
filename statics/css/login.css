@@ -234,7 +234,7 @@ header .container .con_top {
     color: #555555;
 }
 #content .content_detail {
-    width: 1000px;
+    width: 590px;
     margin: 0 auto;
     padding: 50px 50px 50px;
     min-height: 200px;
@@ -242,7 +242,8 @@ header .container .con_top {
     font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
 }
 #content .common_panel {
-    background: #ecf4fb;
+    // background: #ecf4fb;
+    background: rgba(255,255,255,0.8);
     border: 1px solid #afcdeb;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -252,48 +253,57 @@ header .container .con_top {
     width: 16%;
     text-align: right;
     white-space: nowrap;
+    font-size: 16px;
 }
 #content .common_form tr td {
-    padding: 5px 8px;
+    padding: 15px 8px;
     line-height: 30px;
     vertical-align: top;
 }
 #content .common_form tr td.item input.textbox {
     border: 1px solid #AAA;
     font-size: 12px;
-    height: 16px;
+    height: 30px;
     line-height: 16px;
     padding: 6px;
     color: #666666;
-    width: 270px;
+    width: 300px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background: #ffffff;
 }
 #content .common_panel .panel_header {
-    height: 20px;
-    border-bottom: 1px solid #afcdeb;
+    height: 40px;
+    // border-bottom: 1px solid #afcdeb;
     padding: 10px 15px;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 26px;
+    line-height: 40px;
     text-align: center;
+    padding-left: 36px;
+}
+#content .common_panel .panel_header span {
+    font-size:14px;
+}
+#content .common_panel .panel_header span a {
+    color:#f68c25;
 }
 #content .common_panel .panel_footer {
     overflow: hidden;
-    padding: 10px 15px;
-    border-top: 1px solid #afcdeb;
+    padding: 20px 15px 45px;
+    // border-top: 1px solid #afcdeb;
 }
 #content .submit_button {
     overflow: hidden;
-    width: 70px;
+    width: 340px;
     margin: 0 auto;
 }
 #content .common_panel .panel_footer .common_button a, #content .common_panel .panel_footer .submit_button a, #content .common_panel .panel_header_buttons .common_button a, #content .common_panel .panel_header_buttons .submit_button a {
-    height: 12px;
-    line-height: 12px;
-    padding: 5px 16px 6px;
-    font-size: 12px;
+    height: 44px;
+    line-height: 44px;
+    padding: 5px 140px;
+    font-size: 18px;
+    text-decoration: none;
 }
 #content .submit_button a {
     height: 14px;
