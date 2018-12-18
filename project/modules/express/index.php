@@ -556,12 +556,29 @@ class index extends foreground {
                 if ($summary != $info['detail']) {
                     $express_data['detail'] = $summary;
                 }
-                $express = isset($_POST['express']) ? $_POST['express'] : '';
+                // $express = isset($_POST['express']) ? $_POST['express'] : '';
+
+                $express = isset($_POST['inbound']) ? $_POST['inbound'] : '';
+                if (!is_array($express)) {
+
+                    showmessage('非法操作', HTTP_REFERER);
+                }
+                $express=$express['inbound_items_attributes'];
+
                 $goods_sql = [];
                 if (is_array($express)) {
                     $flag = true;
                     $time = time();
                     foreach ($express as $val) {
+                        
+                        $lu_category_id = isset($val['lu_category_id']) ? intval($val['lu_category_id']) : '0';
+                        if ($lu_category_id>0) {
+                            $clild_cat = $this->goods_category_model->get_one(array('id'=>$lu_category_id));
+                            $cate_cat = $this->goods_category_model->get_one(array('id'=>$clild_cat['fid']));
+                            $val['category']=$cate_cat['cate_name'];
+                            $val['category_child']=$clild_cat['cate_name'];
+                        }
+
                         $name = isset($val['name']) ? trim($val['name']) : '';
                         if (!$name) {
                             $flag = false;
