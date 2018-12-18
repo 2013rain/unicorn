@@ -1,129 +1,433 @@
-{template 'express', 'header'}
-<script type="text/javascript" src="{JS_PATH}formvalidator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="{JS_PATH}formvalidatorregex.js" charset="UTF-8"></script>
-<link href="{CSS_PATH}dialog.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="{JS_PATH}dialog.js"></script>
-<script language="JavaScript">
-    $(document).ready(function(){
-        $("#store").change(function(){
-        });
-    });
-</script>
-<div id="memberArea">
-	{template 'express', 'left'}
-	<div class="col-auto">
-		<form method="post" action="" id="myform" name="myform">
-		<div class="col-1 ">
-			<h5 class="title">海外快递公司快递单信息</h5>           
-			<div class="content">			
-				<table width="100%" cellspacing="0" class="table_form">
-					<tr>
-						<th width="100">请选择入库仓库</th> 
-                        <td><input id="store" name="store" checked="checked" value="{$store['id']}" type="radio">{$store['name']}</td>
-					</tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}putin_a.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}address.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}inbound.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+    <script src="{JS_PATH}address.js"></script>
+    <script src="{JS_PATH}inbound.js"></script>
 
-					<tr>
-						<th width="100">快递公司</th> 
-                        <td><select id="company" name="company"><option value="">请选择</option>
-                                {loop $store['company'] $company}
-                                <option value="{$company['id']}" {if $company['name']== $info['company']}selected="selected"{/if}>{$company['name']}</option>
-                                {/loop}
-                        </select></td>
-					</tr>
-					<tr>
-						<th width="100">快递编号</th> 
-                        <td><input id="expressno" name="expressno" value="{$info['expressno']}" type="text" class="input-text" size="30"></td>
-					</tr>
-					<tr>
-						<th width="100"></font>货物概述</th> 
-                    <td><input id="summary" name="summary" value="{$info['detail']}" type="text" class="input-text" size="30"></td>
-					</tr>
-				</table>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+<!-- 入库部分 -->
+<div id="content" style="margin-top:50px;">
+  <div class="content_detail">
+    <!-- <div class="notify_panel">
+      <div class="alert">快递单号已经被使用</div>
+    </div> -->
 
-			</div>
-			<span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span>
-		</div>
-		<div class="col-1 ">
-		<h5 class="title">快递单中商品信息</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table class="table-list">
-			<thead>
-			    <tr>
-			    <th>中文名称</th>
-			    <th>类别</th>
-			    <th>子类别</th>
-			    <th>英文品牌</th>
-			    <th>型号</th>
-			    <th>美元单价</th>
-			    <th>数量</th>
-			    <th>操作</th>
-			    </tr>
-			</thead>
-		    <tbody>
-                {loop $goods $k $good}
-                <tr item_id="{$good['id']}">
-                <td align="center">{$good['goodsname']}</td>
-                <td align="center">{$good['pcategory']}</td>
-                <td align="center">{$good['scategory']}</td>
-                <td align="center">{$good['productname']}</td>
-                <td align="center">{$good['goodsmodel']}</td>
-                <td align="center">{$good['uprice']}</td>
-                <td align="center">{$good['num']}</td>
-                <td align="center">删除</td>
+  <div class="steps_panel">
+    <dl>
+      <dd class="current">
+        <div class="step">1</div>
+        <div class="intro">填写海外快递信息</div>
+      </dd>
+      <dd>
+        <div class="step">2</div>
+        <div class="intro">选择增值服务</div>
+      </dd>
+    </dl>
+  </div>
+  <form accept-charset="UTF-8" action="" class="new_inbound" id="new_inbound" method="post" novalidate="novalidate">
+
+      <div class="common_panel" style="margin-bottom:25px;">
+        <div class="panel_header">海外快递公司快递单信息</div>
+        <div class="panel_content">
+          <table class="common_form">
+            <tbody>
+            <tr>
+            <td class="label">请选择入库仓库</td>
+              <td class="item" colspan="2">
+                <dl class="inbound_warehouse_select">
+                  <dd class="us_or" unit_price_label="单价" warehouse_id="{$store['id']}">{$store['name']}</dd>
+
+                  <input id="inbound_warehouse_id" name="store" type="hidden" value="">
+                  <input name="dosubmit" type="hidden" value="dosubmit">
+                </dl>
+              </td>
             </tr>
+            </tbody>
+          </table>
+          <table class="common_form" id="inbound_express_info" style="display:none;">
+            <tbody>
+            <tr>
+              <td class="label">快递公司</td>
+              <td class="item">
+                <input id="inbound_lu_express_id" name="company" type="hidden" value="1">
+                <select class="select express_select" style="width:180px;">
+                  <option value="">请选择</option>
+                  {loop $store['company'] $company}
+                  <option value="{$company['id']}" {if $company['name']== $info['company']}selected="selected"{/if}>{$company['name']}</option>
+                  {/loop}
+                </select>
+              </td>
+              <td class="info"></td>
+            </tr>
+            <tr>
+              <td class="label">快递编号</td>
+              <td class="item">
+                <div class="field_with_errors">
+                  <input class="textbox" id="inbound_express_tracking_number" name="expressno" type="text" value="{$info['expressno']}">
+                </div>
+              </td>
+              <td class="info">
+              </td>
+
+            </tr>
+            <tr>
+              <td class="label">货物概述</td>
+              <td class="item"><input class="textbox" id="inbound_name" name="summary" type="text" value="{$info['detail']}"></td>
+              <td class="info"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel_footer" id="inbound_express_info_submit_assisted_declaration" style="overflow:visible;display:none;">
+          <div class="common_button" style="overflow:visible;"></div>
+        </div>
+      </div>
+      <div class="notify_panel" id="list_notify" style="display:none;"></div>
+      <div class="common_panel" id="inbound_items_info" style="display:none;">
+      <div class="panel_header">快递单中商品信息</div>
+      <div class="panel_content" id="inbound_item_list">
+      <table class="common_list">
+      <thead><tr class="">
+      <th>中文名称</th>
+      <th>类别</th>
+      <th>子类别</th>
+      <th>英文品牌</th>
+      <th>型号</th>
+      <th id="unit_price_label">美元单价</th>
+      <th>数量</th>
+      <th class="last">操作</th>
+      </tr>
+      </thead>
+        <tbody>
+
+                {loop $goods $k $good}
+                  {if $good['id']!=false}
+                  <tr item_id="{$good['id']}">
+                      <td align="center">{$good['goodsname']}</td>
+                      <td align="center">{$good['pcategory']}</td>
+                      <td align="center">{$good['scategory']}</td>
+                      <td align="center">{$good['productname']}</td>
+                      <td align="center">{$good['goodsmodel']}</td>
+                      <td align="center">{$good['uprice']}</td>
+                      <td align="center">{$good['num']}</td>
+                      <td align="center"><a class="remove_line" href="#this">删除</a></td>
+                  </tr>
+                  {/if}
                 {/loop}
-            <!--
-			<tr>
-            <td align="center"><input style="width:110px;" id="name" name="express[0][name]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center">
-                <select id="category" name="express[0][category]">
-                    <option value="" selected="selected">请选择</option>
-                    {loop $cats $cat}<option value="{$cat['id']}">{$cat['cate_name']}</option>{/loop}
-                </select>
-            </td>
-            <td align="center">
-                <select id="category_child" name="express[0][category_child]">
-                    <option value="" selected="selected">请选择</option>
-                    <option value="1">服装鞋帽</option>
-                </select>
-            </td>
-            <td align="center"><input style="width:100px" id="brand" name="express[0][brand]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="model" name="express[0][model]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="dollar" name="express[0][dollar]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="num" name="express[0][num]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center">删除</td>
-        </tr>
-        -->
-            <!--
-			<tr>
-            <td align="center"><input style="width:110px;" id="name" name="express[1][name]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:110px" id="category" name="express[1][category]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:110px" id="category_child" name="express[1][category_child]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:100px" id="brand" name="express[1][brand]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="model" name="express[1][model]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="dollar" name="express[1][dollar]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center"><input style="width:50px" id="num" name="express[1][num]" value="" type="text" class="input-text" size="30"></td>
-            <td align="center">删除</td>
-            </tr> -->
-		    </tbody>
-		    </table>
-            <div>增加商品</div>
-		</div>
-	</div>
-	</div>
-	</div>
-    <div>
-        <!--
-        删除物品时把删除的物品id如下放置
-        <input name="del_goods[]" type="hidden" value="9">
-        <input name="del_goods[]" type="hidden" value="2">
-        -->
-        <input name="dosubmit" type="submit" id="dosubmit" value="下一步" class="button">
+
+<!--
+                {loop $goods $k $good}
+                  {if $good['id']!=false}
+                <tr class="added_item last" item_id="{$good['id']}">
+                    <td><input class="textbox item_name" placeholder="中文名称" name="goodsname" value="{$good['goodsname']}"></td>
+                    <td>
+                        <select class="select parent_category">
+                            <option value="{$good['id']}">{$good['goodsname']}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="select category" name="scategory">
+                            <option value="{$good['scategory']}" selected="selected">{$good['scategory']}</option>
+                        </select>
+                    </td>
+                    <td><input class="textbox item_brand" placeholder="英文品牌" name="productname" value="{$good['productname']}"></td>
+                    <td>
+                        <div class="item_model_select_area" style="display:none;">
+                            <select class="select item_model_select">
+                                <option value="" selected="selected">请选择</option>
+                            </select>
+                        </div>
+                        <div class="item_model_textbox_area"><input class="textbox item_model" id="test_l" placeholder="型号" name="goodsmodel" value="{$good['goodsmodel']}"></div>
+                        <input class="item_model_hidden" type="hidden" name="inbound[inbound_items_attributes][0][model]">
+                    </td>
+                    <td><input class="textbox item_unit_price" placeholder="单价" name="uprice" value="{$good['uprice']}"></td>
+                    <td><input class="textbox item_amount" placeholder="数量" name="num" value="{$good['num']}"></td>
+                    <td class="last">  <a class="remove_line" href="#this">删除</a></td>
+                </tr>
+                  {/if}
+                {/loop} -->
+        </tbody>
+      </table>
+      </div>
+        <div class="panel_footer" id="inbound_item_list_button">
+          <div class="common_button">
+            <a class="add_item_button" > 增加商品</a>
+            <span class="tips" style="color:red;margin-top:5px;">中文名称填写物品内件名称，如鞋子，面霜，请不要写品牌名字；英文品牌请填写品牌全称。</span>
+          </div>
+        </div>
+      </div>
+      <div class="submit_button" id="inbound_info_submit" style="display:none;">
+        <a href="" id="submit"> 下一步：选择增值服务</a>
+      </div>
+      <div class="tips" style="color:red;margin-top:5px;">申报提示：请根据订单内不同货品品名分别如实申报，避免因为申报问题导致清关查验。</div>
+      <div class="tips" style="color:red;margin-top:5px;">入库提示：库房周末正常休息，不签收包裹，快递周末显示送达的包裹会在工作日再次派件给库房，所以周末送达的包裹入库会有延时。
     </div>
-	</form>
-	</div>
+  </form>
+<!-- <script>
+      $(function(){
+        var theForm = document.forms['new_inbound'];
+      if (!theForm) {
+          theForm = document.new_inbound;
+      }
+      function __doPostBack(eventTarget, eventArgument) {
+          if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+              theForm.__EVENTTARGET.value = eventTarget;
+              theForm.__EVENTARGUMENT.value = eventArgument;
+              theForm.submit();
+          }
+      }
+
+      $(function(){
+        $("#new_inbound").validate({
+          ignore:".item_model",
+          rules: {
+            "goodsmodel": {
+              required: false
+            }
+          }
+        });
+        $("#submit").click(function () {
+          if($("#new_inbound").valid()){
+            $(this).closest('form').submit();
+          }
+        });
+      })
+      })
+</script> -->
+
+  <div id="inbound_assisted_declaration_panel" style="display:none;">
+    <div class="mask"></div>
+    <div class="common_panel">
+      <div class="panel_header">免申报一键货到即发<a href="#"> 编辑收货地址</a></div>
+      <div class="panel_content">
+        <div class="intro">
+          <p>通过此方式入库，您可不填写商品信息，直接将包裹发为货到即发，货物将由库房人员依您包裹内实际商品如实申报。</p>
+          <p>请注意账户内保持有足够金额，否则系统将视为普通包裹入库，仍需要您再次登录系统补足入库信息。</p>
+          <p>选择一键货到即发，已填写的商品信息将被忽略，如您仍想按普通方式入库，请点击取消。</p>
+          <p>如果您的包裹内有需要缴纳强制保险的货物，建议自行申报，否则可能会因未缴纳强制保险而转为普通入库。</p>
+        </div>
+        <div class="notify_panel" style="padding:0 20px;display:none;"><div class="alert"></div></div>
+        <table class="common_form">
+          <tbody>
+            <tr>
+              <td class="label">请选择收货地址</td>
+              <td class="item" colspan="2" style="width:auto;"><select class="select address_id" style="width:600px;"></select></td>
+            </tr>
+            <tr>
+              <td class="label">保价金额</td>
+              <td class="item" style="width:15%;">
+                <input class="textbox insurance_amount" id="" name="" style="width:50px;margin-right:8px;" type="text">元
+              </td>
+              <td class="info">
+                <span class="notice">国际转运有风险，如没有购买保险货品丢失则理赔上限为1000元人民币。保价费用收取投保金额的1.5%，最高保价6500.0元</span>
+              </td>
+            </tr>
+            <tr><td class="label">备注信息</td><td class="item" colspan="2" style="width:auto;"><input class="textbox user_memo" id="" name="" type="text" value=""></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel_footer">
+        <div class="submit_button">
+          <a href="https://www.uszcn.com/inbounds#this" id="inbound_assisted_declaration_panel_submit_button">保存</a>
+          <a class="previous_button" href="https://www.uszcn.com/inbounds#this" id="inbound_assisted_declaration_panel_cancel_button">取消</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
 </div>
-<div class="clear"></div>
-{template 'express', 'footer'}
+<!-- /入库部分 -->
+
+
+
+  <script type="text/javascript">
+    var click_date_array = new Array();
+    var $inbound_assisted_declaration_panel = $("#inbound_assisted_declaration_panel");
+    var $inbound_assisted_declaration_common_panel = $("#inbound_assisted_declaration_panel .common_panel");
+    var $inbound_assisted_declaration_panel_mask = $("#inbound_assisted_declaration_panel .mask");
+    var inbound_assisted_declaration_panel_shown = false;
+    var adjust_inbound_assisted_declaration_panel = function() {
+      if (!inbound_assisted_declaration_panel_shown) {
+        return;
+      }
+      var cw = document.body.clientWidth;
+      var ch = document.body.clientHeight;
+      $inbound_assisted_declaration_common_panel.css({
+        left : ((cw - $inbound_assisted_declaration_common_panel.outerWidth()) / 2).toString() + 'px'
+      });
+      $inbound_assisted_declaration_panel.css({
+        width : cw.toString() + 'px',
+        height : ch.toString() + 'px'
+      });
+      $inbound_assisted_declaration_panel_mask.css({
+        width : cw.toString() + 'px',
+        height : ch.toString() + 'px'
+      });
+    };
+    var show_inbound_assisted_declaration_panel = function() {
+      $inbound_assisted_declaration_panel.show();
+      inbound_assisted_declaration_panel_shown = true;
+      adjust_inbound_assisted_declaration_panel();
+    };
+    $(window).resize(function() {
+      adjust_inbound_assisted_declaration_panel();
+    });
+    $("#inbound_assisted_declaration_panel_cancel_button").click(function() {
+      inbound_assisted_declaration_panel_shown = false;
+      $inbound_assisted_declaration_panel.hide();
+      return false;
+    });
+    $("#inbound_assisted_declaration_panel_submit_button").click(function(event) {
+      click_date_array.push(new Date());
+      var click_date_array_length = click_date_array.length;
+      if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+        event.cancelBubble = true;
+        return false;
+      }
+
+      $inbound_assisted_declaration_common_panel.find('.notify_panel').hide();
+      var to_address_id = $inbound_assisted_declaration_common_panel.find("select.address_id").val();
+      var insurance_amount = $inbound_assisted_declaration_common_panel.find("input.insurance_amount").val();
+      var user_memo = $inbound_assisted_declaration_common_panel.find("input.user_memo").val();
+
+      var alert_messages = [];
+      if (!to_address_id) {
+        alert_messages.push("请选择收货地址");
+      }
+      if (insurance_amount.length > 0) {
+        if (!/^(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(insurance_amount)) {
+          alert_messages.push("请输入正确的保价金额");
+        } else if (isNaN(parseFloat(insurance_amount)) || parseFloat(insurance_amount) <= 0) {
+          alert_messages.push("请输入正确的保价金额");
+        } else if (parseFloat(insurance_amount) > 6500) {
+          alert_messages.push("保价金额需要小于6500元");
+        }
+      }
+
+      if (alert_messages.length > 0) {
+        $inbound_assisted_declaration_common_panel.find(".notify_panel .alert").empty();
+        for (var i in alert_messages) {
+          $inbound_assisted_declaration_common_panel.find(".notify_panel .alert").append($("<p>").text(alert_messages[i]));
+        }
+        $inbound_assisted_declaration_common_panel.find(".notify_panel").show();
+
+      } else {
+        var $form = $("form:first");
+        $form.append($("<input>").attr({ type : "hidden", name : "assisted_declaration" }).val("1"));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][to_address_id]" }).val(to_address_id));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][insurance_amount]" }).val(insurance_amount));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][enable]" }).val("1"));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound[user_memo]" }).val(user_memo));
+        $form.submit();
+      }
+
+      return false;
+    });
+
+
+    $(function () {
+      Inbound.Brief.init();
+
+      jQuery.validator.addMethod("isExpressCode", function (value, element) {
+        value = $(element).val().replace(/\s+/g, '');
+        $(element).val(value);
+        return this.optional(element) || /^[\u4e00-\u9fa50-9a-zA-Z-_#]+$/.test(value);
+      }, "请输入正确的快递编号");
+
+      $("form:first").validate({
+        ignore : "",
+        rules : {
+          "inbound[express_tracking_number]": {
+            required: true,
+            isExpressCode: true
+          },
+          "inbound[warehouse_id]": {
+            required: true
+          },
+          "inbound[lu_express_id]": {
+            required: true
+          },
+          "inbound[brand]": {
+            required: true
+          },
+          "inbound[name]": {
+            required: true
+          }
+        }
+      });
+
+      $("#inbound_express_tracking_number").blur(function() {
+        var input_express_tracking_number = $(this).val();
+        if (input_express_tracking_number.length > 10  && received_express_tracking_numbers.length > 0){
+          for (ri in received_express_tracking_numbers){
+            if (received_express_tracking_numbers[ri].indexOf(input_express_tracking_number) > 0) {
+              alert("您输入的快递编号和已经入库的"+received_express_tracking_numbers[ri]+"疑似为同一个包裹,因为转快递原因库房实际签收包裹快递单号可能会在原单号前面增加位数,请仔细核对");
+              return false;
+            }
+          }
+        }
+      });
+
+
+      $("#submit").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+          event.cancelBubble = true;
+          return false;
+        }
+        var part1_valid = $(this).closest("form").valid();
+        var part2_valid = Inbound.Brief.itemListValid();
+        if (part1_valid && part2_valid) {
+          $(this).closest("form").submit();
+        }
+        return false;
+      });
+
+      $("#submit_assisted_declaration").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 500) {
+          event.cancelBubble = true;
+          return false;
+        }
+        if ($(this).closest("form").valid()) {
+          $.post("/inbounds/brief_addresses", {}, function(ret) {
+            show_inbound_assisted_declaration_panel();
+            var $select = $("#inbound_assisted_declaration_panel select.select");
+            $select.empty();
+            for (var i in ret) {
+              $select.append($("<option>").text(ret[i].brief).attr("value", ret[i].id));
+            }
+            return false;
+          }, "json");
+        }
+        return false;
+      });
+
+    });
+  </script>
+
+
+<script type="text/javascript">
+  var expresses ={$expresses};
+
+  var categories = {$goods_category};
+
+
+  var inbound_lu_express_id = 1;
+  var received_express_tracking_numbers = [];
+</script>
+{template 'member', 'footer'}

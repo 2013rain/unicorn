@@ -1,57 +1,161 @@
-{template 'express', 'header'}
-<script type="text/javascript" src="{JS_PATH}formvalidator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="{JS_PATH}formvalidatorregex.js" charset="UTF-8"></script>
-<link href="{CSS_PATH}dialog.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="{JS_PATH}dialog.js"></script>
-<script language="JavaScript">
-</script>
-<div id="memberArea">
-	{template 'express', 'left'}
-	<div class="col-auto">
-		<form method="post" action="" id="myform" name="myform">
-		<div class="col-1 ">
-		<h5 class="title">选择增值服务</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-		<table class="table-list">
-			<thead>
-			    <tr>
-			    <th></th>
-			    <th>增值服务名称</th>
-			    <th>增值服务介绍及收费</th>
-			    </tr>
-			</thead>
-		    <tbody>
-            {loop $service_info $info}
-			<tr>
-                <td align="center"><input id="service" name="service[]" can_merge="{$info['can_merge']}" value="{$info['value']}" type="checkbox" class="input-text"></td>
-            <td align="center">{$info['name']}</td>
-            <td align="center">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}<td>
-			</tr>
-            {/loop}
-		    </tbody>
-		    </table>
-		</div>
-	</div>
-	</div>
-	</div>
-		<div class="col-1 ">
-			<h5 class="title">填写备注信息</h5>           
-			<div class="content">			
-				<table width="100%" cellspacing="0" class="table_form">
-					<tr>
-						<th width="100">备注信息</th> 
-						<td><input id="remark" name="remarks" value="" type="text" class="input-text" size="30"></td>
-					</tr>
-				</table>
-			</div>
-			<span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span>
-		</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}putin_b.css">
+
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+
+
+<!-- 我要入库服务页 -->
+<div id="content" style="margin-top: 50px;">
+  <div class="content_detail">
+    <div class="steps_panel">
+      <dl>
+        <dd>
+          <div class="step">1</div>
+          <div class="intro">填写海外快递信息</div>
+        </dd>
+        <dd class="current">
+          <div class="step">2</div>
+          <div class="intro">选择增值服务</div>
+        </dd>
+      </dl>
+    </div>
+    <form accept-charset="UTF-8" action="" class="edit_inbound" id="edit_inbound_2055720571432310209" method="post">
+      <div class="common_panel">
+        <div class="panel_header">选择增值服务</div>
         <input name="set_service" type="hidden" value="service">
-	<div><input name="dosubmit" type="submit" id="dosubmit" value="完成" class="button"></div>
-	</form>
-	</div>
+        <input name="dosubmit" type="hidden" value="dosubmit">
+        <div class="panel_content">
+          <table class="common_list inbound_service_list">
+            <thead>
+              <tr>
+                <th width="5%"> &nbsp;</th>
+                <th>增值服务名称</th>
+                <th class="last">增值服务介绍及收费</th>
+              </tr>
+            </thead>
+            <tbody>
+        	{loop $service_info $info}
+            	<tr>
+            		<td>
+	                  <input class="check_inbound_item"  name="service[]" type="checkbox" can_merge="{$info['can_merge']}" value="{$info['value']}">
+	                </td>
+	                <td>{$info['name']}</td>
+	                <td class="last">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}</td>
+				</tr>
+        	<script>
+        		console.log({$info['price_desc']});
+        	</script>
+            {/loop}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="common_panel">
+        <div class="panel_header">填写备注信息</div>
+        <div class="panel_content">
+          <table class="common_form">
+            <tbody>
+              <tr>
+                <td class="label">备注信息</td>
+                <td class="item">
+                  <input class="textbox" id="inbound_user_memo" name="remarks" type="text">
+                </td>
+                <td class="info"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="submit_button">
+        <a href="#this" id="submit"> 确认入库信息</a>
+        <!--
+        <a class="previous_button" href="#"> 返回上一步：填写海外快递信息</a>
+    -->
+      </div>
+    </form>
+
+  </div>
 </div>
-<div class="clear"></div>
-{template 'express', 'footer'}
+<!-- /我要入库服务页 -->
+
+
+<script type="text/javascript">
+  $(function() {
+    // FreightRateSelector.init();
+  });
+</script>
+<script type="text/javascript">
+    var click_date_array = new Array();
+    var immediate_outbound_init = function() {
+      var $this = $(".inbound_service_list input.immediate_outbound");
+      if ($this.is(":checked")) {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "checked" : false, "disabled" : "disabled" });
+        $(".immediate_outbound_panel").slideDown("fast");
+      } else {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "disabled" : null });
+        $(".immediate_outbound_panel").slideUp("fast");
+      }
+    };
+
+    $(function () {
+      $("#submit").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+          event.cancelBubble = true;
+          return false;
+        }
+
+        var is_inbound_service_immediate_outbound_enable = $("#inbound_service_immediate_outbound_enable").is(":checked");
+        var is_us_hk_pick_up = $("#lu_freight_rate_id_11").is(":checked");
+        var is_jp_hk_pick_up = $("#lu_freight_rate_id_12").is(":checked");
+        var hk_pick_up_confirm_message = "您已选择香港自提转运偏好，货物将发往香港仓库\n您选择的收货地址仅用于区分包裹归属，不是实际收货地址\n货物到达香港仓库后，您需要自行去香港仓库提货\n确认选择香港自提吗？";
+        if (is_inbound_service_immediate_outbound_enable && (is_us_hk_pick_up || is_jp_hk_pick_up) && !window.confirm(hk_pick_up_confirm_message)) {
+          return false;
+        }
+
+        if ($(".inbound_cash_on_delivery_panel #inbound_cash_on_delivery_enable:checked").length == 1) {
+          if (validate_inbound_cash_on_delivery_panel()) {
+            $(this).closest("form").submit();
+          }
+        } else {
+          $(this).closest("form").submit();
+        }
+        return false;
+      });
+
+      $(".immediate_outbound_panel .current_to_address a.edit_immediate_outbound_to_address").click(function() {
+        var $tbody = $(this).closest("tbody");
+        $tbody.find("tr.current_to_address").hide();
+        $tbody.find("tr.edit_to_address").show();
+        $tbody.find("tr.edit_to_address .address_list input:first").attr("checked", "checked");
+        return false;
+      });
+
+      if ($(".address_list input:checked").length == 0) {
+        $(".address_list input:first").attr("checked", "checked");
+      }
+    });
+</script>
+<script type="text/javascript">
+  $(function() {
+    $(".inbound_service_list input.immediate_outbound").click(function() { immediate_outbound_init(); });
+    immediate_outbound_init();
+  });
+</script>
+
+{template 'member', 'footer'}
