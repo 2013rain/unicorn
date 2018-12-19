@@ -558,7 +558,7 @@ class index extends foreground {
                 }
                 // $express = isset($_POST['express']) ? $_POST['express'] : '';
 
-                $express = isset($_POST['inbound']) ? $_POST['inbound'] : '';
+                $express = isset($_POST['inbound']) ? $_POST['inbound'] : array();
                 if (!is_array($express)) {
 
                     showmessage('非法操作', HTTP_REFERER);
@@ -566,6 +566,7 @@ class index extends foreground {
                 $express=$express['inbound_items_attributes'];
 
                 $goods_sql = [];
+				$this->goods_category_model = pc_base::load_model('goods_category_model');
                 if (is_array($express)) {
                     $flag = true;
                     $time = time();
