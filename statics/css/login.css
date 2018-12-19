@@ -234,7 +234,7 @@ header .container .con_top {
     color: #555555;
 }
 #content .content_detail {
-    width: 590px;
+    width: 725px;
     margin: 0 auto;
     padding: 50px 50px 50px;
     min-height: 200px;
@@ -250,7 +250,7 @@ header .container .con_top {
     margin-bottom: 35px;
 }
 #content .common_form tr td.label {
-    width: 16%;
+    width: 22%;
     text-align: right;
     white-space: nowrap;
     font-size: 16px;
@@ -275,7 +275,6 @@ header .container .con_top {
 }
 #content .common_panel .panel_header {
     height: 40px;
-    // border-bottom: 1px solid #afcdeb;
     padding: 10px 15px;
     font-size: 26px;
     line-height: 40px;
@@ -291,11 +290,10 @@ header .container .con_top {
 #content .common_panel .panel_footer {
     overflow: hidden;
     padding: 20px 15px 45px;
-    // border-top: 1px solid #afcdeb;
 }
 #content .submit_button {
     overflow: hidden;
-    width: 340px;
+    width: 324px;
     margin: 0 auto;
 }
 #content .common_panel .panel_footer .common_button a, #content .common_panel .panel_footer .submit_button a, #content .common_panel .panel_header_buttons .common_button a, #content .common_panel .panel_header_buttons .submit_button a {
@@ -321,3 +319,4 @@ header .container .con_top {
     FILTER: Shadow(Color=#666, Direction=90, Strength=1);
 }
 #code_img { vertical-align: middle; }
+.panel_content .common_form tbody tr:nth-child(3) .item label { position:absolute; top:23px; right:-43px; }

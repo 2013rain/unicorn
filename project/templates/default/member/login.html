@@ -30,7 +30,6 @@
         <tr>
           <td class="label">{L('username')}</td>
           <td class="item"><input class="textbox" id="email" name="email" type="text" placeholder="请输入您的注册邮箱"></td>
-          <!-- <p style="margin-left: 102px; position: relative; top: 75px;"><label for="email" class="error" style=""></label></p> -->
           <td class="info"></td>
         </tr>
         <tr>
@@ -40,7 +39,11 @@
         </tr>
          <tr>
           <td class="label">{L('checkcode')}</td>
-          <td class="item"><input type="text" id="code" name="code" size="8" class="input-text textbox">{form::checkcode('code_img', '5', '14', 120, 26)}</td>
+          <td class="item" style="position: relative;">
+            <input type="text" id="code" name="code" size="8" class="input-text textbox">
+            <!-- <label for="email" class="error" style="float: right;"></label> -->
+            {form::checkcode('code_img', '5', '14', 120, 26)}
+          </td>
           <td class="info"></td>
         </tr>
       </tbody>
