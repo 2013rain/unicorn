@@ -5,9 +5,10 @@ define('CACHE_MODEL_PATH',CACHE_PATH.'caches_model'.DIRECTORY_SEPARATOR.'caches_
 pc_base::load_app_func('util','content');
 
 class index {
-	private $db;
+	private $express_trade_log;
 	function __construct() {
-		$this->db = pc_base::load_model('content_model');
+		$this->express_trade_log = pc_base::load_model('express_trade_log_model');
+		$this->member_express = pc_base::load_model('member_express_model');
 		$this->_userid = param::get_cookie('_userid');
 		$this->_username = param::get_cookie('_username');
 		$this->_groupid = param::get_cookie('_groupid');
@@ -15,25 +16,39 @@ class index {
 	}
 	//首页
 	public function init() {
-		if(isset($_GET['siteid'])) {
-			$siteid = intval($_GET['siteid']);
-		} else {
-			$siteid = 1;
+		
+	}
+	private  function needPay($id)
+	{
+		$memberinfo = $this->memberinfo;
+		$epinfo = $this->member_express->get_one(array('userid'=>$memberinfo['userid'],'id'=>(int)$id,'status'=>2,'pay_status'=>0));
+		if (empty($epinfo)) {
+			return false;
 		}
-		$siteid = $GLOBALS['siteid'] = max($siteid,1);
-		define('SITEID', $siteid);
-		$_userid = $this->_userid;
-		$_username = $this->_username;
-		$_groupid = $this->_groupid;
+		return $epinfo;
+	}
+
+	public function express() {
+		$memberinfo = $this->memberinfo;
+		$id = isset($_GET['id']) ? (int)$_GET['id']:0;
+
+		if($id<=0) {
+			exit('error');
+		}
+		$needpayinfo = $this->needPay($id);
+		if (empty($needpayinfo) || $needpayinfo['pay_money']<=0) {
+			exit('请求错误');
+		}
+		$order_no = $this->express_trade_log->getOrderNo($memberinfo['userid'], $needpayinfo['expressno']);
+
 		$trade = array(
-			'out_trade_no'=>'123456789111',
-			'total_amount'=>'100',
-			'subject'=>'快递费支付',
-			'body'=>'快递费支付',
+			'out_trade_no'=>$order_no,
+			'total_amount'=>'0.01',
+			'subject'=>'支付运费',
+			'body'=>'快递费支付'.$needpayinfo['pay_money'].'元',
 		);
 		$res = $this->alipay->AlipayTradePagePayRequest($trade);
-		var_dump($res);
-		//SEO
+		echo $res;
 		exit();
 	}
 	

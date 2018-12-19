@@ -8,8 +8,8 @@ class express_trade_log_model extends model {
 		$this->table_name = 'express_trade_log';
 		parent::__construct();
 	}
-	public function getOrderNo($uid = '', $express_no) {
-		$info = parent::get_one(array('member_id' => 'express_no'));
+	public function getOrderNo($uid = '', $expressno) {
+		$info = parent::get_one(array('expressno' => $expressno,'userid'=>$uid));
 		$order_no = '';
 		if (empty($info)) {
 			//18位数
@@ -19,7 +19,7 @@ class express_trade_log_model extends model {
 					'create_date'=>date('Y-m-d'),
 					'order_no'=>$order_no,
 					'status'=>0,
-					'express_no'=>$express_no,
+					'express_no'=>$expressno,
 					'create_time'=>date('Y-m-d H:i:s'),
 					'order_name'=>'支付快递运费',
 			);
@@ -27,7 +27,7 @@ class express_trade_log_model extends model {
 		}else{
 			$order_no = $info['order_no'];
 		}
-		return 		
+		return 		$order_no;
 	}
 
 	public function listinfo($where = '', $order = '', $page = 1, $pagesize = 20, $key='', $setpages = 10,$urlrule = '',$array = array(), $data = '*') {

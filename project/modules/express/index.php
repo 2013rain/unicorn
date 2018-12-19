@@ -745,7 +745,30 @@ class index extends foreground {
 
 
 
-	
+	public  function pay()
+    {
+        $memberinfo = $this->memberinfo;
+        $id = isset($_GET['id']) ? (int)$_GET['id']:0;
+
+        if($id<0) {
+            showmessage('访问不合法');
+        }
+        $info = $this->db->get_one(array('userid'=>$memberinfo['userid'],'id'=>(int)$id));
+        if (empty($info)) {
+            showmessage('访问不合法');
+        }
+        if ($info['status']!=2 ) {
+            showmessage('运单状态不支持支付');
+        }
+        if ($info['pay_status']==1 ) {
+            showmessage('运单已支付');
+        }
+        $this->member_address_model = pc_base::load_model('member_address_model');
+        $address_list = $this->member_address_model->select(array('auditstatus' =>'1'));
+
+        include template('express','pay');
+
+    }
 	
 }
 ?>

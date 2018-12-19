@@ -37,11 +37,12 @@ class alipay {
 		$this->aop->signType = $this->signType;
 		$this->aop->postCharset=$this->postCharset;
 		$this->aop->format= $this->format;
-		$this->aop->sign= '';
+		
 		$this->aop->timestamp= date('Y-m-d H:i:s');
+		$this->aop->returnUrl= 'http://local.wangfuyu.com.cn/receive_notify.php';
 	}
 	
-
+	//pc支付
 	public function AlipayTradePagePayRequest($info) {
 		$this->initAop();
 		$request = new AlipayTradePagePayRequest ();
@@ -51,13 +52,15 @@ class alipay {
 		$data['total_amount']=$info['total_amount'];
 		$data['subject']=$info['subject'];
 		$data['body']=$info['body'];
-		$data['out_trade_no']='FAST_INSTANT_TRADE_PAY';
+		$data['product_code']='FAST_INSTANT_TRADE_PAY';
+		$data['return_url']='http://local.wangfuyu.com.cn/receive_notify.php';
 
 		$bz = json_encode((object)$data);
 		// var_dump($bz);
 		$request->setBizContent($bz);
 		$result = $this->aop->pageExecute ( $request); 
-		echo $result;exit();
+		return $result;
+		 var_dump(json_encode($result));exit();
 		$responseNode = str_replace(".", "", $request->getApiMethodName()) . "response";
 		// var_dump(json_encode($result));
 		$resultCode = $result->$responseNode->code;
@@ -67,4 +70,32 @@ class alipay {
 			return false;
 		}
 	}
+	public function AlipayTradeCreateRequest($info) {
+		$this->initAop();
+		// $this->aop->method='alipay.trade.create';
+		$request = new AlipayTradeCreateRequest();
+
+		$data = array();
+		$data['out_trade_no']=$info['out_trade_no'];
+		$data['total_amount']=$info['total_amount'];
+		$data['subject']=$info['subject'];
+		$data['body']=$info['body'];
+		$data['seller_id']= '2088102176803486';
+
+
+		$bz = json_encode((object)$data);
+		// var_dump($bz);
+		$request->setBizContent($bz);
+		$result = $this->aop->pageExecute ( $request); 
+		
+		$responseNode = str_replace(".", "", $request->getApiMethodName()) . "response";
+		var_dump(json_encode($result));
+		$resultCode = $result->$responseNode->code;
+		if(!empty($resultCode)&&$resultCode == 10000){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
