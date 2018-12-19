@@ -121,42 +121,11 @@
                       <td align="center">{$good['goodsmodel']}</td>
                       <td align="center">{$good['uprice']}</td>
                       <td align="center">{$good['num']}</td>
-                      <td align="center"><a class="remove_line" href="#this">删除</a></td>
+                      <!-- <td align="center"><a class="remove_line" href="#this">删除</a></td> -->
                   </tr>
                   {/if}
                 {/loop}
 
-<!--
-                {loop $goods $k $good}
-                  {if $good['id']!=false}
-                <tr class="added_item last" item_id="{$good['id']}">
-                    <td><input class="textbox item_name" placeholder="中文名称" name="goodsname" value="{$good['goodsname']}"></td>
-                    <td>
-                        <select class="select parent_category">
-                            <option value="{$good['id']}">{$good['goodsname']}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="select category" name="scategory">
-                            <option value="{$good['scategory']}" selected="selected">{$good['scategory']}</option>
-                        </select>
-                    </td>
-                    <td><input class="textbox item_brand" placeholder="英文品牌" name="productname" value="{$good['productname']}"></td>
-                    <td>
-                        <div class="item_model_select_area" style="display:none;">
-                            <select class="select item_model_select">
-                                <option value="" selected="selected">请选择</option>
-                            </select>
-                        </div>
-                        <div class="item_model_textbox_area"><input class="textbox item_model" id="test_l" placeholder="型号" name="goodsmodel" value="{$good['goodsmodel']}"></div>
-                        <input class="item_model_hidden" type="hidden" name="inbound[inbound_items_attributes][0][model]">
-                    </td>
-                    <td><input class="textbox item_unit_price" placeholder="单价" name="uprice" value="{$good['uprice']}"></td>
-                    <td><input class="textbox item_amount" placeholder="数量" name="num" value="{$good['num']}"></td>
-                    <td class="last">  <a class="remove_line" href="#this">删除</a></td>
-                </tr>
-                  {/if}
-                {/loop} -->
         </tbody>
       </table>
       </div>
@@ -174,37 +143,7 @@
       <div class="tips" style="color:red;margin-top:5px;">入库提示：库房周末正常休息，不签收包裹，快递周末显示送达的包裹会在工作日再次派件给库房，所以周末送达的包裹入库会有延时。
     </div>
   </form>
-<!-- <script>
-      $(function(){
-        var theForm = document.forms['new_inbound'];
-      if (!theForm) {
-          theForm = document.new_inbound;
-      }
-      function __doPostBack(eventTarget, eventArgument) {
-          if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-              theForm.__EVENTTARGET.value = eventTarget;
-              theForm.__EVENTARGUMENT.value = eventArgument;
-              theForm.submit();
-          }
-      }
 
-      $(function(){
-        $("#new_inbound").validate({
-          ignore:".item_model",
-          rules: {
-            "goodsmodel": {
-              required: false
-            }
-          }
-        });
-        $("#submit").click(function () {
-          if($("#new_inbound").valid()){
-            $(this).closest('form').submit();
-          }
-        });
-      })
-      })
-</script> -->
 
   <div id="inbound_assisted_declaration_panel" style="display:none;">
     <div class="mask"></div>
