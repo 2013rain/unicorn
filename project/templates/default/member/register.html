@@ -9,21 +9,23 @@
 <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
 <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 <script src="{JS_PATH}jquery-ui.min.js"></script>
- <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+<script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
+<style type="text/css">
+  body { background-image:url('{IMG_PATH}/aa.jpg'); background-size:cover; }
+</style>
 <body>
 
- {template 'content', 'banner'}   
     <!-- /头部 -->
 
 <!-- 注册表单 -->
-<div id="content">
+<div id="content" style="margin-top: 40px;">
 <div class="content_detail">
 <form accept-charset="UTF-8" action="" id="aspnetForm" method="post" novalidate="novalidate">
 	<input type="hidden" name="siteid" value="{$siteid}" />
 	<input type="hidden" name="dosubmit" value="dosubmit" />
     <div class="common_panel">
-    <div class="panel_header">用户注册</div>
+    <div class="panel_header">用户注册<span>（已有账号？ <a href="/index.php?m=member&c=index&a=login">登录</a>）</span></div>
     <div class="panel_content">
       <table class="common_form">
         <tbody>
@@ -178,11 +180,10 @@
         $(".agreement-accr").animate({top:'-9%'});
       });
       $(".agreement-top>span,.agreement-bottom>span").on("click",function(){
-        $(".agreement-accr").animate({top:'-131%'});
+        $(".agreement-accr").animate({top:'-140%'});
       });
 
       //拖动
       $( ".agreement-accr" ).draggable();
     })
 </script>
-{template 'content', 'footer'}
