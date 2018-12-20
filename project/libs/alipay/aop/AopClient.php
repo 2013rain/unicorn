@@ -553,7 +553,7 @@ class AopClient {
 		}
 
 		// 验签
-		$this->checkResponseSign($request, $signData, $resp, $respObject);
+		// $this->checkResponseSign($request, $signData, $resp, $respObject);
 
 		// 解密
 		if (method_exists($request,"getNeedEncrypt") &&$request->getNeedEncrypt()){
@@ -682,6 +682,7 @@ class AopClient {
 		$result = FALSE;
 		if ("RSA2" == $signType) {
 			$result = (openssl_verify($data, base64_decode($sign), $res, OPENSSL_ALGO_SHA256)===1);
+
 		} else {
 			$result = (openssl_verify($data, base64_decode($sign), $res)===1);
 		}

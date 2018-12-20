@@ -5,8 +5,8 @@ class alipay {
 	public $gateway = 'https://openapi.alipaydev.com/gateway.do';
 	// public $gateway = 'https://openapi.alipay.com/gateway.do';
 	public $appid ='2016092200572120';
-	public $rsaPrivateKey ='MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCN4Ip6JzkqgBIqk9C8lH+jeW+i+kMoQ6ITeq29GBAb9dPmXpY9U/VGlz5aD42mrgycxsTY4DsVcRF4MuvHENNDZ5+br+lByj00iQPJrpbQ5U3IZXqSCovHgxSWOLc93xdpp8nVtf6N0aMeYJEgUcOWHR2+v+nwBnzbeuqS5EuNbffFFZjPgLzqsBK4csb3g4W9uqeSEbYVAJc2Yxii2+yo+SYH6FEDtbJH+sJBcwwXauDAke3Geu+TLdoSGVlUwfYEyIdaeI0J2ElfdF/ibiAr4RI6MZkqV+DD5M0D1G/ZZ1+//4KB/VTaxjsdXR+xnolu3r24jdQ97cS+6r+5BLETAgMBAAECggEAA7DoyV7F3PYyAsuPrahLXcxl/B54qs5/o/QYGwhKOv/9QEwLqpLJmcmLhLpM3B5BE78UFfRXdSpY4wCoI6irZmCGxX0hG2YQi5JY9+FD6TFeAa2qL6x4kHs3iOT213Q7XrNPy/CNK9FdZgfrHqUh6oDdaj4B7w2sJ+Wdvq6TzJ0a1XS2NrBPmjn6ppWttLrIwGgiyeMxvSdK6SFngwnqPA5IE7DkaTAq97C1BqVxoey6BRIq5fjOEvPBObnbNK266AovjA9MfrWN7RdaWR11gJAdP00Z4wZYVOi3pV1O0Y4s2SlGP12ZMJJIqrOXm7CYkPYgOYaeBV/q7k3QN1GaAQKBgQDQTlwv3uNN6kTXET1VmbLEl8+unn44IVSAXj/L3BIRhKR0wukqzBwBVrinP5LwlQ9kPC6kgun1e7jnDf1oUhXOJX4dQTDliwg+/0Nq4txgiGS0G3xk9CODYeYm1T6EthwPZEcjP95IeyIQJ84S9nYfTmbnhcM+rqfLVKCEbkYdAQKBgQCuXIROwRcCNvwkmJhYh+7cmKWTTHcrnojLjqs8foD+bkaPCktCIeRw2eJaxD6ocQldUSjiPg4xO14ZroNnGHQQLwE0daSpcjFj6pWjst+U/mHR+IStqVULEHUugLkGfC6TRe42n2KuWzdGlqCSBNlmI6rbzl3yM4r+7/V4iC6KEwKBgBMk0HYZztwPRqpZTEC8smA873pF2KXB8mklwEk0/Xgcr5yHeTRUs9IvrSK5xgBUQqjcmxDFc0j7SN/7OinHOXfLnE6F+j9uSqC3hvOgy84XWuHukL0abtUZPzScbnV14xhLB/qmWQBiSJwhfF/jxLFV3EE02t+833DhYysok0sBAoGAG+9usz90dEJi+2oHXofI2UcLoCHsJezsddCR1std12XLoDdB/4J2my4NegVfFJWnrm/GYRkYJQMh/HNdUjM0xTMCumjuzMci6qM2/lc2QyTOf1mVyE0M9wzX+W9eNY/H1oiptc6rfMvYe1K+vyZPvnGQek8B9kAT0OyZI4qOCkkCgYAQyLCo1vQAAxHspcsKNjmprUj8WgNo9OfN7rZn39BgxgDosb7Qp0px6mHa0VRbtZI2GFSeLyqJX3XDqMgWi8jiVXi2Ce+/Yz9gtsE9Wsm7BGqkd+XNt4Dm40tsRgmsuX3tAVxeScO2e89Q7I0FwK82LPQuyfLkr/2sqnN6DN8tGQ==';
-	public $alipayrsaPublicKey ='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjeCKeic5KoASKpPQvJR/o3lvovpDKEOiE3qtvRgQG/XT5l6WPVP1Rpc+Wg+Npq4MnMbE2OA7FXEReDLrxxDTQ2efm6/pQco9NIkDya6W0OVNyGV6kgqLx4MUlji3Pd8XaafJ1bX+jdGjHmCRIFHDlh0dvr/p8AZ823rqkuRLjW33xRWYz4C86rASuHLG94OFvbqnkhG2FQCXNmMYotvsqPkmB+hRA7WyR/rCQXMMF2rgwJHtxnrvky3aEhlZVMH2BMiHWniNCdhJX3Rf4m4gK+ESOjGZKlfgw+TNA9Rv2Wdfv/+Cgf1U2sY7HV0fsZ6Jbt69uI3UPe3Evuq/uQSxEwIDAQAB';
+	public $rsaPrivateKey ='MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCEiAeCWQCDypBaJlAmflw2hk3ff7TcqlRqYEJAPOi/D8qs+OLvywVe4ZSyx1l7HUK9igRUf0Wku6VefUeLSt1ogldwundvoZEp/RrrMDoQfV0CKcS5joXEy14w0HVWggp6ofb27osIPhw7VJATOfmdoNoQgJi3r/rQP/J6ntWkqFpaVNBeHqzjnuU9s+d8/GZfnA3gftBLwzD41QvX0bMX104iUuuCJ3Oj6eWnr4BUsDa6jovCu3NrSQz8Lz4pXRC6OqtHGUC+Uu2Mpc+C2ZJS/Hp6a8PVmlCvsCSPazzx1e8lrxtvBEHErSCTVEQfe2bhiqVDCuYgs29I3by/EmHVAgMBAAECggEAfB1kYub0+3d1bmeZAiOuOgXW4esYNttxCNoy0TP5iAzC8vB2nrjTw8KgXjkhDJIfkZ+yZGt4jkiJGw9aNBGdfiUqvFB0T9/QMbFuRzk3939f3gm9yUS289C82hwu9x/7rlMGFMTbAZIhIFMWRlsx8DPWZEP6QXQWAHcSn1EmpPb1pID4KIzhHbkFGGpI/r/8Td2rAR6efbEjg4+uzZFXBiUoQEMijw+i5qKYyNDg9erUSdsuZDqwjpuEiwbRdaYlxAsg8a4R7Hhunkz9gZm5UyEz7OEs+hdbh2ASqSdE8ypAsZSVoBnrGxxuEebQYbLQDUpOslY+TlxfbPYT6yOPoQKBgQD+3XnjESmEpdTWnARc//zSZwx52zOXRPK4JN6K+JgVf0zgdhunJ3kWQ1LECLotmMal9kRGkaS3VovT/HUUwGUnRC3wvMeCkaaIsS6PKjiszBdN1RI1vVXbFUlF31MJCZ5NW25x8ktngs1Bahc6FPNI57zlfBY9VJUhM6zyWxYQLQKBgQCFHxp7rJATnwdypvorD+qWwxNBa/MpDvU0sMMo+lppC+yvU/M3crW7JW4LYQcK+LG30mcxBuxLe0KCRR/FejR3SQ6FtL9aJlcZZS4IdJg5qIDp93g4r8jfNBZASCbK8stY4VnSNwVlKqoUqpNkU4EBpknyfqvQHZbYjpq8i7z5SQKBgGWH3ZKzt5J8bbnBFYvm/tTi8Hlq9baBZSAur+k094E44WtaIdIJS5eu4j3uLB0WC6z52mEyjCftdm7Q1+OYcbOe2Z5Z1jERzQIPc7jc3Q8Zjv8WrtZxws4wQKxxNycWidXPYsRJ/fgSh6pTlUUyK2kTyJCzSjjMhUxgxbkWyEdRAoGARbjtsPrHl09Col0sR+OVNZNEgY5dlBKegRNXlB3TvpMdSxMIHvF4l2VaRqFyA+APjLypiXcbycjsI7i6lD6WPifIcGUjl77e/ZEN1CXlGMXVhzUzBVWkOqtYQCDKGJ+ju5CD7+Mbc0ouPJa+jdxihA+pSVXo/R6SRCgkiT4TIukCgYEAr4GJStBDguxbS9pq/QmtnkSs03GLBp4whKgb4nLLL0A0x/MDN4ATMiQKFjLuPL92PNWZY9mkY3OMvweOmNeTy0hOuOdxVHNGklf64ooZUqh/Ci47R+gfjuJm0jF6aOtIV+7M571yCDHFJdB7fvaJVObel0bVhcaisdA91R70dzI=';
+	public $alipayrsaPublicKey ='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhIgHglkAg8qQWiZQJn5cNoZN33+03KpUamBCQDzovw/KrPji78sFXuGUssdZex1CvYoEVH9FpLulXn1Hi0rdaIJXcLp3b6GRKf0a6zA6EH1dAinEuY6FxMteMNB1VoIKeqH29u6LCD4cO1SQEzn5naDaEICYt6/60D/yep7VpKhaWlTQXh6s457lPbPnfPxmX5wN4H7QS8Mw+NUL19GzF9dOIlLrgidzo+nlp6+AVLA2uo6Lwrtza0kM/C8+KV0QujqrRxlAvlLtjKXPgtmSUvx6emvD1ZpQr7Akj2s88dXvJa8bbwRBxK0gk1REH3tm4YqlQwrmILNvSN28vxJh1QIDAQAB';
 	public $apiVersion ='1.0';
 	public $signType ='RSA2';
 	public $postCharset ='UTF-8';
@@ -60,42 +60,30 @@ class alipay {
 		$request->setBizContent($bz);
 		$result = $this->aop->pageExecute ( $request); 
 		return $result;
-		 var_dump(json_encode($result));exit();
-		$responseNode = str_replace(".", "", $request->getApiMethodName()) . "response";
-		// var_dump(json_encode($result));
-		$resultCode = $result->$responseNode->code;
-		if(!empty($resultCode)&&$resultCode == 10000){
-			return true;
-		} else {
-			return false;
-		}
+		
 	}
-	public function AlipayTradeCreateRequest($info) {
+	public function AlipayTradeQueryRequest($info) {
 		$this->initAop();
-		// $this->aop->method='alipay.trade.create';
-		$request = new AlipayTradeCreateRequest();
+		$request = new AlipayTradeQueryRequest ();
 
 		$data = array();
 		$data['out_trade_no']=$info['out_trade_no'];
-		$data['total_amount']=$info['total_amount'];
-		$data['subject']=$info['subject'];
-		$data['body']=$info['body'];
-		$data['seller_id']= '2088102176803486';
-
+		
 
 		$bz = json_encode((object)$data);
 		// var_dump($bz);
 		$request->setBizContent($bz);
-		$result = $this->aop->pageExecute ( $request); 
-		
-		$responseNode = str_replace(".", "", $request->getApiMethodName()) . "response";
-		var_dump(json_encode($result));
-		$resultCode = $result->$responseNode->code;
-		if(!empty($resultCode)&&$resultCode == 10000){
-			return true;
-		} else {
+		try {
+			$result = $this->aop->execute ( $request); 
+		} catch (Exception $e) {
+
 			return false;
 		}
+		return json_decode(json_encode($result),true);
+		// $result = $this->aop->execute ( $request); 
+
+		var_dump($result);exit();
+		
 	}
 
 }

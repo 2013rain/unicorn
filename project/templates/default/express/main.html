@@ -91,7 +91,9 @@
         <td>{format::date($info['in_store_time'], 1)}
         </td>
         <td>{$info['weight']}</td>
-        <td>{if $info['pay_status']==0}<a style="color:blue" target="_blank"  href="index.php?m=express&c=index&a=pay&id={$info['id']}">支付运费</a>
+        <td>
+          {if $info['pay_status']==0 }
+          <a style="color:blue" target="_blank"  href="index.php?m=express&c=index&a=pay&id={$info['id']}">支付运费</a>
           {/if}
         </td>
       </tr>

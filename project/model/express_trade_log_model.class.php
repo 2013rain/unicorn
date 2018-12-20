@@ -9,7 +9,7 @@ class express_trade_log_model extends model {
 		parent::__construct();
 	}
 	public function getOrderNo($uid = '', $expressno) {
-		$info = parent::get_one(array('expressno' => $expressno,'userid'=>$uid));
+		$info = parent::get_one(array('express_no' => $expressno,'member_id'=>$uid));
 		$order_no = '';
 		if (empty($info)) {
 			//18位数

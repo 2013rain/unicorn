@@ -42,7 +42,7 @@ class index extends foreground {
         $list_wait = [];
         $list_in_store = [];
         $list_out_store = [];
-		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time');
+		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time,pay_status,pay_money');
         $store = self::$store;
         foreach ($lists as $val) {
             if ($val['status'] == 0 || $val['status'] == 1) {
@@ -535,12 +535,12 @@ class index extends foreground {
                 $del_goods_id = [];
                 $del_flag = true;
                 foreach ($del_goods as $val) {
-                    $id = intval($val);
-                    if (!$id) {
+                    $goodid = intval($val);
+                    if (!$goodid) {
                         $del_flag = false;
                         break;
                     } else {
-                        $del_goods_id[] = $id;
+                        $del_goods_id[] = $goodid;
                     }
                 }
                 if (!$del_flag) {
@@ -561,7 +561,7 @@ class index extends foreground {
                 $express = isset($_POST['inbound']) ? $_POST['inbound'] : array();
                 if (!is_array($express)) {
 
-                    showmessage('非法操作', HTTP_REFERER);
+                    showmessage('非法操作1', HTTP_REFERER);
                 }
                 $express=$express['inbound_items_attributes'];
 
@@ -647,7 +647,7 @@ class index extends foreground {
                     }
                 }
                 if (!$check_del_flag) {
-                    showmessage('非法操作', HTTP_REFERER);
+                    showmessage('非法操作2', HTTP_REFERER);
                 }
                 if ($del_goods_id && empty($remain_goods_ids) && empty($goods_sql)) {
                     showmessage('物品不能为空', HTTP_REFERER);
@@ -675,7 +675,7 @@ class index extends foreground {
                 foreach ($goods_sql as $sql) {
                     $res = $this->goods_db->insert($sql);
                 }
-                showmessage('保存成功', 'index.php?m=express&c=index&a=edit&id='.$id.'&show_service=1&t=3');
+                showmessage('保存成功', 'index.php?m=express&c=index&a=edit&id='.$id.'&show_service=1');
             }
         } else {
             $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
@@ -763,8 +763,29 @@ class index extends foreground {
         if ($info['pay_status']==1 ) {
             showmessage('运单已支付');
         }
+        $this->express_trade_log = pc_base::load_model('express_trade_log_model');
+        $trade_info = $this->express_trade_log->get_one(array('member_id'=>$memberinfo['userid'],'express_no'=>$info['expressno']));
+
+        if (!empty($trade_info ) && !empty($trade_info['order_no'])) {
+            $this->alipay= pc_base::load_sys_class('alipay','',1);
+            $res  = $this->alipay->AlipayTradeQueryRequest(array('out_trade_no'=>$trade_info['order_no']));
+            if (isset($res['alipay_trade_query_response']) && $res['alipay_trade_query_response']['trade_status']=='TRADE_SUCCESS') {
+                $this->db->update(array('pay_status' =>1) , array('id' => $info['id'] ));
+
+                $sucdata = array(
+                    'status' => 1,
+                    'outer_order_no'=>$res['alipay_trade_query_response']['trade_no'],
+                    'finish_time'=>$res['alipay_trade_query_response']['send_pay_date'],
+                );
+                $this->express_trade_log->update($sucdata,array('member_id'=>$memberinfo['userid'],'order_no'=>$trade_info['order_no']));
+                showmessage('运单已支付','/index.php?m=express&c=index&a=init');
+            }
+
+            
+        }
+
         $this->member_address_model = pc_base::load_model('member_address_model');
-        $address_list = $this->member_address_model->select(array('auditstatus' =>'1'));
+        $address_list = $this->member_address_model->select(array('auditstatus' =>'1','member_id'=>$memberinfo['userid']));
 
         include template('express','pay');
 

@@ -1,74 +1,89 @@
-{template 'member', 'header'}
-<div id="memberArea">
-{template 'member', 'account_manage_left'}
-<div class="col-auto">
-	<div class="col-1 ">
-		<h5 class="title">{L('memberinfo')}：</h5>
-		<div class="content">
-		<div class="col-1 member-info">
-		<div class="content">
-			<div class="col-left himg">
-				<a title="{L('modify').L('avatar')}" href="index.php?m=member&c=index&a=account_manage_avatar&t=1"><img src="{$avatar[90]}" width="60" height="60" onerror="this.src='{$phpsso_api_url}/statics/images/member/nophoto.gif'"></a>
-			</div>
-			<div class="col-auto">
-				<h5>{if $memberinfo['vip']}<img src="{IMG_PATH}icon/vip.gif">{elseif $memberinfo['overduedate']}<img src="{IMG_PATH}icon/vip-expired.gif" title="{L('overdue')}，{L('overduedate')}：{format::date($memberinfo['overduedate'],1)}">{/if}
-				<font color="{$grouplist[$memberinfo[groupid]]['usernamecolor']}">
-				{if $memberinfo['nickname']} {$memberinfo['nickname']} {else} {$memberinfo['username']}{/if} 
-				</font>
-				{if $memberinfo['email']}（{$memberinfo['email']}）{/if}</h5>
-				<p class="blue">
-				{L('member_group')}：{$grouplist[$memberinfo['groupid']]['name']}，
-				{L('account_remain')}：<font style="color:#F00; font-size:22px;font-family:Georgia,Arial; font-weight:700">{$memberinfo[amount]}</font> {L('unit_yuan')}，
-				{L('point')}：<font style="color:#F00; font-size:12px;font-family:Georgia,Arial; font-weight:700">{$memberinfo[point]}</font> {L('unit_point')}{if $memberinfo['vip']}，vip{L('overduedate')}：<font style="color:#F00; font-size:12px;font-family:Georgia,Arial; font-weight:700">{format::date($memberinfo['overduedate'])}</font>{/if}
-				</p>
-			</div>
-		</div>
-	</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}account_manage.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 
-	<div class="bk10"></div>	
-	<div class="col-1 ">
-		<h5 class="title">{L('more_configuration')}：</h5>
-		<div class="content">
-				<table width="100%" cellspacing="0" class="table_form">
-					<tr>
-						<th width="120">{L('username')}</th>        
-						<td>{$memberinfo['username']}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('in_model')}：</th>        
-						<td>{$member_model[$memberinfo['modelid']]['name']}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('regtime')}：</th>        
-						<td>{FORMAT::date($memberinfo['regdate'] ,1)}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('lastlogintime')}：</th>        
-						<td>{FORMAT::date($memberinfo['lastdate'] ,1)}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('regip')}：</th>        
-						<td>{$memberinfo['regip']}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('lastip')}：</th>        
-						<td>{$memberinfo['lastip']}</td>
-					</tr>
-					<tr>
-						<th width="120">{L('mp')}：</th>        
-						<td style="color:#ff6600;"><strong>{if $memberinfo['mobile']}{substr($memberinfo['mobile'],0,3)}****{substr($memberinfo['mobile'],-4)}{/if}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="更换手机" class="button" onclick="redirect('?m=member&c=index&a=account_change_mobile&t=1')"></td>
-					</tr>
-					{loop $member_modelinfo $k $v}
-					<tr>
-						<th width="120">{$k}：</th>        
-						<td>{$v}</td>
-					</tr>
-					{/loop}
-				</table>
-		</div>
-	</div>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}common.js"></script>
+</head>
+{template "member","banner"}
+
+
+<!-- 账号管理 -->
+<div id="content" style="margin-top: 50px;">
+  <div class="content_detail">
+    <div class="header_button_panel"></div>
+
+      <div class="common_panel">
+        <div class="panel_header">查看、修改账号信息</div>
+          <div class="panel_content">
+            <table class="common_form">
+              <tbody>
+                <tr>
+                  <td class="label">注册邮箱</td>
+                  <td class="item">{$memberinfo['email']}</td>
+                  <td class="info"><span class="notice"></span></td>
+                </tr>
+                <tr>
+                  <td class="label">注册日期</td>
+                  <td class="item">{FORMAT::date($memberinfo['regdate'] ,1)}</td>
+                  <td class="info"><span class="notice"></span></td>
+                </tr>
+
+                <tr>
+                  <td class="label">中文姓名</td>
+                  <td class="item">{$memberinfo['username']}</td>
+                  <td class="info"></td>
+                </tr>
+                <tr>
+                  <td class="label">英文名</td>
+                  <td class="item">{$memberinfo['enname']}</td>
+                  <td class="info"></td>
+                </tr>
+                <tr>
+                  <td class="label">手机号码</td>
+                  <td class="item">{$memberinfo['mobile']}</td>
+                  <td class="info"></td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="panel_footer">
+            <div class="submit_button">
+              
+              <a href="/index.php?m=member&c=index&a=account_manage_password&t=1" id="change_password"> 修改登录密码</a>
+            </div>
+          </div>
+      </div>
+
+    <script type="text/javascript">
+      $(function () {
+        jQuery.validator.addMethod("isMobile", function (value, element) {
+          var length = value.length;
+          var mobile = /^((1[0-9]{2})+\d{8})$/;
+          return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请正确填写您的手机号码");
+        $("form:first").validate({
+          rules: {
+            "mobile": {
+              required: true,
+              isMobile: true
+            }
+          }
+        });
+        $("a#submit").click(function () {
+          $(this).closest("form").submit();
+          return false;
+        });
+      });
+    </script>
+  </div>
 </div>
-</div>
-</div>
-<div class="clear"></div>
 {template 'member', 'footer'}
