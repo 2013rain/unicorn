@@ -112,38 +112,50 @@ class manage extends admin {
                     showmessage('上传失败',HTTP_REFERER);
                 }
                 $row = 0;
+                $suc_row = 0;
                 $time = time();
                 if($_FILES['express_data']['tmp_name']) {
                     if (($fp = fopen($_FILES['express_data']['tmp_name'], 'rb')) !== false) {
                         while (($data = fgetcsv($fp)) !== false) {
                             if ($row!=0) {
                                 if (count($data) != 5) {
+                                    $row++;
                                     continue;
                                 }
                                 $store = $data[0];
                                 $company = $data[1];
                                 $expressno = $data[2];
                                 $create_time = $data[3];
-                                $weight = floatval($data[4]);
+                                $weight = self::formatWeight($data[4]);
                                 if (!$company || !$expressno || !$create_time || !$weight) {
+                                    $row++;
                                     continue;
                                 }
                                 $where = [
                                     'expressno' => $expressno,
-                                    'status' => 1
                                 ];
-                                $set_data = [
-                                    'weight' => $weight,
-                                    'status' => 2,
-                                    'in_store_time' => $time
-                                ];
-                                $this->db->update($set_data, $where);
+                                $get_one = $this->db->get_one($where, 'id,rebate,status');
+                                if ($get_one && $get_one['status'] == 1) {
+                                    $price = self::getPrice($weight, $get_one['rebate']);
+                                    $set_where = [
+                                        'id' => $get_one['id']
+                                    ];
+                                    $set_data = [
+                                        'weight' => $weight,
+                                        'status' => 2,
+                                        'in_store_time' => $time,
+                                        'price' => $price
+                                    ];
+                                    $this->db->update($set_data, $set_where);
+                                    $suc_row++;
+                                }
                             }
                             $row++;
                         }
                     }
+                    fclose($_FILES['express_data']['tmp_name']);
                 }
-                showmessage('批量处理完成',HTTP_REFERER);
+                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));
@@ -217,12 +229,14 @@ class manage extends admin {
                     showmessage('上传失败',HTTP_REFERER);
                 }
                 $row = 0;
+                $suc_row = 0;
                 $time = time();
                 if($_FILES['express_data']['tmp_name']) {
                     if (($fp = fopen($_FILES['express_data']['tmp_name'], 'rb')) !== false) {
                         while (($data = fgetcsv($fp)) !== false) {
                             if ($row!=0) {
                                 if (count($data) != 10) {
+                                    $row++;
                                     continue;
                                 }
                                 $store = $data[0];
@@ -236,6 +250,7 @@ class manage extends admin {
                                 $send_company = $data[8];
                                 $send_no = $data[9];
                                 if (!$company || !$expressno || !$in_store_time || !$weight || !$pay || !$rebat || !$service || !$send_company || !$send_no) {
+                                    $row++;
                                     continue;
                                 }
                                 $where = [
@@ -250,12 +265,14 @@ class manage extends admin {
                                     'status' => 3
                                     ];
                                 $this->db->update($set_data, $where);
+                                $suc_row++;
                             }
                             $row++;
                         }
                     }
+                    fclose($_FILES['express_data']['tmp_name']);
                 }
-                showmessage('批量处理完成',HTTP_REFERER);
+                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));
@@ -279,6 +296,30 @@ class manage extends admin {
         }
         return $name;
     }   
+
+    private static function formatWeight($weight) {
+        if (!is_numeric($weight)) {
+            return false;
+        }
+        $weight = floatval($weight);
+        if ($weight <= 0) {
+            return false;
+        }
+        return $weight;
+    }
+
+    private static function getPrice($weight, $rebate) {
+        $rebate = floatval($rebate);
+        if ($rebate < 0) {
+            $rebate = 0;
+        }
+        $base = 10;
+        $price = $weight * $base;
+        if ($rebate != 0) {
+            $price = $price * $rebate;
+        }
+        return $price;
+    }
 
 	
 }
