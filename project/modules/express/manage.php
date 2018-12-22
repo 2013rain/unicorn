@@ -11,6 +11,7 @@ class manage extends admin {
 	private $db, $goods_db;
     private static $store;
     private static $services;
+    private static $nodes;
 	function __construct() {
 		parent::__construct();
 		//$this->db = pc_base::load_model('member_model');
@@ -24,6 +25,12 @@ class manage extends admin {
         }
         if (!self::$services) {
             self::$services = pc_base::load_config('express_service');
+        }
+        if (!self::$nodes) {
+            $info = pc_base::load_config('express_node');
+            foreach ($info as $val) {
+                self::$nodes[$val['value']] = $val;
+            }
         }
 	}
 
@@ -319,6 +326,81 @@ class manage extends admin {
             $price = $price * $rebate;
         }
         return $price;
+    }
+    function sendno_status_update() {
+        $where = [
+            'status' => 3,
+        ];
+		$lists = $this->db->listinfo($where, '', $page, 10);
+		$pages = $this->db->pages;
+        $nodes = self::$nodes;
+        include $this->admin_tpl('set_status');
+    }
+
+    function set_status() {
+        $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : '';
+        $get_node = isset($_GET['node']) ? trim($_GET['node']) : '';
+        if (!$expressno || !self::$nodes[$get_node]) {
+            echo 0;
+            exit;
+        }
+        $where = [
+            'expressno' => $expressno,
+        ];
+        $get_one = $this->db->get_one($where, 'pay_status,status,time_node');
+        if (!$get_one) {
+            echo 0;
+            exit;
+        }
+        if ($get_one['pay_status'] != 1 || $get_one['status'] != 3) {
+            echo 0;
+            exit;
+        }
+        $store_node = unserialize($get_one['time_node']);
+        $format_node = self::checkFormatNode($get_node, $store_node);
+        if (!$format_node) {
+            echo 0;
+            exit;
+        }
+        $save_node = serialize($format_node);
+        $set_data = [
+            'time_node' => $save_node
+        ];
+        $res = $this->db->update($set_data, $where);
+        if ($res) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
+    private static function checkFormatNode($get_node, $store_node) {
+        if (!isset(self::$nodes[$get_node])) {
+            return false;
+        }
+        if (!is_array($store_node)) {
+            $store_node = [];
+        }
+        if (isset($store_node[$get_node])) {
+            return false;
+        }
+        $flag = true;
+        for ($i = 1; $i < intval($get_node); $i++) {
+            if (!isset($store_node[$i])) {
+                $flag =false;
+                break;
+            }
+        }
+        if (!$flag) {
+            return false;
+        }
+        $value = self::$nodes[$get_node]['value'];
+        $data = [
+            'value' => $value,
+            'time' => time()
+        ];
+        $store_node[$get_node] = $data;
+        return $store_node;
     }
 
 	
