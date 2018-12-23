@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}detail.css">
+
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+	
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+
+<!-- 查看快递信息 -->
+<div id="content" style="margin-top: 50px;">
+  <div class="content_detail">
+    <div class="header_intro_panel">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div class="label">出库仓库：</div>
+              <div class="value">
+                {$store[$express['storeid']]['name']}
+              </div>
+            </td>
+            <td>
+              <div class="label">快递单号：</div>
+              <div class="value">{$express['expressno']}</div>
+            </td>
+            <td>
+              <div class="label">国内单号：</div>
+              <div class="value">{$express['send_company']}{$express['send_no']}</div>
+            </td>
+            <td>
+              <div class="label">货物数量：</div>
+              <div class="value">{$goods_num}</div>
+            </td>
+            <td class="status">
+              <div class="label">状态：</div>
+              <div class="value">{if $express['status']==3}已出库{elseif $express['status']==4}已收货{/if}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail_info_panel">
+      <dl class="list_info">
+        <dd>
+          <div class="label">收件人</div>
+          <div class="value">{$addr_info['consignee']},{$addr_info['province']},{$addr_info['area']},{$addr_info['addressinfo']},{$addr_info['zipcode']},{$addr_info['mobile']}</div>
+        </dd>
+        <dd>
+          <div class="label">出库单重量</div>
+          <div class="value">{$express['weight']}</div>
+        </dd>
+        <dd>
+          <div class="label">出库单费用</div>
+          <div class="value">{$express['price']}</div>
+        </dd>
+        <dd>
+          <div class="label">实付费用</div>
+          <div class="value">{$express['pay_money']}</div>
+        </dd>
+        <dd>
+          <div class="label">货物概述</div>
+          <div class="value">{$express['detail']}</div>
+        </dd>
+      </dl>
+      <dl class="chart_info">
+          {loop $time_node $node}
+          <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
+          {if $node['value']=='5'}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.baidu.com/s?wd={$express['send_company']} {$express['send_no']}">点击这里去百度查询包裹信息</a></dd>{/if}
+          {/loop}
+      </dl>
+    </div>
+    <div class="common_panel">
+      <div class="panel_header">快递单中货物信息</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="35%">商品名称</th>
+              <th width="20%">商品类别</th>
+              <th width="10%">商品品牌</th>
+              <th width="10%">商品型号</th>
+              <th width="15%">商品单价</th>
+              <th width="10%" class="last">商品数量</th>
+            </tr>
+          </thead>
+          <tbody>
+          	{loop $goods $good}
+            <tr class="last">
+            	<td >{$good['goodsname']}</td>
+            <td  >{$good['pcategory']} - {$good['scategory']}</td>
+			<td>{$good['productname']}</td>
+			<td >{$good['goodsmodel']}</td>
+			<td>{$good['uprice']}</td>
+			<td class="last">{$good['num']}</td>
+            </tr>
+            {/loop}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="common_panel">
+      <div class="panel_header">增值服务及收费明细</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+              <tr>
+                <th width="20%">服务名称</th>
+                <th width="20%">收费</th>
+                <th class="last">完成情况及收费标准收费描述</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{loop $service_arr $service}
+              <tr class="last">
+                <td>{$service['name']}</td>
+                <td>{if $vip}{$service['vip_price']}{else}{$service['price']}{/if}</td>
+                <td class="last">{$service['desc']}{$service['price_desc']}</td>
+              </tr>
+              {/loop}
+              <tr class="last">
+                <td>运费</td>
+                <td>{weightcost($express['weight'])}</td>
+                <td class="last">出库单称重{$express['weight']}公斤，计费重量{$express['weight']}公斤，最终计费重量以飞往中国时实际重量为准，转运偏好为转运中国默认，首重500克49.0元，续重100克6.9元</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--
+    <div class="common_panel">
+      <div class="panel_header">相关交易明细</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="35%">交易发起时间</th>
+              <th width="20%">交易金额</th>
+              <th width="10%">交易内容</th>
+            </tr>
+          </thead>
+          <tbody>
+          	{loop $goods $good}
+            <tr class="last">
+            	<td >{$good['goodsname']}</td>
+            <td  >{$good['pcategory']} - {$good['scategory']}</td>
+			<td>{$good['productname']}</td>
+			<td >{$good['goodsmodel']}</td>
+			<td>{$good['uprice']}</td>
+			<td class="last">{$good['num']}</td>
+            </tr>
+            {/loop}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    -->
+
+  </div>
+</div>
+<!-- 查看快递信息 -->
+
+
+{template 'member', 'footer'}

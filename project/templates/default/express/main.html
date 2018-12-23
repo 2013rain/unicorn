@@ -113,15 +113,16 @@
          <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:16px;">有异常的货物</a>
          <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">有税票出库单</a>
      -->
-         <a href="javascript:void()" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">全部货物转运记录</a></th>
+         <a href="index.php?m=express&c=index&a=all_out_express" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">全部货物转运记录</a></th>
       </tr>
       <tr>
         <th>出库仓库</th>
-        <th>出库单号</th>
+        <th>快递单号</th>
         <th>货物概述</th>
         <th>入库时间</th>
-        <th>出库日期</th>
+        <th>出库时间</th>
         <th>重量</th>
+        <th>操作</th>
       </tr>
       {if empty($list_out_store)}
       <tr class="t1"  >
@@ -131,11 +132,12 @@
       {loop $list_out_store $info}
       <tr>
         <td>{$store[$info['storeid']]['name']}</td>
-        <td>{$info['expressno']}</td>
+        <td><a style="color:blue" target="_blank" href="/index.php?m=express&c=index&a=out_detail&expressno={$info['expressno']}&t=3">{$info['expressno']}</a></td>
         <td>{$info['detail']}</td>
         <td>{format::date($info['in_store_time'], 1)}</td>
         <td>{format::date($info['out_store_time'], 1)}</td>
         <td>{$info['weight']}</td>
+          <td><a style="color:blue" href="index.php?m=express&c=index&a=confirm&id={$info['id']}">确认收货</a></td>
       </tr>
       {/loop}
       {/if}

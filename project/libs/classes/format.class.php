@@ -29,5 +29,19 @@ class format {
 		$weekarray = array(L('Sunday'),L('Monday'),L('Tuesday'),L('Wednesday'),L('Thursday'),L('Friday'),L('Saturday')); 
 		return $weekarray[date("w",$timestamp)]; 
 	}
+
+    /**
+     * 持续天数，不满一天按一天计算
+     */
+	public static function holdday($starttimestamp, $endtimestamp) {
+        $start = intval($starttimestamp);
+        $end = intval($endtimestamp);
+        $hold = $end - $start;
+        if ($hold < 0) {
+            return 1;
+        }
+        $days = ceil($hold/(24*3600));
+        return $days;
+	}
 }
 ?>

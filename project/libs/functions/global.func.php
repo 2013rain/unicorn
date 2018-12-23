@@ -1856,4 +1856,19 @@ function dump($r) {
     var_dump($r);
     echo "</pre>";
 }
+function weightcost($weight,$debate) {
+    $rebate = floatval($rebate);
+    if ($rebate < 0) {
+        $rebate = 0;
+    }
+    $weight = $weight - 0.5;
+    $price = 0.5 * 49;
+    if ($weight > 0) {
+        $price += ceil($weight / 0.1);
+    }
+    if ($rebate != 0) {
+        $price = $price * $rebate;
+    }
+    return $price;
+}
 ?>

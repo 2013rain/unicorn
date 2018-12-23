@@ -141,9 +141,12 @@ class manage extends admin {
                                 $where = [
                                     'expressno' => $expressno,
                                 ];
-                                $get_one = $this->db->get_one($where, 'id,rebate,status');
+                                $get_one = $this->db->get_one($where, 'id,rebate,status,service');
                                 if ($get_one && $get_one['status'] == 1) {
-                                    $price = self::getPrice($weight, $get_one['rebate']);
+                                    $price = weightcost($weight, $get_one['rebate']);
+                                    $store_service = $get_one['service'];
+                                    $service_price = $this->getServicePrice($store_service);
+                                    $price = $price + $service_price;
                                     $set_where = [
                                         'id' => $get_one['id']
                                     ];
@@ -315,18 +318,6 @@ class manage extends admin {
         return $weight;
     }
 
-    private static function getPrice($weight, $rebate) {
-        $rebate = floatval($rebate);
-        if ($rebate < 0) {
-            $rebate = 0;
-        }
-        $base = 10;
-        $price = $weight * $base;
-        if ($rebate != 0) {
-            $price = $price * $rebate;
-        }
-        return $price;
-    }
     function sendno_status_update() {
         $where = [
             'status' => 3,
@@ -394,14 +385,21 @@ class manage extends admin {
         if (!$flag) {
             return false;
         }
-        $value = self::$nodes[$get_node]['value'];
-        $data = [
-            'value' => $value,
-            'time' => time()
-        ];
+        $data = self::$nodes[$get_node];
+        $data['time'] = time();
         $store_node[$get_node] = $data;
         return $store_node;
     }
+    private function getServicePrice($serviceStr) {
+        $price = 0; 
+        $len = strlen($serviceStr);
+        for ($i = 0; $i < $len; $i++) {
+            if ($serviceStr[$i] == '1' && isset(self::$services[$i])) {
+                $price += self::$services[$i]['price'];
+            }   
+        }
+        return $price;
+    }   
 
 	
 }

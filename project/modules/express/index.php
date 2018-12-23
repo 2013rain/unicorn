@@ -42,12 +42,12 @@ class index extends foreground {
         $list_wait = [];
         $list_in_store = [];
         $list_out_store = [];
-		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time,pay_status,pay_money');
+		$lists = $this->db->select($where, 'id,storeid,expressno,detail,createtime,status,in_store_time,out_store_time,weight,pay_status,pay_money');
         $store = self::$store;
         foreach ($lists as $val) {
             if ($val['status'] == 0 || $val['status'] == 1) {
                 $list_wait[] = $val;
-            } elseif ($val['status']) {
+            } elseif ($val['status'] == 2) {
                 $list_in_store[] = $val;
             } else {
                 $list_out_store[] = $val;
@@ -457,6 +457,21 @@ class index extends foreground {
         $pages = $this->db->pages;
         include template('express','all_express');
     }
+    function all_out_express() {
+        $userid = $this->memberinfo['userid'];
+        $page = $_GET['page'] ? intval($_GET['page']) : '1';
+        $expressno = isset($_GET['expressno']) ? $_GET['expressno'] : '';
+        $where = "`userid`=$userid";
+        if (!isset($_GET['clear']) && $expressno) {
+            $where .= " and `expressno`=$expressno";
+        } else {
+            $where .= " and `status` in (3,4)";
+        }
+        $store = self::$store;
+        $list = $this->db->listinfo($where, '', $page, 10, '', 10, '', [], 'id,company,storeid,expressno,weight,detail,out_store_time,status');
+        $pages = $this->db->pages;
+        include template('express','all_out_express');
+    }
 
     function delete() {
         $userid = $this->memberinfo['userid'];
@@ -789,6 +804,67 @@ class index extends foreground {
 
         include template('express','pay');
 
+    }
+
+    function out_detail() {
+        $userid = $this->memberinfo['userid'];
+        $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : 0;
+        if (!$expressno) {
+            showmessage('非法订单', 'index.php?m=express&c=index');
+        }
+        $store = self::$store;
+        $where = [
+            'expressno' => $expressno,
+        ];
+        $express = $this->db->get_one($where);
+        if (!$express || $express['userid'] != $userid || !in_array($express['status'],[3,4])) {
+            showmessage('非法操作', 'index.php?m=express&c=index');
+        }
+        $expressno = $express['expressno'];
+        $where = [
+            'userid' => $userid,
+            'expressno' => $expressno
+        ];
+        $goods = $this->goods_db->select($where);
+        $goods_num = 0;
+        foreach ($goods as $val) {
+            $goods_num += $val['num'];
+        }
+        $service = $express['service'];
+        if ($service[0] == '1') {
+            $express_mode = '货到即发';
+        } else {
+            $express_mode = '普通入库';
+        }
+        $hold_days = format::holdday($express['in_store_time'],$express['out_store_time']);
+        $vip = isset($express['pay_vip']) ? $express['pay_vip'] : 0;
+        $service = $express['service'];
+        $service_arr = $this->decodeService($service);
+        $time_node = unserialize($express['time_node']);
+        $addr_id = $express['address_id'];
+        $addr_db = pc_base::load_model('member_address_model');
+        $addr_info = $addr_db->get_one(['id'=>$addr_id]);
+        include template('express', 'out_detail');
+    }
+
+    function confirm() {
+        $userid = $this->memberinfo['userid'];
+        $express_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        if (!$express_id) {
+            showmessage('非法订单', 'index.php?m=express&c=index');
+        }
+        $where = [
+            'id' => $express_id,
+        ];
+        $express = $this->db->get_one($where);
+        if (!$express || $express['userid'] != $userid || $express['status'] != 3) {
+            showmessage('非法操作', 'index.php?m=express&c=index');
+        }
+        $set_data = [
+            'status' => 4
+        ];
+        $this->db->update($set_data, $where);
+        showmessage('收货成功', 'index.php?m=express&c=index');
     }
 	
 }

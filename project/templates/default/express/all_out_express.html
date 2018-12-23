@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{L('member','','member').L('manage_center')}</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}all_express.css">
+
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+	
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+
+<!-- 全部入库记录 -->
+<div id="content" style="margin-top: 50px;">
+    <div class="content_detail">
+      <div class="common_panel">
+        <div class="panel_header">全部货物入库记录(系统只提供2014年以后的入库数据,之前数据已经归档不再提供直接查询)
+        
+        </div>
+        <div class="panel_header">
+        <form name="searchform" action="/index.php?m=express&c=index&a=all_out_express" method="get" ><input type="hidden" value="express" name="m">
+    <input type="hidden" value="index" name="c">
+    <input type="hidden" value="all_out_express" name="a">
+        	<input name="expressno" type="text" value="{$expressno}" class="input-text" />
+        	<input type="submit" name="search" class="button" value="搜索" />
+        </form>
+        </div>
+        <div class="panel_content">
+          <table class="common_list">
+            <thead>
+              <tr>
+                <th>出库仓库</th>
+                <th>公司</th>
+                <th>快递单号</th>
+                <th>货物描述</th>
+                <th>当前状态</th>
+                <th>出库时间</th>
+                <th class="last">重量</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{loop $list $info}
+			<tr>
+			<td class="nowrap">{$store[$info['storeid']]['name']}</td>
+			<td >{$info['company']}</td>
+            <td class="nowrap" ><a style="color:blue" target="_blank" href="/index.php?m=express&c=index&a=out_detail&expressno={$info['expressno']}&t=3">{$info['expressno']}</a></td>
+			<td >{$info['detail']}</td>
+            <td >{if $info['status']==3}运输中{else}已完成{/if}</td>
+			<td>{format::date($info['out_store_time'], 1)}</td>
+			<td class="last">{$info['weight']}</td>
+			</tr>
+			{/loop}
+              
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="pager_button">{$pages}</div>
+    </div>
+</div>
+<!-- /全部入库记录 -->
+
+{template 'member', 'footer'}
