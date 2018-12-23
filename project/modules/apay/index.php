@@ -41,7 +41,7 @@ class index extends foreground{
 			}
 			$this->member_address_model = pc_base::load_model('member_address_model');
 			$addressInfo = $this->member_address_model->get_one(array('member_id'=>$memberinfo['userid'],'id'=>(int)$address_id,'auditstatus'=>1));
-			var_dump($_POST);var_dump($memberinfo);
+
 			if (empty($addressInfo)) {
 				showmessage('无效收货地址');
 			}
@@ -49,7 +49,7 @@ class index extends foreground{
 			if (empty($info)) {
 	            showmessage('访问不合法');
 	        }
-	        if ($info['status']!=2 || $info['pay_money']<=0) {
+	        if ($info['status']!=2 || $info['price']<=0) {
 	            showmessage('运单状态不支持支付');
 	        }
 	        if ($info['pay_status']==1 ) {
@@ -61,9 +61,9 @@ class index extends foreground{
 	       
 	        $trade = array(
 				'out_trade_no'=>$order_no,
-				'total_amount'=>$info['pay_money'],
+				'total_amount'=> 0.01,//$info['price'],
 				'subject'=>'支付运费',
-				'body'=>'快递费支付'.$info['pay_money'].'元',
+				'body'=>'快递费支付'.$info['price'].'元',
 			);
 			$res = $this->alipay->AlipayTradePagePayRequest($trade);
 			echo $res;

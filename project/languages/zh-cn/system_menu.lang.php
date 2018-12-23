@@ -461,5 +461,9 @@ $LANG['complete_info'] = '填写资料';
 $LANG['clear_data'] = '一键清理';
 $LANG['player_manage'] = '播放器管理';
 $LANG['video_upload'] = '视频上传'; 
-
+$LANG['set_weight_storage'] = '称重入库';
+$LANG['batch_express'] = '快递批量操作';
+$LANG['batch_in_store'] = '入库批量操作';
+$LANG['batch_out_store'] = '出库批量操作';
+$LANG['sendno_status_update'] = '物流状态更新';
 ?>
