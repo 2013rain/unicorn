@@ -12,7 +12,7 @@
     <script src="{JS_PATH}common.js"></script>
     <script src="{JS_PATH}address.js"></script>
     <script src="{JS_PATH}inbound.js"></script>
-	
+
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
 {template 'member', 'banner'}
@@ -49,7 +49,7 @@
                 	{loop $stores $store}
                   <dd class="us_or" unit_price_label="单价" warehouse_id="{$store['id']}">{$store['name']}</dd>
                   {/loop}
-                 
+
                   <input id="inbound_warehouse_id" name="store" type="hidden" value="">
                   <input name="dosubmit" type="hidden" value="dosubmit">
                 </dl>
@@ -71,7 +71,7 @@
               <td class="label">快递编号</td>
               <td class="item">
                 <div class="field_with_errors">
-                  <input class="textbox" id="inbound_express_tracking_number" name="expressno" type="text" value="EWDWDWD">
+                  <input class="textbox" id="inbound_express_tracking_number" name="expressno" type="text" value="">
                 </div>
               </td>
               <td class="info">
@@ -82,7 +82,7 @@
             </tr>
             <tr>
               <td class="label">货物概述</td>
-              <td class="item"><input class="textbox" id="inbound_name" name="summary" type="text" value="dwwwwwdwd"></td>
+              <td class="item"><input class="textbox" id="inbound_name" name="summary" type="text" value=""></td>
               <td class="info"></td>
             </tr>
             </tbody>
@@ -109,7 +109,7 @@
       </tr>
       </thead>
         <tbody>
-          
+
         </tbody>
       </table>
       </div>
