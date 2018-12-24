@@ -12,7 +12,7 @@
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
  <!-- 头部 -->
- {template 'member', 'banner'} 
+ {template 'member', 'banner'}
 <!-- 添加/编辑地址 -->
 <div id="content" style="margin-top:50px;">
 <div class="content_detail">
@@ -68,20 +68,20 @@
                   <td class="item">
                     <select id="region_city_selector_region" name="info[province]">
                       <option value="">请选择</option>
-                      {loop $province_list  $p}           
+                      {loop $province_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['province'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
                     </select>
                     <select id="region_city_selector_city" name="info[city]" >
                       <option value="">请选择</option>
-                      {loop $city_list  $p}           
+                      {loop $city_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['city'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
-        
+
                     </select>
                     <select id="region_city_selector_district" name="info[area]" >
                       <option value="">请选择</option>
-                       {loop $area_list  $p}           
+                       {loop $area_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['area'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
                     </select>
@@ -91,7 +91,7 @@
                 <tr>
                   <td class="label"><em>(必填)</em>收货街道门牌号</td>
                   <td class="item"><input class="textbox" id="user_address_address" name="info[addressinfo]" type="text" value="{$member_address_info['addressinfo']}"></td>
-                  <td class="info"><span class="notice">请勿重复填写省市辖区</span></td>
+                  <td class="info"><span class="">请勿重复填写省市辖区</span></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>收货邮编</td>
@@ -163,6 +163,10 @@
       return this.optional(element) || /^[\u4DAE\u4E00-\u9FA5]+$/.test(value);
     }, "请输入中文姓名");
 
+    jQuery.validator.addMethod("isZipCode", function (value, element) {
+      return this.optional(element) || /^[0-9]{6}$/.test(value);
+    }, "请输入正确的邮编");
+
     jQuery.validator.addMethod("validates_district", function (value, element) {
       return /^[\u4DAE\u4E00-\u9FA5]+$/.test(value);
     }, "请选择收货省市辖区");
@@ -187,6 +191,7 @@
         "user_address[zip_code]": {
           required: true,
           number: true
+          isZipCode:true
         },
         "user_address[mobile]": {
           required: true,
@@ -265,12 +270,12 @@ $(function() {
 
                          if (data.data) {
 
-                            var html = '<option>请选择</option>'; 
+                            var html = '<option>请选择</option>';
                               $.each(data.data, function(commentIndex, comment){
                                    html += '<option value="'+comment['cityname']+'">'+comment['cityname']+'</option>';
                              });
                             obj.html(html);
-                         } 
+                         }
 
                       }
 
@@ -292,6 +297,6 @@ $(function() {
     }
   });
 });
-  
+
 </script>
 {template 'content', 'footer'}
