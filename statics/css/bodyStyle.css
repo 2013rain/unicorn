@@ -1,0 +1,19 @@
+/*
+* @Author: Marte
+* @Date:   2018-12-23 16:18:50
+* @Last Modified by:   Marte
+* @Last Modified time: 2018-12-23 16:26:02
+*/
+
+header .container .con_top {
+    background-color: rgba(246,170,0,1)!important;
+}
+#content .common_panel{
+    background-color:rgba(246,170,0,0.6)!important;
+}
+#content .common_list thead{
+    background-color:rgba(246,170,0,0.4)!important;
+}
+header .container .con_center ul .active {
+    border-bottom: 3px solid rgba(246,170,0,1)!important;
+}

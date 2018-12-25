@@ -108,7 +108,7 @@
 <div class="wait-in-store out-in-store">
     <table>
       <tr style="background-color: rgba(246,170,0,0.6);">
-        <th class="t1" colspan="6" style="text-align: left; border:none; padding-left: 15px; font-size: 18px;">已出库货物
+        <th class="t1" colspan="7" style="text-align: left; border:none; padding-left: 15px; font-size: 18px;">已出库货物
          <!--
          <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:16px;">有异常的货物</a>
          <a href="#" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">有税票出库单</a>
@@ -126,7 +126,7 @@
       </tr>
       {if empty($list_out_store)}
       <tr class="t1"  >
-        <td colspan="6">目前仓库中没有货物</td>
+        <td colspan="7">目前仓库中没有货物</td>
       </tr>
       {else}
       {loop $list_out_store $info}

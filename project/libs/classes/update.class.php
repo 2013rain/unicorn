@@ -6,12 +6,13 @@ class update {
 
 	function __construct() {
 		$this->db = pc_base::load_model('admin_model');
-		$this->update_url = 'http://update.v9.phpcms.cn/index.php';
+		$this->update_url = '';
 		$this->http = pc_base::load_sys_class('http','',1);
 		$this->uuid = $this->check_uuid();
 	}
 
 	function check(){
+		return true;
 		$url = $this->url('check');
         if(!$this->http->get($url)) return false;
 		return $this->http->get_data();
