@@ -1939,11 +1939,12 @@ class index extends foreground {
 
 			$attachment = new attachment('index','110',1,"addresslist");
 			$attachment->set_userid($memberinfo['userid']);
-			$a = $attachment->upload('idfront','jpeg|jpg', 1024*10*5,'',array(),0);
+			$a = $attachment->upload('idfront','jpeg|jpg', 1024*1024*5,'',array(),0);
+
 			if (!$a) {
 				showmessage("正面照上传失败");
 			}
-			$a = $attachment->upload('idback','jpeg|jpg', 1024*10*5,'',array(),0);
+			$a = $attachment->upload('idback','jpeg|jpg', 1024*1024*5,'',array(),0);
 			if (!$a) {
 				showmessage("国徽照上传失败");
 				
