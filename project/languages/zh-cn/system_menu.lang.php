@@ -4,7 +4,7 @@ Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
 $LANG['member_address_init'] = '收货地址';
-$LANG['express'] = '货物操作';
+$LANG['express'] = '订单管理';
 $LANG['my_express'] = '我的货物';
 $LANG['put_in_storage'] = '我要入库';
 $LANG['manage_admin_member'] = '供货商列表';
@@ -461,5 +461,13 @@ $LANG['complete_info'] = '填写资料';
 $LANG['clear_data'] = '一键清理';
 $LANG['player_manage'] = '播放器管理';
 $LANG['video_upload'] = '视频上传'; 
-
+$LANG['set_weight_storage'] = '称重入库';
+$LANG['batch_express'] = '快递批量操作';
+$LANG['batch_in_store'] = '入库批量操作';
+$LANG['batch_out_store'] = '出库批量操作';
+$LANG['sendno_status_update'] = '物流状态更新';
+$LANG['express_plane'] = '待登机订单';
+$LANG['express_clearance'] = '待清关订单';
+$LANG['express_distribute'] = '国内派送订单';
+$LANG['express_complete'] = '已完成订单';
 ?>

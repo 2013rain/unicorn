@@ -38,9 +38,9 @@ class manage extends admin {
 	 * defalut
 	 */
 	function init() {
-		$lists = $this->db->listinfo([], '', $page, 20);
-		$pages = $this->db->pages;
-		include $this->admin_tpl('list');
+        //$lists = $this->db->listinfo([], '', $page, 20);
+        //$pages = $this->db->pages;
+        //include $this->admin_tpl('list');
 	}
 
     function in_storage() {
@@ -400,6 +400,113 @@ class manage extends admin {
         }
         return $price;
     }   
+
+    function express_list() {
+        if(isset($_POST['dosubmit'])) {
+            $ids_arr = isset($_POST['expressid']) ? $_POST['expressid'] : [];
+            $status = isset($_POST['s']) ? intval($_POST['s']) : 0;
+            if (!is_array($ids_arr) || !$status) {
+                showmessage('非法操作', HTTP_REFERER);
+            }
+            if (count($ids_arr)>10) {
+                showmessage('每次选择不能超过10个', HTTP_REFERER);
+            }
+            if (!$ids_arr) {
+                showmessage('至少选择一个', HTTP_REFERER);
+            }
+            $check = self::checkSetStatus($status);
+            if (!$check) {
+                showmessage('非法操作', HTTP_REFERER);
+            }
+            $ids_str = implode(",", $ids_arr);
+            $where = "`id` in ($ids_str)";
+            $list = $this->db->select($where, 'status');
+            if (!$list) {
+                showmessage('非法操作', HTTP_REFERER);
+            }
+            $flag = true;
+            foreach ($list as $val) {
+                if ($val['status'] != $status) {
+                    $flag = false;
+                    break;
+                }
+            }
+            if (!$flag) {
+                showmessage('非法操作', HTTP_REFERER);
+            }
+            $time = time();
+            $status = $status + 1;
+            $set_data = [
+                'status' => $status,
+            ];
+            $set_time = $this->getStatusTime($status);
+            $set_data = array_merge($set_data, $set_time);
+            $this->db->update($set_data, $where);
+            showmessage('操作完成', HTTP_REFERER);
+        } else {
+            $status = isset($_GET['s']) ? intval($_GET['s']) : 0;
+            if (!$status) {
+                showmessage('非法操作', HTTP_REFERER);
+            }
+            $where = [
+                'status' => $status,
+                ];
+            $lists = $this->db->listinfo($where, '', $page, 10);
+            $pages = $this->db->pages;
+            include $this->admin_tpl('list');
+        }
+    }
+
+    function set_next_status() {
+        $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        $status = isset($_GET['s']) ? intval($_GET['s']) : 0;
+        if (!$id || !$status) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        $check = self::checkSetStatus($status);
+        if (!$check) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        $where = [
+            'id' => $id,
+            ];
+        $get_one = $this->db->get_one($where, 'status');
+        if (!$get_one) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        if ($get_one['status'] != $status) {
+            showmessage('非法操作', HTTP_REFERER);
+        }
+        $time = time();
+        $status = $status + 1;
+        $set_data = [
+            'status' => $status,
+        ];
+        $set_time = $this->getStatusTime($status);
+        $set_data = array_merge($set_data, $set_time);
+        $this->db->update($set_data, $where);
+        showmessage('操作完成', HTTP_REFERER);
+    }
+
+    function getStatusTime($status) {
+        $time = time();
+        $set_time = [];
+        switch ($status) {
+            case 4: $set_time['plane_time'] = $time;break;
+            case 5: $set_time['clearance_time'] = $time;break;
+            case 6: $set_time['distribute_time'] = $time;break;
+            case 7: $set_time['complete_time'] = $time;break;
+        }
+        return $set_time;
+    }
+
+    static function checkSetStatus($status) {
+        $status = intval($status);
+        if ($status < 3 || $status >= 7) {
+            return false;
+        }
+        return true;
+    }
 
 	
 }
