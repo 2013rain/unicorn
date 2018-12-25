@@ -38,7 +38,7 @@ class index extends foreground {
 	 */
 	function init() {
 		$userid = $this->memberinfo['userid'];
-        $where = "userid=$userid and status in (0,1,2,3)";
+        $where = "userid=$userid and status in (0,1,2,3,4,5,6)";
         $list_wait = [];
         $list_in_store = [];
         $list_out_store = [];
@@ -465,7 +465,7 @@ class index extends foreground {
         if (!isset($_GET['clear']) && $expressno) {
             $where .= " and `expressno`=$expressno";
         } else {
-            $where .= " and `status` in (3,4)";
+            $where .= " and `status` in (3,4,5,6,7)";
         }
         $store = self::$store;
         $list = $this->db->listinfo($where, '', $page, 10, '', 10, '', [], 'id,company,storeid,expressno,weight,detail,out_store_time,status');
@@ -817,7 +817,7 @@ class index extends foreground {
             'expressno' => $expressno,
         ];
         $express = $this->db->get_one($where);
-        if (!$express || $express['userid'] != $userid || !in_array($express['status'],[3,4])) {
+        if (!$express || $express['userid'] != $userid || !in_array($express['status'],[3,4,5,6,7])) {
             showmessage('非法操作', 'index.php?m=express&c=index');
         }
         $expressno = $express['expressno'];
@@ -840,7 +840,43 @@ class index extends foreground {
         $vip = isset($express['pay_vip']) ? $express['pay_vip'] : 0;
         $service = $express['service'];
         $service_arr = $this->decodeService($service);
-        $time_node = unserialize($express['time_node']);
+        $time_node = [];
+        if ($express['status'] >= 3) {
+            $time_node[] = [
+                'name' => '仓库出库',
+                'value' => 3,
+                'time' => $express['out_store_time'],
+            ];
+        }
+        if ($express['status'] >= 4) {
+            $time_node[] = [
+                'name' => '快递登机',
+                'value' => 4,
+                'time' => $express['plane_time'],
+            ];
+        }
+        if ($express['status'] >= 5) {
+            $time_node[] = [
+                'name' => '快递清关',
+                'value' => 5,
+                'time' => $express['clearance_time'],
+            ];
+        }
+        if ($express['status'] >= 6) {
+            $time_node[] = [
+                'name' => '快递派送',
+                'value' => 6,
+                'time' => $express['distribute_time'],
+            ];
+        }
+        if ($express['status'] == 7) {
+            $time_node[] = [
+                'name' => '订单完成',
+                'value' => 7,
+                'time' => $express['complete_time'],
+            ];
+        }
+
         $addr_id = $express['address_id'];
         $addr_db = pc_base::load_model('member_address_model');
         $addr_info = $addr_db->get_one(['id'=>$addr_id]);
@@ -857,11 +893,11 @@ class index extends foreground {
             'id' => $express_id,
         ];
         $express = $this->db->get_one($where);
-        if (!$express || $express['userid'] != $userid || $express['status'] != 3) {
+        if (!$express || $express['userid'] != $userid) {
             showmessage('非法操作', 'index.php?m=express&c=index');
         }
         $set_data = [
-            'status' => 4
+            'status' => 7
         ];
         $this->db->update($set_data, $where);
         showmessage('收货成功', 'index.php?m=express&c=index');
