@@ -61,7 +61,7 @@
               <td class="label">快递公司</td>
               <td class="item">
                 <input id="inbound_lu_express_id" name="company" type="hidden" value="1">
-                <select class="select express_select" style="width:180px;">
+                <select class="select express_select required" style="width:180px;">
                   <option value="">请选择</option>
                   {loop $store['company'] $company}
                   <option value="{$company['id']}" {if $company['name']== $info['company']}selected="selected"{/if}>{$company['name']}</option>
@@ -74,7 +74,7 @@
               <td class="label">快递编号</td>
               <td class="item">
                 <div class="field_with_errors">
-                  <input class="textbox" id="inbound_express_tracking_number" name="expressno" type="text" value="{$info['expressno']}">
+                  <input class="textbox required" id="inbound_express_tracking_number" name="expressno" type="text" value="{$info['expressno']}">
                 </div>
               </td>
               <td class="info">
@@ -83,7 +83,7 @@
             </tr>
             <tr>
               <td class="label">货物概述</td>
-              <td class="item"><input class="textbox" id="inbound_name" name="summary" type="text" value="{$info['detail']}"></td>
+              <td class="item"><input class="textbox required" id="inbound_name" name="summary" type="text" value="{$info['detail']}"></td>
               <td class="info"></td>
             </tr>
             </tbody>
