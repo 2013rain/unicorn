@@ -59,18 +59,24 @@
           <div class="label">&nbsp;</div>
           <div class="value">一般网站地址栏会有两行，请按此格式填写，确保C/O后的编号能够打印到快递单上<br>如果购物时网站不认可收货地址的话请删除C/O字母，保留3位字母加3位数字的组合</div>
         </dd>
+        {if !empty($v['city']) }
         <dd class="city">
           <div class="label">城市(City)</div>
           <div class="value">{$v['city']}</div>
         </dd>
+        {/if}
+        {if !empty($v['state']) }
         <dd class="state">
           <div class="label">州(State)</div>
           <div class="value">{$v['state']}</div>
         </dd>
+        {/if}
+        {if !empty($v['county']) }
         <dd class="county">
           <div class="label">县/郡(County)</div>
           <div class="value">{$v['county']}</div>
         </dd>
+        {/if}
         <dd class="country">
           <div class="label">国家(Country)</div>
           <div class="value">{$v['country_name']}</div>
