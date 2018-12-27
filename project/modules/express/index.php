@@ -103,6 +103,9 @@ class index extends foreground {
                 if (!$expressno) {
                     showmessage('快递单号必填', HTTP_REFERER);
                 }
+                if (strlen($expressno) > 50) {
+                    showmessage('快递单号限长50以内', HTTP_REFERER);
+                }
                 $row = $this->db->get_one(array('expressno'=>$expressno));
                 if (!empty($row)) {
                     showmessage('快递单号已被使用', HTTP_REFERER);
@@ -111,6 +114,9 @@ class index extends foreground {
                 $summary = isset($_POST['summary']) ? trim($_POST['summary']) : '';
                 if (!$summary) {
                     showmessage('货物概述必填', HTTP_REFERER);
+                }
+                if (mb_strlen($summary, "utf-8") > 100) {
+                    showmessage('货物概述不能超过100字', HTTP_REFERER);
                 }
                 // $express = isset($_POST['express']) ? $_POST['express'] : '';
                 //使用新界面，前端不太好弄
