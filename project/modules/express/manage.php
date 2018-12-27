@@ -99,7 +99,7 @@ class manage extends admin {
                             flush();
                             $r = 0;
                         }
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno'], date('Y-m-d H:i:s', $val['createtime']));
+                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], '"'.$val['expressno'].'"', date('Y-m-d H:i:s', $val['createtime']));
                         foreach($row as $j => $v)
                         {
                             $row[$j] = iconv('utf-8', 'gbk', $v);
@@ -132,6 +132,7 @@ class manage extends admin {
                                 $store = $data[0];
                                 $company = $data[1];
                                 $expressno = trim($data[2]);
+                                $expressno = trim($expressno, '"');
                                 $create_time = trim($data[3]);
                                 $weight = self::formatWeight($data[4]);
                                 if (!$company || !$expressno || !$create_time || !$weight) {
@@ -219,7 +220,7 @@ class manage extends admin {
                         $in_store_time = format::date($val['in_store_time'], 1);
                         $service = $this->getServiceName($val['service']);
                         $rebate = $val['rebate'] ? $val['rebate'] : '无';
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno'], $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
+                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], '"'.$val['expressno'].'"', $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
                         foreach($row as $j => $v)
                         {
                             $row[$j] = iconv('utf-8', 'gbk', $v);
@@ -251,7 +252,8 @@ class manage extends admin {
                                 }
                                 $store = $data[0];
                                 $company = $data[1];
-                                $expressno = $data[2];
+                                $expressno = trim($data[2]);
+                                $expressno = trim($expressno, '"');
                                 $in_store_time = $data[3];
                                 $weight = floatval($data[4]);
                                 $pay = floatval($data[5]);
