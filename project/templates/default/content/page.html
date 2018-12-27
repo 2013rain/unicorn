@@ -10,7 +10,11 @@
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
+{if $_userid && $_username }
+{template 'member', 'banner'}
+{else}
 {template 'content', 'banner'}
+{/if}
 
 <div id="content">
   <div class="content_detail">

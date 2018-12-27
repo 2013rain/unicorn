@@ -125,14 +125,14 @@ class manage extends admin {
                     if (($fp = fopen($_FILES['express_data']['tmp_name'], 'rb')) !== false) {
                         while (($data = fgetcsv($fp)) !== false) {
                             if ($row!=0) {
-                                if (count($data) != 5) {
+                                if (count($data) < 5) {
                                     $row++;
                                     continue;
                                 }
                                 $store = $data[0];
                                 $company = $data[1];
-                                $expressno = $data[2];
-                                $create_time = $data[3];
+                                $expressno = trim($data[2]);
+                                $create_time = trim($data[3]);
                                 $weight = self::formatWeight($data[4]);
                                 if (!$company || !$expressno || !$create_time || !$weight) {
                                     $row++;
@@ -165,7 +165,7 @@ class manage extends admin {
                     }
                     fclose($_FILES['express_data']['tmp_name']);
                 }
-                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
+                showmessage('文件中含有'.($row-1).'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));

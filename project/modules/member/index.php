@@ -788,28 +788,22 @@ class index extends foreground {
   	
 	public function logout() {
 		$setting = pc_base::load_config('system');
-		//snda退出
-		if($setting['snda_enable'] && param::get_cookie('_from')=='snda') {
-			param::set_cookie('_from', '');
-			$forward = isset($_GET['forward']) && trim($_GET['forward']) ? urlencode($_GET['forward']) : '';
-			$logouturl = 'https://cas.sdo.com/cas/logout?url='.urlencode(APP_PATH.'index.php?m=member&c=index&a=logout&forward='.$forward);
-			header('Location: '.$logouturl);
-		} else {
-			$synlogoutstr = '';	//同步退出js代码
-			if(pc_base::load_config('system', 'phpsso')) {
-				$this->_init_phpsso();
-				$synlogoutstr = $this->client->ps_member_synlogout();			
-			}
-			
-			param::set_cookie('auth', '');
-			param::set_cookie('_userid', '');
-			param::set_cookie('_username', '');
-			param::set_cookie('_groupid', '');
-			param::set_cookie('_nickname', '');
-			param::set_cookie('cookietime', '');
-			$forward = isset($_GET['forward']) && trim($_GET['forward']) ? $_GET['forward'] : 'index.php?m=member&c=index&a=login';
-			showmessage(L('logout_success').$synlogoutstr, $forward);
+		
+		$synlogoutstr = '';	//同步退出js代码
+		if(pc_base::load_config('system', 'phpsso')) {
+			$this->_init_phpsso();
+			$synlogoutstr = $this->client->ps_member_synlogout();			
 		}
+		
+		param::set_cookie('auth', '');
+		param::set_cookie('_userid', '');
+		param::set_cookie('_username', '');
+		param::set_cookie('_groupid', '');
+		param::set_cookie('_nickname', '');
+		param::set_cookie('cookietime', '');
+		$forward = isset($_GET['forward']) && trim($_GET['forward']) ? $_GET['forward'] : 'index.php?m=member&c=index&a=login';
+		showmessage(L('logout_success'), $forward);
+		
 	}
 
 	/**
@@ -1939,11 +1933,12 @@ class index extends foreground {
 
 			$attachment = new attachment('index','110',1,"addresslist");
 			$attachment->set_userid($memberinfo['userid']);
-			$a = $attachment->upload('idfront','jpeg|jpg', 1024*10*5,'',array(),0);
+			$a = $attachment->upload('idfront','jpeg|jpg', 1024*1024*5,'',array(),0);
+
 			if (!$a) {
 				showmessage("正面照上传失败");
 			}
-			$a = $attachment->upload('idback','jpeg|jpg', 1024*10*5,'',array(),0);
+			$a = $attachment->upload('idback','jpeg|jpg', 1024*1024*5,'',array(),0);
 			if (!$a) {
 				showmessage("国徽照上传失败");
 				

@@ -45,41 +45,41 @@
               <tbody>
                 <tr>
                   <td class="label"><em>(必填)</em>收货人姓名</td>
-                  <td class="item"><input class="textbox" id="user_address_cname" name="info[consignee]" type="text" value="{$member_address_info['consignee']}"></td>
+                  <td class="item"><input class="textbox required isCName" id="user_address_cname" name="info[consignee]" type="text" value="{$member_address_info['consignee']}"></td>
                   <td class="info"></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>身份证号码</td>
-                  <td class="item"><input class="textbox" id="user_address_identity_card" name="info[idcard]" type="text"  value="{$member_address_info['idcard']}"></td>
+                  <td class="item"><input class="textbox required isIdCardNo" id="user_address_identity_card" name="info[idcard]" type="text"  value="{$member_address_info['idcard']}"></td>
                   <td class="info"></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>上传身份证(正面)</td>
-                  <td class="item"><input id="identity_card_picture_path1" name="idfront" style="width:200px;" type="file"></td>
+                  <td class="item"><input id="identity_card_picture_path1" class="required" name="idfront" style="width:200px;" type="file"></td>
                   <td class="info"><span class="notice">(5MB以下jpg/png)</span></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>上传身份证(背面)</td>
-                  <td class="item"><input id="identity_card_picture_path2" name="idback" style="width:200px;" type="file"></td>
+                  <td class="item"><input id="identity_card_picture_path2"  class="required" name="idback" style="width:200px;" type="file"></td>
                   <td class="info"><span class="notice">(5MB以下jpg/png)</span></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>收货省市辖区</td>
                   <td class="item">
-                    <select id="region_city_selector_region" name="info[province]">
+                    <select id="region_city_selector_region" name="info[province]" class="required" >
                       <option value="">请选择</option>
                       {loop $province_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['province'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
                     </select>
-                    <select id="region_city_selector_city" name="info[city]" >
+                    <select id="region_city_selector_city" name="info[city]" class="required" >
                       <option value="">请选择</option>
                       {loop $city_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['city'] } selected {/if}" >{$p['cityname']}</option>
                       {/loop}
 
                     </select>
-                    <select id="region_city_selector_district" name="info[area]" >
+                    <select id="region_city_selector_district" name="info[area]" class="required" >
                       <option value="">请选择</option>
                        {loop $area_list  $p}
                       <option value="{$p['cityname']}" "{if $p['cityname'] == $member_address_info['area'] } selected {/if}" >{$p['cityname']}</option>
@@ -90,17 +90,17 @@
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>收货街道门牌号</td>
-                  <td class="item"><input class="textbox" id="user_address_address" name="info[addressinfo]" type="text" value="{$member_address_info['addressinfo']}"></td>
+                  <td class="item"><input class="textbox required" id="user_address_address" name="info[addressinfo]" type="text" value="{$member_address_info['addressinfo']}"></td>
                   <td class="info"><span class="">请勿重复填写省市辖区</span></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>收货邮编</td>
-                  <td class="item"><input class="textbox" id="user_address_zip_code" name="info[zipcode]" type="text" value="{$member_address_info['zipcode']}"></td>
+                  <td class="item"><input class="textbox required isZipCode" id="user_address_zip_code" name="info[zipcode]" type="text" value="{$member_address_info['zipcode']}"></td>
                   <td class="info"></td>
                 </tr>
                 <tr>
                   <td class="label"><em>(必填)</em>收货人手机</td>
-                  <td class="item"><input class="textbox" id="user_address_mobile" name="info[mobile]" type="text" value="{$member_address_info['mobile']}"></td>
+                  <td class="item"><input class="textbox required isMobile" id="user_address_mobile" name="info[mobile]" type="text" value="{$member_address_info['mobile']}"></td>
                   <td class="info"></td>
                 </tr>
         <!--
@@ -112,7 +112,7 @@
         -->
                 <tr>
                   <td class="label"><em>(必填)</em>收货人Email</td>
-                  <td class="item"><input class="textbox" id="user_address_email" name="info[email]" type="text" value="{$member_address_info['email']}"></td>
+                  <td class="item"><input class="textbox required email" id="user_address_email" name="info[email]" type="text" value="{$member_address_info['email']}"></td>
                   <td class="info"></td>
                 </tr>
               </tbody>
