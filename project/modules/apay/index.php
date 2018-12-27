@@ -77,7 +77,7 @@ class index extends foreground{
 	       	$user_update =array(
 	       		'amount'=> ($userinfo['amount']-$info['price'])
 	       	);
-	       	$this->member_model->update($user_updat, array('userid'=>$memberinfo['userid']));
+	       	$this->member_model->update($user_update, array('userid'=>$memberinfo['userid']));
 	       	//
 	       	$exp_data = array(
 	       		'pay_status'=>1,
