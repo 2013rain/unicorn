@@ -268,6 +268,10 @@ class manage extends admin {
                                     'status' => 2,
                                     'pay_status' => 1
                                 ];
+                                if (mb_strlen($send_company, "utf-8") > 20 || strlen($send_no) > 50) {
+                                    $row++;
+                                    continue;
+                                }
                                 $set_data = [
                                     'send_company' => iconv('gbk', 'utf-8', $send_company),
                                     'send_no' => $send_no,

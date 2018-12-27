@@ -81,6 +81,9 @@ class index extends foreground {
                     showmessage('非法操作', 'index.php?m=express&c=index');
                 }
                 $user_remark = isset($_POST['remark']) ? trim($_POST['remark']) : '';
+                if (mb_strlen($user_remark, "utf-8") > 100) {
+                    showmessage('备注需控制在100字以内', 'index.php?m=express&c=index');
+                }
                 $data = [];
                 $data['status'] = 1;
                 $data['service'] = $service;
@@ -145,23 +148,23 @@ class index extends foreground {
                     }
 
                     $name = isset($val['name']) ? trim($val['name']) : '';
-                    if (!$name) {
+                    if (!$name || mb_strlen($name, "utf-8") > 20) {
                         $flag = false;
                     }
                     $category = isset($val['category']) ? trim($val['category']) : '';
-                    if (!$category) {
+                    if (!$category || mb_strlen($category, "utf-8") > 20) {
                         $flag = false;
                     }
                     $category_child = isset($val['category_child']) ? trim($val['category_child']) : '';
-                    if (!$category_child) {
+                    if (!$category_child || mb_strlen($category_child, "utf-8") > 20) {
                         $flag = false;
                     }
                     $brand = isset($val['brand']) ? trim($val['brand']) : '';
-                    if (!$brand) {
+                    if (!$brand || mb_strlen($brand, "utf-8") > 20) {
                         $flag = false;
                     }
                     $model = isset($val['model']) ? trim($val['model']) : '';
-                    if (!$model) {
+                    if (!$model || mb_strlen($model ,"utf-8") > 20) {
                         $flag = false;
                     }
                     $dollar = isset($val['dollar']) ? floatval($val['dollar']) : 0;
