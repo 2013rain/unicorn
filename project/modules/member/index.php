@@ -76,7 +76,7 @@ class index extends foreground {
 			$userinfo['admin_code'] = isset($_POST['admin_code']) ? $_POST['admin_code'] : '';
 			$userinfo['regip'] = ip();
 			$userinfo['point'] = $member_setting['defualtpoint'] ? $member_setting['defualtpoint'] : 0;
-			$userinfo['amount'] = $member_setting['defualtamount'] ? $member_setting['defualtamount'] : 0;
+			$userinfo['amount'] = 0;//$member_setting['defualtamount'] ? $member_setting['defualtamount'] : 0;
 			$userinfo['regdate'] = $userinfo['lastdate'] = SYS_TIME;
 			$userinfo['siteid'] = $siteid;
 			$userinfo['connectid'] = isset($_SESSION['connectid']) ? $_SESSION['connectid'] : '';
@@ -148,7 +148,20 @@ class index extends foreground {
 				$_POST['info'] = array_map('new_html_special_chars',$_POST['info']);
 				$user_model_info = $member_input->get($_POST['info']);				        				
 			}
+			
 
+			$checkone = $this->db->get_one(array('enname'=>$userinfo['enname']));
+			if (!empty($checkone)) {
+				showmessage('英文名已被使用');
+			}
+			$checkone = $this->db->get_one(array('email'=>$userinfo['email']));
+			if (!empty($checkone)) {
+				showmessage('email已被使用');
+			}
+			$checkone = $this->db->get_one(array('username'=>$userinfo['username']));
+			if (!empty($checkone)) {
+				showmessage('中文名已被使用');
+			}
 			if(pc_base::load_config('system', 'phpsso')) {
 				$this->_init_phpsso();
 				$status = $this->client->ps_member_register($userinfo['username'], $userinfo['password'], $userinfo['email'], $userinfo['regip'], $userinfo['encrypt']);
