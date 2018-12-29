@@ -76,7 +76,8 @@ class manage extends admin {
                 $pagesize = 100;
                 $num = ceil($count/$pagesize);
                 header('Content-Type: application/vnd.ms-excel');
-                header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                header('Content-Disposition: attachment;filename="' . date("YmdHis", time()) . '.csv"');
                 header('Cache-Control: max-age=0');
                 $fp = fopen('php://output', 'a');
                 $head = array('仓库', '快递公司', '快递单号', '创建时间', '重量');
@@ -99,7 +100,7 @@ class manage extends admin {
                             flush();
                             $r = 0;
                         }
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], '"'.$val['expressno'].'"', date('Y-m-d H:i:s', $val['createtime']));
+                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno']."\t", date('Y-m-d H:i:s', $val['createtime']));
                         foreach($row as $j => $v)
                         {
                             $row[$j] = iconv('utf-8', 'gbk', $v);
@@ -132,7 +133,6 @@ class manage extends admin {
                                 $store = $data[0];
                                 $company = $data[1];
                                 $expressno = trim($data[2]);
-                                $expressno = trim($expressno, '"');
                                 $create_time = trim($data[3]);
                                 $weight = self::formatWeight($data[4]);
                                 if (!$company || !$expressno || !$create_time || !$weight) {
@@ -194,7 +194,8 @@ class manage extends admin {
                 $pagesize = 100;
                 $num = ceil($count/$pagesize);
                 header('Content-Type: application/vnd.ms-excel');
-                header('Content-Disposition: attachment;filename="待出库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                //header('Content-Disposition: attachment;filename="待出库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                header('Content-Disposition: attachment;filename="' . date("YmdHis", time()) . '.csv"');
                 header('Cache-Control: max-age=0');
                 $fp = fopen('php://output', 'a');
                 $head = array('仓库', '快递公司', '快递单号', '入库时间', '重量', '支付金额', '折扣', '增值服务', '发货公司' , '发货单号');
@@ -220,7 +221,7 @@ class manage extends admin {
                         $in_store_time = format::date($val['in_store_time'], 1);
                         $service = $this->getServiceName($val['service']);
                         $rebate = $val['rebate'] ? $val['rebate'] : '无';
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], '"'.$val['expressno'].'"', $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
+                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno']."\t", $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
                         foreach($row as $j => $v)
                         {
                             $row[$j] = iconv('utf-8', 'gbk', $v);
@@ -253,7 +254,6 @@ class manage extends admin {
                                 $store = $data[0];
                                 $company = $data[1];
                                 $expressno = trim($data[2]);
-                                $expressno = trim($expressno, '"');
                                 $in_store_time = $data[3];
                                 $weight = floatval($data[4]);
                                 $pay = floatval($data[5]);
@@ -288,7 +288,7 @@ class manage extends admin {
                     }
                     fclose($_FILES['express_data']['tmp_name']);
                 }
-                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
+                showmessage('文件中含有'.($row-1).'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));

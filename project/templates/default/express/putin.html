@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}putin_a.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}address.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}inbound.css">
+    <style type="text/css">
+        .step_two {display:none}
+    </style>
     <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
     <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
     <script src="{JS_PATH}common.js"></script>
@@ -37,6 +40,7 @@
   </div>
   <form accept-charset="UTF-8" action="" class="new_inbound" id="new_inbound" method="post" novalidate="novalidate">
 
+      <div class="step_one">
       <div class="common_panel" style="margin-bottom:25px;">
         <div class="panel_header">海外快递公司快递单信息</div>
         <div class="panel_content">
@@ -122,11 +126,64 @@
         </div>
       </div>
       <div class="submit_button" id="inbound_info_submit" style="display:none;">
-        <a href="" id="submit"> 下一步：选择增值服务</a>
+        <a href="" id="go_step_two"> 下一步：选择增值服务</a>
       </div>
       <div class="tips" style="color:red;margin-top:5px;">申报提示：请根据订单内不同货品品名分别如实申报，避免因为申报问题导致清关查验。</div>
       <div class="tips" style="color:red;margin-top:5px;">入库提示：库房周末正常休息，不签收包裹，快递周末显示送达的包裹会在工作日再次派件给库房，所以周末送达的包裹入库会有延时。
     </div>
+</div>
+<div class="step_two">
+      <div class="common_panel">
+        <div class="panel_header">选择增值服务</div>
+        <input name="set_service" type="hidden" value="service">
+        <input name="dosubmit" type="hidden" value="dosubmit">
+        <div class="panel_content">
+          <table class="common_list inbound_service_list">
+            <thead>
+              <tr>
+                <th width="5%"> &nbsp;</th>
+                <th>增值服务名称</th>
+                <th class="last">增值服务介绍及收费</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{loop $service_info $info}
+            	<tr>
+            		<td>
+	                  <input class="check_inbound_item"  name="service[]" type="checkbox" can_merge="{$info['can_merge']}" value="{$info['value']}">
+	                </td>
+                <td>{$info['name']}</td>
+                <td class="last">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}</td>
+				</tr>
+            {/loop}
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+     
+      <div class="common_panel">
+        <div class="panel_header">填写备注信息</div>
+        <div class="panel_content">
+          <table class="common_form">
+            <tbody>
+              <tr>
+                <td class="label">备注信息</td>
+                <td class="item">
+                  <input class="textbox" id="inbound_user_memo" name="remark" type="text">
+                </td>
+                <td class="info"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="submit_button">
+        <a class="previous_button" href="#">返回上一步：填写海外快递信息</a>
+        <a href="#this" id="submit">提交入库</a>
+      </div>
+</div>
   </form>
 
   <div id="inbound_assisted_declaration_panel" style="display:none;">
@@ -258,6 +315,16 @@
 
       return false;
     });
+    var immediate_outbound_init = function() {
+      var $this = $(".inbound_service_list input.immediate_outbound");
+      if ($this.is(":checked")) {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "checked" : false, "disabled" : "disabled" });
+        $(".immediate_outbound_panel").slideDown("fast");
+      } else {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "disabled" : null });
+        $(".immediate_outbound_panel").slideUp("fast");
+      }
+    };
 
 
     $(function () {
@@ -304,7 +371,7 @@
       });
 
 
-      $("#submit").click(function (event) {
+      $("#go_step_two").click(function (event) {
         click_date_array.push(new Date());
         var click_date_array_length = click_date_array.length;
         if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
@@ -314,9 +381,19 @@
         var part1_valid = $(this).closest("form").valid();
         var part2_valid = Inbound.Brief.itemListValid();
         if (part1_valid && part2_valid) {
-          $(this).closest("form").submit();
+        //$(this).closest("form").submit();
+            $(".step_one").hide();
+            $(".step_two").show();
+            $(".steps_panel dl dd:first").removeClass("current");
+            $(".steps_panel dl dd:last").addClass("current");
         }
         return false;
+      });
+      $(".previous_button").click(function(event){
+              $(".step_two").hide();
+              $(".step_one").show();
+              $(".steps_panel dl dd:last").removeClass("current");
+              $(".steps_panel dl dd:first").addClass("current");
       });
 
       $("#submit_assisted_declaration").click(function (event) {
@@ -339,6 +416,43 @@
         }
         return false;
       });
+      $("#submit").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+          event.cancelBubble = true;
+          return false;
+        }
+
+        var is_inbound_service_immediate_outbound_enable = $("#inbound_service_immediate_outbound_enable").is(":checked");
+        var is_us_hk_pick_up = $("#lu_freight_rate_id_11").is(":checked");
+        var is_jp_hk_pick_up = $("#lu_freight_rate_id_12").is(":checked");
+        var hk_pick_up_confirm_message = "您已选择香港自提转运偏好，货物将发往香港仓库\n您选择的收货地址仅用于区分包裹归属，不是实际收货地址\n货物到达香港仓库后，您需要自行去香港仓库提货\n确认选择香港自提吗？";
+        if (is_inbound_service_immediate_outbound_enable && (is_us_hk_pick_up || is_jp_hk_pick_up) && !window.confirm(hk_pick_up_confirm_message)) {
+          return false;
+        }
+
+        if ($(".inbound_cash_on_delivery_panel #inbound_cash_on_delivery_enable:checked").length == 1) {
+          if (validate_inbound_cash_on_delivery_panel()) {
+            $(this).closest("form").submit();
+          }
+        } else {
+          $(this).closest("form").submit();
+        }
+        return false;
+      });
+	  $(".immediate_outbound_panel .current_to_address a.edit_immediate_outbound_to_address").click(function() {
+        var $tbody = $(this).closest("tbody");
+        $tbody.find("tr.current_to_address").hide();
+        $tbody.find("tr.edit_to_address").show();
+        $tbody.find("tr.edit_to_address .address_list input:first").attr("checked", "checked");
+        return false;
+      });
+	  if ($(".address_list input:checked").length == 0) {
+        $(".address_list input:first").attr("checked", "checked");
+      }
+	  $(".inbound_service_list input.immediate_outbound").click(function() { immediate_outbound_init(); });
+      immediate_outbound_init();
 
     });
   </script>
