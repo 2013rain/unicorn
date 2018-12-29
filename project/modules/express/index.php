@@ -739,31 +739,15 @@ class index extends foreground {
             showmessage('访问不合法');
         }
         if ($info['status']!=2 ) {
-            showmessage('运单状态不支持支付');
+            showmessage('运单状态不支持支付','index.php?m=express&c=index&a=init');
         }
         if ($info['pay_status']==1 ) {
-            showmessage('运单已支付');
+            showmessage('运单已支付','index.php?m=express&c=index&a=init');
         }
-        $this->express_trade_log = pc_base::load_model('express_trade_log_model');
-        $trade_info = $this->express_trade_log->get_one(array('member_id'=>$memberinfo['userid'],'express_no'=>$info['expressno']));
-
-        if (!empty($trade_info ) && !empty($trade_info['order_no'])) {
-            $this->alipay= pc_base::load_sys_class('alipay','',1);
-            $res  = $this->alipay->AlipayTradeQueryRequest(array('out_trade_no'=>$trade_info['order_no']));
-            if (isset($res['alipay_trade_query_response']) && $res['alipay_trade_query_response']['trade_status']=='TRADE_SUCCESS') {
-                $this->db->update(array('pay_status' =>1) , array('id' => $info['id'] ));
-
-                $sucdata = array(
-                    'status' => 1,
-                    'outer_order_no'=>$res['alipay_trade_query_response']['trade_no'],
-                    'finish_time'=>$res['alipay_trade_query_response']['send_pay_date'],
-                );
-                $this->express_trade_log->update($sucdata,array('member_id'=>$memberinfo['userid'],'order_no'=>$trade_info['order_no']));
-                showmessage('运单已支付','/index.php?m=express&c=index&a=init');
-            }
-
-            
-        }
+        
+        $base_price = weightcost(0, 0);
+        $service = $info['service'];
+        $service_arr = $this->decodeService($service);
 
         $this->member_address_model = pc_base::load_model('member_address_model');
         $address_list = $this->member_address_model->select(array('auditstatus' =>'1','member_id'=>$memberinfo['userid']));

@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{L('member').L('login')}</title>
+    <title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}login.css">
+    
     <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
     <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}alertTips.css">
+     <script type="text/javascript" src="{JS_PATH}alertTips.min.js"></script>
 </head>
 <style type="text/css">
   body { background-image:url('{IMG_PATH}/login.jpg'); background-size:cover; }
@@ -30,12 +33,12 @@
       <tbody>
         <tr>
           <td class="label">{L('username')}</td>
-          <td class="item"><input class="textbox" id="email" name="email" type="text" placeholder="请输入您的注册邮箱"></td>
+          <td class="item"><input class="textbox required email" id="email" name="email" type="text" placeholder="请输入您的注册邮箱"></td>
           <td class="info"></td>
         </tr>
         <tr>
           <td class="label">{L('password')}</td>
-          <td class="item"><input class="textbox" id="password" name="password" type="password" placeholder="请输入您的密码"></td>
+          <td class="item"><input class="textbox required" id="password" name="password" type="password" placeholder="请输入您的密码"></td>
           <td class="info"></td>
         </tr>
          <tr>

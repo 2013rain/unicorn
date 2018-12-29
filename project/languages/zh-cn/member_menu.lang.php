@@ -9,4 +9,6 @@ $LANG['mygoods'] = '我的货物';
 $LANG['member_address'] = '我的地址';
 $LANG['price'] = '价格与服务';
 $LANG['price_server'] = '价格与服务';
+$LANG['aboutus'] = '关于我们';
+$LANG['guide'] = '新手指南';
 ?>

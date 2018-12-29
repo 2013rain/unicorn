@@ -14,8 +14,6 @@
 				快递单号：
 				<input name="express_no" type="text" value="<?php echo $express_no; ?>" class="input-text" />
 				&nbsp;&nbsp;
-				支付宝付款单号
-				<input name="outer_order_no" type="text" value="<?php echo $outer_order_no; ?>" class="input-text" />
 				<input type="submit" name="search" class="button" value="<?php echo L('search')?>" />
 	</div>
 		</td>
@@ -34,7 +32,7 @@
 			<th align="left">英文名</th>
 			<th align="left">快递单号</th>
 			<th align="left">支付状态</th>
-
+			<th align="left">金额</th>
 			<th align="left">支付时间</th>
 			<th align="left">支付宝交易号</th>
 
@@ -51,6 +49,7 @@
 		<td align="left"><?php echo $v['enname']?></td>
 		<td align="left"><?php echo $v['express_no']?></td>
 		<td align="left"><?php  if($v['status']=='1'){echo '已支付';} else {echo '待支付'; } ?></td>
+		<td align="left"><?php echo $v['amount']?></td>
 		<td align="left"><?php echo $v['finish_time']?></td>
 		<td align="left"><?php echo $v['outer_order_no']?></td>
     </tr>

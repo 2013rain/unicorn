@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{L('member','','member').L('manage_center')}</title>
+    <title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}login.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}account_manage.css">
@@ -11,5 +11,7 @@
     <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}alertTips.css">
+<script type="text/javascript" src="{JS_PATH}alertTips.min.js"></script>
 </head>
 {template "member","banner"}

@@ -3,13 +3,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
-<title> {L('member','','member').L('manage_center')}</title>
+<title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}register.css">
 <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
 <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 <script src="{JS_PATH}jquery-ui.min.js"></script>
 <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}alertTips.css">
+<script type="text/javascript" src="{JS_PATH}alertTips.min.js"></script>
 </head>
 <style type="text/css">
   body { background-image:url('{IMG_PATH}/register.jpg'); background-size:cover; }
@@ -32,27 +34,27 @@
         <tbody>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>邮箱</td>
-            <td class="item"><input class="textbox" id="email" name="email" type="text"></td>
+            <td class="item"><input class="textbox required email" id="email" name="email" type="text"></td>
             <td class="info"></td>
           </tr>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>登录密码</td>
-            <td class="item"><input class="textbox" id="password" name="password" type="password"></td>
+            <td class="item"><input class="textbox required" id="password" name="password" type="password"></td>
             <td class="info"></td>
           </tr>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>确认密码</td>
-            <td class="item"><input class="textbox" id="password_confirmation" name="password_confirmation" type="password"></td>
+            <td class="item"><input class="textbox required" id="password_confirmation" name="password_confirmation" type="password"></td>
             <td class="info"></td>
           </tr>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>姓名</td>
-            <td class="item"><input class="textbox" id="cname" name="username" type="text"></td>
+            <td class="item"><input class="textbox required" id="cname" name="username" type="text"></td>
             <td class="info"></td>
           </tr>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>英文名</td>
-            <td class="item"><input class="textbox" id="ename" name="enname" type="text"></td>
+            <td class="item"><input class="textbox required" id="ename" name="enname" type="text"></td>
             <td class="info"></td>
           </tr>
           <tr>
@@ -66,7 +68,7 @@
           </tr>
           <tr>
             <td class="label"><span style="color:red">(必填)</span>手机</td>
-            <td class="item"><input class="textbox" id="mobile" name="mobile" type="text"></td>
+            <td class="item"><input class="textbox required" id="mobile" name="mobile" type="text"></td>
             <td class="info"></td>
           </tr>
           <tr>

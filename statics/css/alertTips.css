@@ -1,0 +1,100 @@
+/*
+* @Author: Marte
+* @Date:   2018-12-29 15:11:46
+* @Last Modified by:   Marte
+* @Last Modified time: 2018-12-29 15:12:20
+*/
+.alertTips-layer{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 99999;
+        }
+        .alertTips-alert-box{
+            width: 360px;
+            height: 220px;
+            background: #fff;
+            border-radius: 6px;
+            position: absolute;
+            left: 50%;
+            margin-left: -180px;
+            top: 50%;
+            margin-top: -110px;
+            z-index: 100000;
+        }
+        .alertTips-top-box{
+            height: 49px;
+            line-height: 50px;
+            border-bottom: 1px dashed #ddd;
+            padding: 0 20px;
+            color: #666;
+            font-family: "微软雅黑";
+        }
+        .alertTips-top-box a{
+            float: right;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: relative;
+            margin-top: 17px;
+        }
+        .alertTips-top-box a:hover:before,.alertTips-top-box a:hover:after{
+            background: #666;
+        }
+        .alertTips-top-box a:before,.alertTips-top-box a:after{
+            content: "";
+            display: block;
+            width: 3px;
+            height: 16px;
+            border-radius: 3px;
+            background: #999;
+            position: absolute;
+            left: 6px;
+            top: 0;
+        }
+        .alertTips-top-box a:before{
+            transform: rotate(45deg);
+        }
+        .alertTips-top-box a:after{
+            transform: rotate(-45deg);
+        }
+        .alertTips-center-box{
+            height: 74px;
+            line-height: 74px;
+            padding: 0 20px;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: center;
+            color: #666;
+            overflow: hidden;
+            font-family: "微软雅黑";
+        }
+        .alertTips-bottom-box{
+            border-top: 1px dashed #ddd;
+            height: 56px;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: "微软雅黑";
+        }
+        .alertTips-bottom-box button{
+            height: 30px;
+            padding: 0 18px;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            outline: medium;
+            font-family: "微软雅黑";
+            font-size: 14px;
+            margin: 0 8px;
+        }
+        .alertTips-bottom-box button.bg-blue{
+            background: #0095d9;
+        }
+        .alertTips-bottom-box button.bg-gray{
+            background: #bbb;
+
+        }

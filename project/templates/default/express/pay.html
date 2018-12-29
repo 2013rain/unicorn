@@ -34,9 +34,31 @@
       </tr>
       {/loop}
       {/if}
+       <tr>
+        <td class="t1" colspan="6" style="text-align: left; ">
+          总重:&nbsp;{$info['weight']}&nbsp;g,基础费用{$base_price}&nbsp;元
+        </td>
+      </tr>
+      {loop $service_arr $service}
+        <tr >
+          <td  class="t1" colspan="6" style="text-align: left; ">
+          {$service['name']}：{$service['price']}&nbsp;元
+        </td>
+        </tr>
+        {/loop}
+       <tr>
+        <td class="t1" colspan="6" style="text-align: left; ">
+          总重:&nbsp;{$info['weight']}:&nbsp;g
+        </td>
+      </tr>
       <tr>
         <td class="t1" colspan="6" style="text-align: left; ">
-          支付金额:&nbsp;{$info['price']}:&nbsp;元
+          支付金额:&nbsp;{$info['price']}&nbsp;元
+        </td>
+      </tr>
+      <tr>
+        <td class="t1" colspan="6" style="text-align: left; ">
+          当前余额:&nbsp;{$memberinfo['amount']}&nbsp;元
         </td>
       </tr>
       <tr>
