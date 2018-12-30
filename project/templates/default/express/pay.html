@@ -23,14 +23,14 @@
       </tr>
       {else}
       {loop $address_list $adss}
-      <tr>
-        <td><input type='radio' name='address_id' value="{$adss['id']}" ></td>
-        <td>{$adss['consignee']}</td>
-        <td>{$adss['mobile']}</td>
-        <td>{$adss['province']}/{$adss['city']}/{$adss['area']}</td>
-        <td>{$adss['addressinfo']}</td>
-        <td>{$adss['zipcode']}</td>
-      </tr>
+        <tr>
+          <td><input type='radio' name='address_id' value="{$adss['id']}" ></td>
+          <td>{$adss['consignee']}</td>
+          <td>{$adss['mobile']}</td>
+          <td>{$adss['province']}/{$adss['city']}/{$adss['area']}</td>
+          <td>{$adss['addressinfo']}</td>
+          <td>{$adss['zipcode']}</td>
+        </tr>
       {/loop}
       {/if}
        <tr>
