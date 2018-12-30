@@ -351,6 +351,7 @@ class index extends foreground {
    	}
 	
 	public function account_manage() {
+		$SEO = seo(1);
 		$memberinfo = $this->memberinfo;
 		//初始化phpsso
 		$phpsso_api_url = $this->_init_phpsso();
@@ -413,6 +414,7 @@ class index extends foreground {
 	}
 
 	public function account_manage_avatar() {
+		$SEO = seo(1);
 		$memberinfo = $this->memberinfo;
 		//初始化phpsso
 		$phpsso_api_url = $this->_init_phpsso();
@@ -431,6 +433,7 @@ class index extends foreground {
 	}
 	
 	public function account_manage_info() {
+		$SEO = seo(1);
 		if(isset($_POST['dosubmit'])) {
 			//更新用户昵称
 			$nickname = isset($_POST['nickname']) && is_username(trim($_POST['nickname'])) ? trim($_POST['nickname']) : '';
@@ -492,6 +495,7 @@ class index extends foreground {
 	}
 	
 	public function account_manage_password() {
+		$SEO = seo(1);
 		if(isset($_POST['dosubmit'])) {
 			$updateinfo = array();
 			if(!is_password($_POST['info']['password'])) {

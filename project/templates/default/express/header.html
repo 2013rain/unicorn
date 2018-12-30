@@ -21,8 +21,8 @@
 	{php $siteinfo = siteinfo($this->memberinfo['siteid']);}
 	{php $this->menu_db = pc_base::load_model('member_menu_model');}
 	{php $menu = $this->menu_db->select(array('display'=>1, 'parentid'=>0), '*', 20 , 'listorder');}
-    <div class="link">{L('hellow')} {get_nickname()}<span> | </span>
-	<a href="{APP_PATH}index.php?m=member&c=index&a=logout">{L('logout')}</a>
+    <div class="link">{L('hello')} {get_nickname()}<span> | </span>
+	<a href="{APP_PATH}index.php?m=member&c=index&a=logout">{L('退出')}</a>
 	<span> | </span><a href="{$siteinfo['domain']}">{L('index')}</a> </div>
 	<div class="nav-bar">
     	<map>
