@@ -3,14 +3,14 @@
 <div class="wait-in-store">
     <form action="/index.php?m=apay&c=index&a=express" method="POST">
     <table>
-      <tr>
+      <tr style="background-color: rgba(246,170,0,0.6);">
         <th class="t1" colspan="6" style="text-align: left; border:none; padding-left: 15px; font-size: 18px;">选择收货地址
             <a href="index.php?m=member&c=index&a=address_edit" style="float: right; margin-right:15px; margin-top:10px; font-size:14px;">添加收货地址</a>
         </th>
 
       </tr>
-      <tr>
-        <th>&nbsp;</th>
+      <tr style="background-color: rgba(246,170,0,0.4);">
+        <th>请选择</th>
         <th>姓名</th>
         <th>手机</th>
         <th>省市辖区</th>
@@ -23,48 +23,47 @@
       </tr>
       {else}
       {loop $address_list $adss}
-      <tr>
-        <td><input type='radio' name='address_id' value="{$adss['id']}" ></td>
-        <td>{$adss['consignee']}
-        </td>
-        <td>{$adss['mobile']}</td>
-        <td>{$adss['province']}/{$adss['city']}/{$adss['area']}</td>
-        <td>{$adss['addressinfo']}</td>
-        <td>{$adss['zipcode']}</td>
-      </tr>
+        <tr>
+          <td><input type='radio' name='address_id' value="{$adss['id']}" ></td>
+          <td>{$adss['consignee']}</td>
+          <td>{$adss['mobile']}</td>
+          <td>{$adss['province']}/{$adss['city']}/{$adss['area']}</td>
+          <td>{$adss['addressinfo']}</td>
+          <td>{$adss['zipcode']}</td>
+        </tr>
       {/loop}
       {/if}
        <tr>
-        <td class="t1" colspan="6" style="text-align: left; ">
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
           总重:&nbsp;{$info['weight']}&nbsp;g,基础费用{$base_price}&nbsp;元
         </td>
       </tr>
       {loop $service_arr $service}
         <tr >
-          <td  class="t1" colspan="6" style="text-align: left; ">
+          <td  class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
           {$service['name']}：{$service['price']}&nbsp;元
         </td>
         </tr>
         {/loop}
        <tr>
-        <td class="t1" colspan="6" style="text-align: left; ">
-          总重:&nbsp;{$info['weight']}:&nbsp;g
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
+          总重:&nbsp;{$info['weight']}&nbsp;g
         </td>
       </tr>
       <tr>
-        <td class="t1" colspan="6" style="text-align: left; ">
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
           支付金额:&nbsp;{$info['price']}&nbsp;元
         </td>
       </tr>
       <tr>
-        <td class="t1" colspan="6" style="text-align: left; ">
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
           当前余额:&nbsp;{$memberinfo['amount']}&nbsp;元
         </td>
       </tr>
       <tr>
-        <td class="t1" colspan="6" style="text-align: left; ">
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
           <input type='hidden' name='express_id' value="{$info['id']}" >
-          <input style="display: inline-block;margin-right: 8px;background-color: #6CD134; color: #ffffff;"  type="submit" name="submit" value=" 支 付 确 认 " />
+          <input style="display: inline-block;margin-right: 8px;background-color: #6CD134; color: #ffffff; padding:5px 10px; cursor: pointer;"  type="submit" name="submit" value="确认支付" />
         </td>
       </tr>
     </table>

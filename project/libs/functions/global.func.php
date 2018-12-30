@@ -1857,6 +1857,7 @@ function dump($r) {
     echo "</pre>";
 }
 /**
+ * 运费等于首重价格+续重价格，首先入库重量-首重重量，如小于零则运费等于首重价格，如大于零，用两者差除以续重重量后向上取整，乘以续重价格
  * 重量:kg
  * 价格:日元
  */
@@ -1865,10 +1866,10 @@ function weightcost($weight,$debate) {
     if ($rebate < 0) {
         $rebate = 0;
     }
-    $base_weight = 1;
+    $base_weight = 1; //首重
     $base_price = 1100;
-    $continued_weight = 1;
-    $continued_price = 1;
+    $continued_weight = 1; //续重
+    $continued_price = 1100;
     $weight = $weight - $base_weight;
     $price = $base_weight * $base_price;
     if ($weight > 0) {
