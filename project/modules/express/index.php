@@ -61,6 +61,8 @@ class index extends foreground {
 		$show_validator = true;
         $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
         $userid = $this->memberinfo['userid'];
+        $admin_userid = (int)$this->memberinfo['admin_userid'];
+   
 		if(isset($_POST['dosubmit'])) {
 			$service = isset($_POST['service']) ? $_POST['service'] : [];
 			
@@ -173,6 +175,7 @@ class index extends foreground {
 			if (!$goods_sql) {
 				showmessage('物品不能为空', HTTP_REFERER);
 			}
+
 			$express_sql = [
 				'userid' => $userid,
 				'storeid' => $store,
@@ -183,6 +186,14 @@ class index extends foreground {
 				'status' => 1,
 				'service' => $service,
 			];
+            if ($admin_userid > 0) {
+                $this->admin_model = pc_base::load_model('admin_model');
+                $rebate_one = $this->admin_model->get_one(array('userid'=>$admin_userid,'roleid'=>2), 'rebate');
+                if (isset($rebate_one['rebate']) && $rebate_one['rebate']>0 && $rebate_one['rebate']<100) {
+                   $express_sql['rebate']=$rebate_one['rebate'];
+                }
+            }
+
 			if ($user_remark) {
 				$express_sql['user_remark'] = $user_remark;
 			}
@@ -751,9 +762,11 @@ class index extends foreground {
             showmessage('运单已支付','index.php?m=express&c=index&a=init');
         }
         
-        $base_price = weightcost(0, 0);
+        $base_price = weightcost($info['weight'], 0);
+        
         $service = $info['service'];
         $service_arr = $this->decodeService($service);
+        $rebate = $info['rebate']>0&& $info['rebate']<100? $info['rebate']/10 :0;
 
         $this->member_address_model = pc_base::load_model('member_address_model');
         $address_list = $this->member_address_model->select(array('auditstatus' =>'1','member_id'=>$memberinfo['userid']));

@@ -35,24 +35,34 @@
       {/if}
        <tr>
         <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
-          总重:&nbsp;{$info['weight']}&nbsp;g,基础费用{$base_price}&nbsp;元
+
+          运费：{$base_price}&nbsp;元
         </td>
       </tr>
       {loop $service_arr $service}
         <tr >
           <td  class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
-          {$service['name']}：{$service['price']}&nbsp;元
+          增值服务费用-{$service['name']}：{$service['price']}&nbsp;元
         </td>
         </tr>
         {/loop}
        <tr>
         <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
-          总重:&nbsp;{$info['weight']}&nbsp;g
+          总重:&nbsp;{$info['weight']}&nbsp;kg
         </td>
       </tr>
       <tr>
         <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
-          支付金额:&nbsp;{$info['price']}&nbsp;元
+          折扣:&nbsp;{if $rebate>0 }
+              {$rebate}
+              {else}
+              无折扣
+              {/if}
+        </td>
+      </tr>
+      <tr>
+        <td class="t1" colspan="6" style="text-align: left; padding-left: 15px;">
+          最终费用:&nbsp;{$info['price']}&nbsp;元
         </td>
       </tr>
       <tr>

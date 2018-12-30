@@ -1861,9 +1861,9 @@ function dump($r) {
  * 重量:kg
  * 价格:日元
  */
-function weightcost($weight,$debate) {
-    $rebate = floatval($rebate);
-    if ($rebate < 0) {
+function weightcost($weight,$debate=0, $service_price=0) {
+    $rebate = floatval($debate);
+    if ($rebate < 0 ||$rebate>100 ) {
         $rebate = 0;
     }
     $base_weight = 1; //首重
@@ -1875,8 +1875,9 @@ function weightcost($weight,$debate) {
     if ($weight > 0) {
         $price += ceil($weight / $continued_weight) * $continued_price;
     }
+    $price+=$service_price;
     if ($rebate != 0) {
-        $price = $price * $rebate;
+        $price = $price * $rebate/100;
     }
     return $price;
 }

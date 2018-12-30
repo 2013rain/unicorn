@@ -144,10 +144,10 @@ class manage extends admin {
                                 ];
                                 $get_one = $this->db->get_one($where, 'id,rebate,status,service');
                                 if ($get_one && $get_one['status'] == 1) {
-                                    $price = weightcost($weight, $get_one['rebate']);
                                     $store_service = $get_one['service'];
                                     $service_price = $this->getServicePrice($store_service);
-                                    $price = $price + $service_price;
+                                    $price = weightcost($weight, $get_one['rebate'] , $service_price);
+                                    
                                     $set_where = [
                                         'id' => $get_one['id']
                                     ];
@@ -400,8 +400,8 @@ class manage extends admin {
         $price = 0; 
         $len = strlen($serviceStr);
         for ($i = 0; $i < $len; $i++) {
-            if ($serviceStr[$i] == '1' && isset(self::$services[$i])) {
-                $price += self::$services[$i]['price'];
+            if ($serviceStr[$i] == '1' && isset(self::$services[$i+1])) {
+                $price += self::$services[$i+1]['price'];
             }   
         }
         return $price;
