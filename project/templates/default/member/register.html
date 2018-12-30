@@ -144,7 +144,7 @@
     jQuery.validator.addMethod("exitEmail", function (value, element) {
        var flag = 1;
         $.ajax({
-          type:"POST",
+          type:"GET",
           url:'/index.php?m=member&c=index&a=public_checkemail_ajax&',
           async:false,
           data:{'email':value},
@@ -163,7 +163,7 @@
     jQuery.validator.addMethod("exitName", function (value, element) {
        var flag = 1;
         $.ajax({
-          type:"POST",
+          type:"GET",
           url:'/index.php?m=member&c=index&a=public_checkname_ajax&',
           async:false,
           data:{'username':value},
@@ -182,7 +182,7 @@
     jQuery.validator.addMethod("exitEnname", function (value, element) {
        var flag = 1;
         $.ajax({
-          type:"POST",
+          type:"GET",
           url:'/index.php?m=member&c=index&a=public_checkenname_ajax&',
           async:false,
           data:{'enname':value},
