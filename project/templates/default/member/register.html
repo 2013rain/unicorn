@@ -11,7 +11,7 @@
 <script src="{JS_PATH}jquery-ui.min.js"></script>
 <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{CSS_PATH}alertTips.css">
-<script type="text/javascript" src="{JS_PATH}alertTips.min.js"></script>
+<script type="text/javascript" src="{JS_PATH}alertTips.js"></script>
 </head>
 <style type="text/css">
   body { background-image:url('{IMG_PATH}/register.jpg'); background-size:cover; }
@@ -93,7 +93,7 @@
       </div>
     </div>
     <div class="panel_footer">
-      <div class="submit_button"><a href="javascript:__doPostBack(&#39;register_button&#39;, &#39;&#39;);" id="register_button"> 同意服务条款，提交</a></div>
+      <div class="submit_button"><a href="javascript:void(0);" id="register_button"> 同意服务条款，提交</a></div>
     </div>
   </div>
 </form>
@@ -120,13 +120,13 @@
   if (!theForm) {
       theForm = document.aspnetForm;
   }
-  function __doPostBack(eventTarget, eventArgument) {
-      if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-          theForm.__EVENTTARGET.value = eventTarget;
-          theForm.__EVENTARGUMENT.value = eventArgument;
-          theForm.submit();
-      }
-  }
+  // function __doPostBack(eventTarget, eventArgument) {
+  //     if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+  //         theForm.__EVENTTARGET.value = eventTarget;
+  //         theForm.__EVENTARGUMENT.value = eventArgument;
+  //         theForm.submit();
+  //     }
+  // }
 
   $(function(){
     jQuery.validator.addMethod("isMobile", function (value, element) {
@@ -140,11 +140,72 @@
     jQuery.validator.addMethod("isCName", function (value, element) {
       return this.optional(element) || /^[\u4E00-\u9FA5]+$/.test(value);
     }, "请输入中文名称");
+
+    jQuery.validator.addMethod("exitEmail", function (value, element) {
+       var flag = 1;
+        $.ajax({
+          type:"POST",
+          url:'/index.php?m=member&c=index&a=public_checkemail_ajax&',
+          async:false,
+          data:{'email':value},
+          success: function(msg){
+            if(msg != '1'){
+              flag = 0;
+            }
+          }
+        });
+        if(flag == 0){
+          return false;
+        }else{
+          return true;
+        }
+    }, "邮箱已存在");
+    jQuery.validator.addMethod("exitName", function (value, element) {
+       var flag = 1;
+        $.ajax({
+          type:"POST",
+          url:'/index.php?m=member&c=index&a=public_checkname_ajax&',
+          async:false,
+          data:{'username':value},
+          success: function(msg){
+            if(msg != '1'){
+              flag = 0;
+            }
+          }
+        });
+        if(flag == 0){
+          return false;
+        }else{
+          return true;
+        }
+    }, "中文名已存在");
+    jQuery.validator.addMethod("exitEnname", function (value, element) {
+       var flag = 1;
+        $.ajax({
+          type:"POST",
+          url:'/index.php?m=member&c=index&a=public_checkenname_ajax&',
+          async:false,
+          data:{'enname':value},
+          success: function(msg){
+            if(msg !='1'){
+              flag = 0;
+            }
+          }
+        });
+        if(flag == 0){
+          return false;
+        }else{
+          return true;
+        }
+    }, "英文名已存在");
+
+
     $("#aspnetForm").validate({
       rules: {
         "email": {
           required: true,
-          email: true
+          email: true,
+          exitEmail:true
         },
         "password": {
           required: true,
@@ -157,11 +218,13 @@
         },
         "enname": {
           required: true,
-          isEnName: true
+          isEnName: true,
+          exitEnname:true
         },
         "username": {
           required: true,
-          isCName: true
+          isCName: true,
+          exitName:true
         },
         "mobile": {
           required: true,
@@ -171,6 +234,8 @@
     });
     $("#register_button").click(function () {
       if($("#aspnetForm").valid()){
+
+
         $(this).closest('form').submit();
       }
     });

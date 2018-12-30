@@ -33,6 +33,7 @@ class index extends foreground {
 	}
 	
 	public function register() {
+		$SEO = seo(1);
 		$this->_session_start();
 		//获取用户siteid
 		$siteid = isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
@@ -626,6 +627,7 @@ class index extends foreground {
 	}
 	
 	public function login() {
+		$SEO = seo(1);
 		$this->_session_start();
 		//获取用户siteid
 		$siteid = isset($_REQUEST['siteid']) && trim($_REQUEST['siteid']) ? intval($_REQUEST['siteid']) : 1;
