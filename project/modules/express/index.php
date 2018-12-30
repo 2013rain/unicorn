@@ -871,6 +871,20 @@ class index extends foreground {
         $this->db->update($set_data, $where);
         showmessage('收货成功', 'index.php?m=express&c=index');
     }
+
+    /**
+     * 检查快递单是否存在
+     * 0 已存在 1:成果
+     */
+    function public_checkexpressno_ajax() {
+        $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : exit('0');
+        $userid = $this->memberinfo['userid'];
+        $row = $this->db->get_one(array('expressno'=>$expressno));
+        if (!$row) {
+            exit('1');
+        }
+        exit('0');
+    }
 	
 }
 ?>
