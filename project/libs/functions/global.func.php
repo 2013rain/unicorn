@@ -1856,15 +1856,23 @@ function dump($r) {
     var_dump($r);
     echo "</pre>";
 }
+/**
+ * 重量:kg
+ * 价格:日元
+ */
 function weightcost($weight,$debate) {
     $rebate = floatval($rebate);
     if ($rebate < 0) {
         $rebate = 0;
     }
-    $weight = $weight - 0.5;
-    $price = 0.5 * 49;
+    $base_weight = 1;
+    $base_price = 1100;
+    $continued_weight = 1;
+    $continued_price = 1;
+    $weight = $weight - $base_weight;
+    $price = $base_weight * $base_price;
     if ($weight > 0) {
-        $price += ceil($weight / 0.1);
+        $price += ceil($weight / $continued_weight) * $continued_price;
     }
     if ($rebate != 0) {
         $price = $price * $rebate;
