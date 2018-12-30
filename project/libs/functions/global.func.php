@@ -1856,15 +1856,16 @@ function dump($r) {
     var_dump($r);
     echo "</pre>";
 }
+//运费等于首重价格+续重价格，首先入库重量-首重重量，如小于零则运费等于首重价格，如大于零，用两者差除以续重重量后向上取整，乘以续重价格
 function weightcost($weight,$debate) {
     $rebate = floatval($rebate);
     if ($rebate < 0) {
         $rebate = 0;
     }
-    $weight = $weight - 0.5;
-    $price = 0.5 * 49;
+    $weight = $weight - 1.0;//kg
+    $price = 1.0 * 1100;
     if ($weight > 0) {
-        $price += ceil($weight / 0.1);
+        $price += ceil($weight / 1.0) * 1100;
     }
     if ($rebate != 0) {
         $price = $price * $rebate;

@@ -94,6 +94,8 @@
         <td>
           {if $info['pay_status']==0 }
           <a style="color:blue" target="_blank"  href="index.php?m=express&c=index&a=pay&id={$info['id']}">支付运费</a>
+          {else}
+          待出库
           {/if}
         </td>
       </tr>

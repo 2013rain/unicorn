@@ -37,6 +37,7 @@ class index extends foreground {
 	 * defalut
 	 */
 	function init() {
+        $SEO = seo(1);
 		$userid = $this->memberinfo['userid'];
         $where = "userid=$userid and status in (0,1,2,3,4,5,6)";
         $list_wait = [];
@@ -56,6 +57,7 @@ class index extends foreground {
 		include template('express','main');
 	}
 	function in_storage() {
+        $SEO = seo(1);
 		$show_validator = true;
         $show_service = isset($_GET['show_service']) ? intval($_GET['show_service']) : 0;
         $userid = $this->memberinfo['userid'];
@@ -280,6 +282,7 @@ class index extends foreground {
     }
 
     function detail() {
+        $SEO = seo(1);
         $userid = $this->memberinfo['userid'];
         $express_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         if (!$express_id) {
@@ -405,6 +408,7 @@ class index extends foreground {
     }
 
     function all_express() {
+        $SEO = seo(1);
         $userid = $this->memberinfo['userid'];
         $page = $_GET['page'] ? intval($_GET['page']) : '1';
         $expressno = isset($_GET['expressno']) ? $_GET['expressno'] : '';
@@ -423,6 +427,7 @@ class index extends foreground {
         include template('express','all_express');
     }
     function all_out_express() {
+        $SEO = seo(1);
         $userid = $this->memberinfo['userid'];
         $page = $_GET['page'] ? intval($_GET['page']) : '1';
         $expressno = isset($_GET['expressno']) ? $_GET['expressno'] : '';
@@ -439,6 +444,7 @@ class index extends foreground {
     }
 
     function delete() {
+        $SEO = seo(1);
         $userid = $this->memberinfo['userid'];
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         if (!$id) {

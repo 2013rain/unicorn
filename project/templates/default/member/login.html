@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}alertTips.css">
-     <script type="text/javascript" src="{JS_PATH}alertTips.min.js"></script>
+     <script type="text/javascript" src="{JS_PATH}alertTips.js"></script>
 </head>
 <style type="text/css">
   body { background-image:url('{IMG_PATH}/login.jpg'); background-size:cover; }
@@ -54,7 +54,7 @@
     </table>
     </div>
     <div class="panel_footer">
-      <div class="submit_button"><a href="javascript:__doPostBack(&#39;register_button&#39;, &#39;&#39;);" id="register_button">登录</a></div>
+      <div class="submit_button"><a href="javascript:void(0);" id="register_button">登录</a></div>
     </div>
   </div>
 </form>
@@ -79,13 +79,13 @@
       if (!theForm) {
           theForm = document.aspnetForm;
       }
-      function __doPostBack(eventTarget, eventArgument) {
-          if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-              theForm.__EVENTTARGET.value = eventTarget;
-              theForm.__EVENTARGUMENT.value = eventArgument;
-              theForm.submit();
-          }
-      }
+      // function __doPostBack(eventTarget, eventArgument) {
+      //     if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+      //         theForm.__EVENTTARGET.value = eventTarget;
+      //         theForm.__EVENTARGUMENT.value = eventArgument;
+      //         theForm.submit();
+      //     }
+      // }
 
       $(function(){
         $("#aspnetForm").validate({

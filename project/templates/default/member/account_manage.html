@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{L('member','','member').L('manage_center')}</title>
+    <title>{$SEO['site_title']}</title>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}account_manage.css">
     <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
@@ -43,6 +43,11 @@
                 <tr>
                   <td class="label">英文名</td>
                   <td class="item">{$memberinfo['enname']}</td>
+                  <td class="info"></td>
+                </tr>
+                <tr>
+                  <td class="label">余额</td>
+                  <td class="item">{$memberinfo['amount']}</td>
                   <td class="info"></td>
                 </tr>
                 <tr>
