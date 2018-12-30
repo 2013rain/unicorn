@@ -745,6 +745,7 @@ class index extends foreground {
 
 	public  function pay()
     {
+        $SEO = seo(1);
         $memberinfo = $this->memberinfo;
         $id = isset($_GET['id']) ? (int)$_GET['id']:0;
 
@@ -763,7 +764,7 @@ class index extends foreground {
         }
         
         $base_price = weightcost($info['weight'], 0);
-        
+
         $service = $info['service'];
         $service_arr = $this->decodeService($service);
         $rebate = $info['rebate']>0&& $info['rebate']<100? $info['rebate']/10 :0;
@@ -776,6 +777,7 @@ class index extends foreground {
     }
 
     function out_detail() {
+        $SEO = seo(1);
         $userid = $this->memberinfo['userid'];
         $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : 0;
         if (!$expressno) {
