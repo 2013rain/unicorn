@@ -228,96 +228,21 @@ header .container .con_top {
         }
 
 
-// 用户注册
 
-// 我要入库
+// 全部货物入库记录
 #content {
     width: 100%;
     min-width: 1000px;
     color: #555555;
+    margin-top:50px;
+    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
 }
 #content .content_detail {
     width: 1000px;
     margin: 0 auto;
-    padding-top: 10px;
+    padding: 10px 50px 50px;
+    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
     min-height: 400px;
-    box-sizing: border-box;
-}
-#content .steps_panel {
-    margin: 0 0 25px;
-    padding: 5px 0 0;
-    cursor: default;
-}
-#content .steps_panel dl {
-    overflow: hidden;
-    width: 580px;
-    margin: 0 auto;
-}
-#content .steps_panel dl dd {
-    float: left;
-    width: 290px;
-    text-align: center;
-}
-#content .steps_panel dl dd.current .step {
-    background-color: #f68c25;
-}
-#content .steps_panel dl dd .step {
-    vertical-align: top;
-    display: inline-block;
-    background-color: #ddd;
-    height: 24px;
-    line-height: 24px;
-    width: 24px;
-    text-align: center;
-    color: #fff;
-    font-size: 20px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-}
-#content .steps_panel dl dd.current .intro {
-    color: #f68c25;
-}
-#content .steps_panel dl dd .intro {
-    vertical-align: top;
-    display: inline-block;
-    height: 24px;
-    line-height: 24px;
-    padding: 0 0 0 5px;
-    color: #ddd;
-    font-size: 14px;
-}
-#content .notify_panel {
-    margin-bottom: 10px;
-}
-#content .notify_panel .notify {
-    background: #ffc;
-    border: 1px solid #ee0;
-}
-#content .notify_panel div {
-    text-align: center;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    font-size: 14px;
-    line-height: 18px;
-    padding: 8px;
-}
-#content .notify_panel a {
-    color: #336699;
-}
-
-:link, :visited, ins {
-    text-decoration: none;
-}
-a {
-    text-decoration: none;
-}
-user agent stylesheet
-a:-webkit-any-link {
-    color: -webkit-link;
-    cursor: pointer;
-    text-decoration: underline;
 }
 #content .common_panel {
     background: #ecf4fb;
@@ -339,43 +264,6 @@ a:-webkit-any-link {
     font-size: 12px;
     overflow: hidden;
 }
-#content .common_form {
-    margin: 5px 0;
-    width: 100%;
-}
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-table {
-    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: grey;
-}
-tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-}
-#content .common_form tr td.label {
-    width: 16%;
-    text-align: right;
-    white-space: nowrap;
-}
-#content .common_form tr td {
-    padding: 5px 8px;
-    line-height: 30px;
-    vertical-align: top;
-}
-#content .common_form tr td.item {
-    width: 300px;
-}
-#content .common_panel .panel_footer {
-    overflow: hidden;
-    padding: 10px 15px;
-    border-top: 1px solid #afcdeb;
-}
 #content .common_list {
     width: 100%;
 }
@@ -394,21 +282,14 @@ tbody {
     padding: 8px 5px;
     white-space: nowrap;
 }
-caption, th {
-    text-align: left;
-}
-address, caption, cite, code, dfn, em, strong, th, var, optgroup {
-    font-style: normal;
-    font-weight: normal;
+#content .common_list thead tr th.last {
+    border-right: 0;
 }
 #content .common_list tbody {
     background: #ffffff;
 }
-#content .common_list tbody tr.last td {
-    border-bottom: 0;
-}
-#inbound_item_list table.common_list tbody tr td {
-    padding: 8px 2px;
+#content .common_list tbody tr td.nowrap {
+    white-space: nowrap;
 }
 #content .common_list tbody tr td {
     border-bottom: 1px solid #afcdeb;
@@ -416,191 +297,20 @@ address, caption, cite, code, dfn, em, strong, th, var, optgroup {
     text-align: center;
     padding: 8px 5px;
 }
-#inbound_item_list table.common_list tbody td input.item_name {
-    width: 120px;
-}
-#inbound_item_list table.common_list tbody td input.textbox {
-    border: 1px solid #AAA;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    padding: 6px 3px;
-    color: #666666;
-    text-align: center;
-    moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffffff;
-}
-body, button, input, select, textarea {
-    font-size: 12px;
-    font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
-    color: #000000;
+#content .common_list tbody tr td.last {
+    border-right: 0;
 }
 #content .common_list tbody tr.last td {
     border-bottom: 0;
 }
-#content .common_list tbody tr td.last {
-    border-right: 0;
-}
-#inbound_item_list table.common_list tbody tr td {
-    padding: 8px 2px;
-}
 #content .common_panel .panel_content a {
     color: #336699;
 }
-#content .common_list tbody tr td a {
-    color: #336699;
-}
-#content .common_panel .panel_footer {
+#content .pager_button {
     overflow: hidden;
-    padding: 10px 15px;
-    border-top: 1px solid #afcdeb;
-}
-#content .common_button {
-    overflow: hidden;
-}
-#content .common_panel .panel_footer .common_button a, #content .common_panel .panel_footer .submit_button a, #content .common_panel .panel_header_buttons .common_button a, #content .common_panel .panel_header_buttons .submit_button a {
-    height: 12px;
-    line-height: 12px;
-    padding: 5px 16px 6px;
-    font-size: 12px;
-}
-#content .common_button a {
-    height: 14px;
-    line-height: 14px;
-    display: inline-block;
-    margin-right: 8px;
-    padding: 6px 18px 8px;
-    background-color: #6CD134;
-    color: #ffffff;
-    font-size: 14px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    text-shadow: #666666 1px 1px 1px;
-    FILTER: Shadow(Color=#666, Direction=90, Strength=1);
-}
-:link, :visited, ins {
-    text-decoration: none;
-}
-a {
-    text-decoration: none;
-}
-#inbound_assisted_declaration_panel {
-    z-index: 10;
-    position: absolute;
-    width: 100%;
-    left: 0px;
-    top: 0px;
-}
-#inbound_assisted_declaration_panel .mask {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 15;
-    background: #000;
-    -moz-opacity: 0.6;
-    opacity: 0.6;
-    filter: alpha(opacity=60);
-}
-#inbound_assisted_declaration_panel .common_panel {
-    position: absolute;
-    left: 0px;
-    top: 270px;
-    z-index: 20;
-    width: 790px;
-    border-width: 5px;
-    margin: 0 auto;
-}
-#content .common_panel {
-    background: #ecf4fb;
-    border: 1px solid #afcdeb;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    margin-bottom: 35px;
-}
-#content .common_panel .panel_header a {
-    font-size: 12px;
-    color: #336699;
-}
-:link, :visited, ins {
-    text-decoration: none;
-}
-#inbound_assisted_declaration_panel .common_panel .intro {
-    font-size: 12px;
-    border-bottom: 1px solid #afcdeb;
-    padding: 10px 20px;
-    line-height: 18px;
-    background: #DFD;
-    color: #222;
-    margin-bottom: 10px;
-}
-#content .notify_panel .alert {
-    background: #fdd;
-    border: 1px solid #eaa;
-}
-#content .notify_panel div {
     text-align: center;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    font-size: 14px;
-    line-height: 18px;
-    padding: 8px;
 }
-#content .common_form tr td.item select.select {
-    border: 1px solid #AAA;
-    color: #666666;
-    height: 28px;
-    padding: 3px 6px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffffff;
-}
-#content .common_form tr td.item input.textbox {
-    border: 1px solid #AAA;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    padding: 6px;
-    color: #666666;
-    width: 270px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffffff;
-}
-#content .common_form tr td.info span.notice {
-    color: #888;
-}
-#content .common_panel .panel_footer {
-    overflow: hidden;
-    padding: 10px 15px;
-    border-top: 1px solid #afcdeb;
-}
-#content .submit_button {
-    overflow: hidden;
-}
-#content .submit_button a {
-    height: 14px;
-    line-height: 14px;
-    display: inline-block;
-    margin-right: 8px;
-    padding: 6px 18px 7px;
-    background-color: #f68c25;
-    color: #ffffff;
-    font-size: 14px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    text-shadow: #666666 1px 1px 1px;
-    FILTER: Shadow(Color=#666, Direction=90, Strength=1);
-}
-#content .submit_button a.previous_button {
-    background-color: #ddd;
-    text-shadow: #aaaaaa 1px 1px 1px;
-    FILTER: Shadow(Color=#aaa, Direction=90, Strength=1);
+#content .common_panel .panel_content .empty {
+    text-align: center;
+    padding: 20px 0;
 }

@@ -21,8 +21,16 @@ class index extends foreground{
 	}
 	//首页
 	public function init() {
+		$SEO = seo(1);
 		$memberinfo = $this->memberinfo;
-		$this->express_trade_log->get_list();
+		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+		$where=array(
+			'member_id'=>$memberinfo['userid'],
+			'status'=>1,
+		);
+		$tradelist = $this->express_trade_log->listinfo($where, 'finish_time DESC', $page, 30);
+		include template('apay', 'apay_list');
+
 	}
 	private  function needPay($id)
 	{
@@ -69,7 +77,9 @@ class index extends foreground{
 	       	$paydata = array(
 	       		'status'=>1,
 	       		'amount'=>$info['price'],
+	       		'balance'=>($userinfo['amount']-$info['price']),
 	       		'finish_time'=>date('Y-m-d H:i:s'),
+	       		'express_id'=>$express_id,
 	       		'order_name'=> '快递费支付'.$info['price'].'元',
 	       	);
 	       	$this->express_trade_log->update($paydata, array('order_no'=>$order_no));
@@ -82,6 +92,7 @@ class index extends foreground{
 	       	$exp_data = array(
 	       		'pay_status'=>1,
 	       		'pay_money'=>$info['price'],
+	       		'pay_time'=>time(),
 	       	);
 	       	$this->member_express->update($exp_data, array('id'=>$express_id) );
 			showmessage('支付成功','index.php?m=express&c=index&a=init');

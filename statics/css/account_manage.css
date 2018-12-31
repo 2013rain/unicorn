@@ -24,7 +24,7 @@ header {
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1200px;
+            min-width: 1000px;
             background-color: rgb(255, 109, 55);
         }
         header .container .con_center {
@@ -235,8 +235,9 @@ header .container .con_top {
 #content .content_detail {
     width: 1000px;
     margin: 0 auto;
-    padding: 10px 50px 50px;
+    padding-top: 10px;
     min-height: 400px;
+    box-sizing: border-box;
 }
 #content .header_button_panel {
     margin-bottom: 20px;

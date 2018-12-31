@@ -15,6 +15,7 @@ fieldset, img { border:0; }
 button, input, select, textarea { font-size:100%; }
 table { border-collapse:collapse; border-spacing:0; margin:0 auto; }
 
+body { min-width:1000px; }
 
 header {
     position: relative;
@@ -235,8 +236,9 @@ header .container .con_top {
 #content .content_detail {
     width: 1000px;
     margin: 0 auto;
-    padding: 10px 50px 50px;
+    padding-top: 10px;
     min-height: 400px;
+    box-sizing: border-box;
 }
 #content .common_panel .panel_header {
     height: 20px;
