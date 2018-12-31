@@ -59,6 +59,60 @@ class manage extends admin {
 
     function batch_in_store() {
         if(isset($_POST['dosubmit'])) {
+            if (isset($_POST['export_express_goods_detail'])) {
+                $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
+                $end_time = isset($_POST['end_time']) ? $_POST['end_time'] : '';
+                if (!$start_time || !$end_time) {
+                    showmessage('请选择起始时间',HTTP_REFERER);
+                }
+                $start_time = strtotime($start_time);
+                $end_time = strtotime($end_time);
+                $end_time += 86399;
+                if (($end_time-$start_time)>31104000) {
+                    showmessage('起止时间不能超过360天',HTTP_REFERER);
+                }
+                $where = "`status`=1 and `createtime` between $start_time and $end_time";
+                $count = $this->db->count($where);
+                $pagesize = 10;
+                $num = ceil($count/$pagesize);
+                header('Content-Type: application/vnd.ms-excel');
+                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                header('Content-Disposition: attachment;filename="goods_detail_' . date("YmdHis", time()) . '.csv"');
+                header('Cache-Control: max-age=0');
+                $fp = fopen('php://output', 'a');
+                $head = array('快递单号', '中文名称', '类别', '子类别', '英文品牌', '型号', '单价', '数量');
+                foreach($head as $i => $v)
+                {
+                    $head[$i] = iconv('utf-8', 'gbk', $v);
+                }
+                $limit = 10000;
+                $r = 0;
+                fputcsv($fp, $head);
+                $row = array();
+                for ($i=0;$i<$num;$i++) {
+                    $page_start = $i * $limit;
+                    $res = $this->db->select($where, 'expressno', "$page_start, $pagesize");
+                    foreach ($res as $val) {
+                        $expressno = $val['expressno'];
+                        $goods_lists = $this->goods_db->select("`expressno`='".$expressno."'");
+                        foreach ($goods_lists as $v) {
+                            $r++;
+                            if($r == $limit)
+                            {
+                                ob_flush();
+                                flush();
+                                $r = 0;
+                            }
+                            $row = array($v['expressno']."\t", $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
+                            foreach($row as $j => $v)
+                            {
+                                $row[$j] = iconv('utf-8', 'gbk', $v);
+                            }
+                            fputcsv($fp, $row);
+                        }
+                    }
+                }
+            }
             if (isset($_POST['export'])) {
                 $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
                 $end_time = isset($_POST['end_time']) ? $_POST['end_time'] : '';
@@ -77,7 +131,7 @@ class manage extends admin {
                 $num = ceil($count/$pagesize);
                 header('Content-Type: application/vnd.ms-excel');
                 //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="' . date("YmdHis", time()) . '.csv"');
+                header('Content-Disposition: attachment;filename="for_in_store_' . date("YmdHis", time()) . '.csv"');
                 header('Cache-Control: max-age=0');
                 $fp = fopen('php://output', 'a');
                 $head = array('仓库', '快递公司', '快递单号', '创建时间', '重量');
@@ -177,6 +231,60 @@ class manage extends admin {
 
     function batch_out_store() {
         if(isset($_POST['dosubmit'])) {
+            if (isset($_POST['export_express_goods_detail'])) {
+                $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
+                $end_time = isset($_POST['end_time']) ? $_POST['end_time'] : '';
+                if (!$start_time || !$end_time) {
+                    showmessage('请选择起始时间',HTTP_REFERER);
+                }
+                $start_time = strtotime($start_time);
+                $end_time = strtotime($end_time);
+                $end_time += 86399;
+                if (($end_time-$start_time)>31104000) {
+                    showmessage('起止时间不能超过360天',HTTP_REFERER);
+                }
+                $where = "`status`=2 and `pay_status`=1 and `createtime` between $start_time and $end_time";
+                $count = $this->db->count($where);
+                $pagesize = 10;
+                $num = ceil($count/$pagesize);
+                header('Content-Type: application/vnd.ms-excel');
+                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
+                header('Content-Disposition: attachment;filename="goods_detail_' . date("YmdHis", time()) . '.csv"');
+                header('Cache-Control: max-age=0');
+                $fp = fopen('php://output', 'a');
+                $head = array('快递单号', '中文名称', '类别', '子类别', '英文品牌', '型号', '单价', '数量');
+                foreach($head as $i => $v)
+                {
+                    $head[$i] = iconv('utf-8', 'gbk', $v);
+                }
+                $limit = 10000;
+                $r = 0;
+                fputcsv($fp, $head);
+                $row = array();
+                for ($i=0;$i<$num;$i++) {
+                    $page_start = $i * $limit;
+                    $res = $this->db->select($where, 'expressno', "$page_start, $pagesize");
+                    foreach ($res as $val) {
+                        $expressno = $val['expressno'];
+                        $goods_lists = $this->goods_db->select("`expressno`='".$expressno."'");
+                        foreach ($goods_lists as $v) {
+                            $r++;
+                            if($r == $limit)
+                            {
+                                ob_flush();
+                                flush();
+                                $r = 0;
+                            }
+                            $row = array($v['expressno']."\t", $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
+                            foreach($row as $j => $v)
+                            {
+                                $row[$j] = iconv('utf-8', 'gbk', $v);
+                            }
+                            fputcsv($fp, $row);
+                        }
+                    }
+                }
+            }
             if (isset($_POST['export'])) {
                 $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
                 $end_time = isset($_POST['end_time']) ? $_POST['end_time'] : '';
@@ -195,7 +303,7 @@ class manage extends admin {
                 $num = ceil($count/$pagesize);
                 header('Content-Type: application/vnd.ms-excel');
                 //header('Content-Disposition: attachment;filename="待出库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="' . date("YmdHis", time()) . '.csv"');
+                header('Content-Disposition: attachment;filename="for_out_store_' . date("YmdHis", time()) . '.csv"');
                 header('Cache-Control: max-age=0');
                 $fp = fopen('php://output', 'a');
                 $head = array('仓库', '快递公司', '快递单号', '入库时间', '重量', '支付金额', '折扣', '增值服务', '发货公司' , '发货单号');
@@ -464,6 +572,7 @@ class manage extends admin {
     }
 
     function set_next_status() {
+        exit('功能废弃');
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         $status = isset($_GET['s']) ? intval($_GET['s']) : 0;
         if (!$id || !$status) {

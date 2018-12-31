@@ -41,7 +41,7 @@
             </td>
             <td class="status">
               <div class="label">状态：</div>
-              <div class="value">{if $express['status']==3}待登机{elseif $express['status']==4}待清关{elseif $express['status']==5}清关完成{elseif $express['status']==6}派送中{elseif $express['status']==7}已完成{/if}</div>
+              <div class="value">{if $express['status']==3}待登机{elseif $express['status']==4}待清关{elseif $express['status']==5}待派送{elseif $express['status']==6}国内派送中{elseif $express['status']==7}已完成{/if}</div>
             </td>
           </tr>
         </tbody>
@@ -73,8 +73,8 @@
       <dl class="chart_info">
           {loop $time_node $node}
           <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
-          {if $node['value']>=5}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.baidu.com/s?wd={$express['send_company']} {$express['send_no']}">点击这里去百度查询包裹信息</a></dd>{/if}
           {/loop}
+          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.trackingmore.com/embed_box_float-cn.html?wd={$express['send_company']} {$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
       </dl>
     </div>
     <div class="common_panel">

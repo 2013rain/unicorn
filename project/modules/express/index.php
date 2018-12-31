@@ -812,6 +812,21 @@ class index extends foreground {
         $service = $express['service'];
         $service_arr = $this->decodeService($service);
         $time_node = [];
+        $time_node[] = [
+            'name' => '快递单创建',
+            'value' => 1,
+            'time' => $express['createtime']
+        ];
+        $time_node[] = [
+            'name' => '快递入库',
+            'value' => 2,
+            'time' => $express['in_store_time']
+        ];
+        $time_node[] = [
+            'name' => '支付时间',
+            'value' => 2,
+            'time' => isset($express['pay_time']) ? $express['pay_time'] : 0,
+        ];
         if ($express['status'] >= 3) {
             $time_node[] = [
                 'name' => '仓库出库',
@@ -826,12 +841,14 @@ class index extends foreground {
                 'time' => $express['plane_time'],
             ];
         }
+        $show_send_no = false;
         if ($express['status'] >= 5) {
             $time_node[] = [
                 'name' => '快递清关',
                 'value' => 5,
                 'time' => $express['clearance_time'],
             ];
+            $show_send_no = true;
         }
         if ($express['status'] >= 6) {
             $time_node[] = [
@@ -839,6 +856,7 @@ class index extends foreground {
                 'value' => 6,
                 'time' => $express['distribute_time'],
             ];
+            $show_send_no = true;
         }
         if ($express['status'] == 7) {
             $time_node[] = [
@@ -846,6 +864,7 @@ class index extends foreground {
                 'value' => 7,
                 'time' => $express['complete_time'],
             ];
+            $show_send_no = true;
         }
 
         $addr_id = $express['address_id'];

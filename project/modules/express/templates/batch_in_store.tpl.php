@@ -5,7 +5,7 @@
 </style>
 <div class="pad-lr-10">
 		<div class="explain-col">
-            <div>说明：本功能为<b>入库批量</b>操作。<br>批量导出功能：把待入库的快递单号批量导出,默认导出三个月内的，最多不能超过一年。</div>
+            <div>说明：本功能为<b>入库批量</b>操作。<br>批量导出功能：把待入库的快递单号批量导出,默认导出三个月内的，最多不能超过一年。<br>批量导出快递单中物品供比对使用</div>
 	</div>
 
 <form name="myform" action="" method="post">
@@ -19,7 +19,8 @@
 		<tr>
 		<td>
             <input name="dosubmit" type="hidden" value="dosubmit">
-            <input type="submit" name="export" class="button" value="批量导出" />
+            <input type="submit" name="export" class="button" value="批量导出待入库快递单" />
+            <input type="submit" name="export_express_goods_detail" class="button" value="批量导出快递单中物品" />
 		</td>
 		</tr>
     </tbody>
@@ -42,7 +43,7 @@
             <input type="file" name="express_data">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728" />
             <input name="dosubmit" type="hidden" value="dosubmit">
-            <input type="submit" name="import" class="button" value="批量导入" />
+            <input type="submit" name="import" class="button" value="批量导入待入库快递单" />
 		</td>
 		</tr>
     </tbody>
