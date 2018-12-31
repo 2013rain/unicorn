@@ -230,91 +230,6 @@ header .container .con_top {
 
 // 用户注册
 
-// #content {
-//     width: 100%;
-//     min-width: 1000px;
-//     color: #555555;
-//     // background: url(../images/content_bgs-1.png) repeat-y center top #f4f4f4;
-// }
-// #content .content_detail {
-//     width: 1100px;
-//     margin: 0 auto;
-//     padding: 50px 50px 50px;
-//     // background: url(../images/content_detail_bgs.png) no-repeat 0px bottom;
-//     min-height: 400px;
-//     font-size: 12px;
-//     font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu,Arial;
-// }
-// #content .common_panel {
-//     background: #ecf4fb;
-//     border: 1px solid #afcdeb;
-//     -moz-border-radius: 3px;
-//     border-radius: 3px;
-//     margin-bottom: 35px;
-// }
-// #content .common_form tr td.label {
-//     width: 16%;
-//     text-align: right;
-//     white-space: nowrap;
-// }
-// #content .common_form tr td {
-//     padding: 5px 8px;
-//     line-height: 30px;
-//     vertical-align: top;
-// }
-// #content .common_form tr td.item input.textbox {
-//     border: 1px solid #AAA;
-//     font-size: 12px;
-//     height: 16px;
-//     line-height: 16px;
-//     padding: 6px;
-//     color: #666666;
-//     width: 270px;
-//     -moz-border-radius: 3px;
-//     -webkit-border-radius: 3px;
-//     border-radius: 3px;
-//     background: #ffffff;
-// }
-// #content .common_panel .panel_header {
-//     height: 20px;
-//     border-bottom: 1px solid #afcdeb;
-//     padding: 10px 15px;
-//     font-size: 14px;
-//     line-height: 20px;
-//     text-align: center;
-// }
-// #content .common_panel .panel_footer {
-//     overflow: hidden;
-//     padding: 10px 15px;
-//     border-top: 1px solid #afcdeb;
-// }
-// #content .submit_button {
-//     overflow: hidden;
-//     width: 70px;
-//     margin: 0 auto;
-// }
-// #content .common_panel .panel_footer .common_button a, #content .common_panel .panel_footer .submit_button a, #content .common_panel .panel_header_buttons .common_button a, #content .common_panel .panel_header_buttons .submit_button a {
-//     height: 12px;
-//     line-height: 12px;
-//     padding: 5px 16px 6px;
-//     font-size: 12px;
-// }
-// #content .submit_button a {
-//     height: 14px;
-//     line-height: 14px;
-//     display: inline-block;
-//     margin-right: 8px;
-//     padding: 6px 18px 7px;
-//     background-color: #f68c25;
-//     color: #ffffff;
-//     font-size: 14px;
-//     -moz-border-radius: 3px;
-//     -webkit-border-radius: 3px;
-//     border-radius: 3px;
-//     text-shadow: #666666 1px 1px 1px;
-//     FILTER: Shadow(Color=#666, Direction=90, Strength=1);
-// }
-//
 // 我要入库
 #content {
     width: 100%;
@@ -324,8 +239,9 @@ header .container .con_top {
 #content .content_detail {
     width: 1000px;
     margin: 0 auto;
-    padding: 10px 50px 50px;
+    // padding: 10px 50px 50px;
     min-height: 400px;
+    box-sizing: border-box;
 }
 #content .steps_panel {
     margin: 0 0 25px;

@@ -24,7 +24,7 @@ header {
 }
 header .container .con_top {
             height: 37px;
-            min-width: 1200px;
+            min-width: 1000px;
             background-color: rgb(255, 109, 55);
         }
         header .container .con_center {
