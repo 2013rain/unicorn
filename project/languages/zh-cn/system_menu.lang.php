@@ -467,8 +467,9 @@ $LANG['batch_express'] = '快递批量操作';
 $LANG['batch_in_store'] = '入库批量操作';
 $LANG['batch_out_store'] = '出库批量操作';
 $LANG['sendno_status_update'] = '物流状态更新';
-$LANG['express_plane'] = '待登机订单';
-$LANG['express_clearance'] = '待清关订单';
-$LANG['express_distribute'] = '国内派送订单';
+$LANG['express_outstore'] = '待登机订单';
+$LANG['express_plane'] = '待清关订单';
+$LANG['express_clearance'] = '待派送订单';
+$LANG['express_distribute'] = '在派送订单';
 $LANG['express_complete'] = '已完成订单';
 ?>
