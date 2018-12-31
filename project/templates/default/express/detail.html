@@ -66,11 +66,11 @@
           <div class="value">{$express['weight']}</div>
         </dd>
       </dl>
-      {if $express['status']}
       <dl class="chart_info" express_id="other" express_number="12344566AAAA">
-        <dd class="one">提交入库&nbsp;<em>({format::date($express['createtime'], 1)})</em></dd>
+          {loop $time_node $node}
+          <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
+          {/loop}
       </dl>
-      {/if}
     </div>
     <div class="common_panel">
       <div class="panel_header">快递单中货物信息</div>
