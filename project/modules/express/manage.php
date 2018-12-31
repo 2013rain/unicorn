@@ -75,43 +75,23 @@ class manage extends admin {
                 $count = $this->db->count($where);
                 $pagesize = 10;
                 $num = ceil($count/$pagesize);
-                header('Content-Type: application/vnd.ms-excel');
-                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="goods_detail_' . date("YmdHis", time()) . '.csv"');
-                header('Cache-Control: max-age=0');
-                $fp = fopen('php://output', 'a');
+                $filename = "待入库列表商品详情_".$_POST['start_time'] .'_' .$_POST['end_time'];
                 $head = array('快递单号', '中文名称', '类别', '子类别', '英文品牌', '型号', '单价', '数量');
-                foreach($head as $i => $v)
-                {
-                    $head[$i] = iconv('utf-8', 'gbk', $v);
-                }
-                $limit = 10000;
-                $r = 0;
-                fputcsv($fp, $head);
-                $row = array();
+                $row = [];
                 for ($i=0;$i<$num;$i++) {
-                    $page_start = $i * $limit;
+                    $page_start = $i * $pagesize;
                     $res = $this->db->select($where, 'expressno', "$page_start, $pagesize");
                     foreach ($res as $val) {
                         $expressno = $val['expressno'];
                         $goods_lists = $this->goods_db->select("`expressno`='".$expressno."'");
                         foreach ($goods_lists as $v) {
-                            $r++;
-                            if($r == $limit)
-                            {
-                                ob_flush();
-                                flush();
-                                $r = 0;
-                            }
-                            $row = array($v['expressno']."\t", $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
-                            foreach($row as $j => $v)
-                            {
-                                $row[$j] = iconv('utf-8', 'gbk', $v);
-                            }
-                            fputcsv($fp, $row);
+                            $row[] = array($v['expressno'], $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
                         }
                     }
                 }
+                $excel= pc_base::load_sys_class('excel','',1);
+                $excel->export($head, $row, $filename);
+                exit;
             }
             if (isset($_POST['export'])) {
                 $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
@@ -129,44 +109,29 @@ class manage extends admin {
                 $count = $this->db->count($where);
                 $pagesize = 100;
                 $num = ceil($count/$pagesize);
-                header('Content-Type: application/vnd.ms-excel');
-                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="for_in_store_' . date("YmdHis", time()) . '.csv"');
-                header('Cache-Control: max-age=0');
-                $fp = fopen('php://output', 'a');
+                $filename = "待入库列表_".$_POST['start_time'] .'_' .$_POST['end_time'];
                 $head = array('仓库', '快递公司', '快递单号', '创建时间', '重量');
-                foreach($head as $i => $v)
-                {
-                    $head[$i] = iconv('utf-8', 'gbk', $v);
-                }
-                $limit = 10000;
-                $r = 0;
-                fputcsv($fp, $head);
-                $row = array();
+                $row = [];
                 for ($i=0;$i<$num;$i++) {
-                    $page_start = $i * $limit;
+                    $page_start = $i * $pagesize;
                     $res = $this->db->select($where, 'storeid,company,expressno,createtime', "$page_start, $pagesize");
                     foreach ($res as $val) {
-                        $r++;
-                        if($r == $limit)
-                        {
-                            ob_flush();
-                            flush();
-                            $r = 0;
-                        }
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno']."\t", date('Y-m-d H:i:s', $val['createtime']));
-                        foreach($row as $j => $v)
-                        {
-                            $row[$j] = iconv('utf-8', 'gbk', $v);
-                        }
-                        fputcsv($fp, $row);
+                        $row[] = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno'], date('Y-m-d H:i:s', $val['createtime']));
                     }
                 }
+                $excel= pc_base::load_sys_class('excel','',1);
+                $excel->export($head, $row, $filename);
+                exit;
             }
             if (isset($_POST['import'])) {
-                if (strpos($_FILES['express_data']['type'], 'application/vnd.ms-excel') === false && strpos($_FILES['express_data']['type'], 'text/csv') === false) {
-                    showmessage('上传格式必须为csv的excel文件',HTTP_REFERER);
+                $filename = $_FILES['express_data']['name'];
+                $explode = explode(".",$filename);
+                $length = count($explode);
+                $ext = $explode[$length-1];
+                if (!in_array($ext, ['xls','xlsx'])) {
+                    showmessage('上传格式必须为xls或者xlsx的excel文件',HTTP_REFERER);
                 }
+
                 if ($_FILES['express_data']['size'] > 3145728) {
                     showmessage('上传文件大小不能超过3M',HTTP_REFERER);
                 }
@@ -177,50 +142,52 @@ class manage extends admin {
                 $suc_row = 0;
                 $time = time();
                 if($_FILES['express_data']['tmp_name']) {
-                    if (($fp = fopen($_FILES['express_data']['tmp_name'], 'rb')) !== false) {
-                        while (($data = fgetcsv($fp)) !== false) {
-                            if ($row!=0) {
-                                if (count($data) < 5) {
-                                    $row++;
-                                    continue;
-                                }
-                                $store = $data[0];
-                                $company = $data[1];
-                                $expressno = trim($data[2]);
-                                $create_time = trim($data[3]);
-                                $weight = self::formatWeight($data[4]);
-                                if (!$company || !$expressno || !$create_time || !$weight) {
-                                    $row++;
-                                    continue;
-                                }
-                                $where = [
-                                    'expressno' => $expressno,
-                                ];
-                                $get_one = $this->db->get_one($where, 'id,rebate,status,service');
-                                if ($get_one && $get_one['status'] == 1) {
-                                    $store_service = $get_one['service'];
-                                    $service_price = $this->getServicePrice($store_service);
-                                    $price = weightcost($weight, $get_one['rebate'] , $service_price);
-                                    
-                                    $set_where = [
-                                        'id' => $get_one['id']
-                                    ];
-                                    $set_data = [
-                                        'weight' => $weight,
-                                        'status' => 2,
-                                        'in_store_time' => $time,
-                                        'price' => $price
-                                    ];
-                                    $this->db->update($set_data, $set_where);
-                                    $suc_row++;
-                                }
+                    $excel= pc_base::load_sys_class('excel','',1);
+                    $data = $excel->import($_FILES['express_data']['tmp_name'], $ext);
+                    if (!$data) {
+                        showmessage('没检测到数据,请检查是否excel或者是否有内容',HTTP_REFERER);
+                    }
+                    $row = count($data) - 1;
+                    foreach ($data as $k=>$v) {
+                        if ($k != 1) {
+                            if (count($v) < 5) {
+                                continue;
                             }
-                            $row++;
+                            $store = $v['A'];
+                            $company = $v['B'];
+                            $expressno = trim($v['C']);
+                            $create_time = trim($v['D']);
+                            $weight = self::formatWeight($v['E']);
+                            if (!$store || !$company || !$expressno || !$create_time || !$weight) {
+                                continue;
+                            }
+                            $where = [
+                                'expressno' => $expressno,
+                            ];
+                            $get_one = $this->db->get_one($where, 'id,rebate,status,service');
+                            if ($get_one && $get_one['status'] == 1) {
+                                $store_service = $get_one['service'];
+                                $service_price = $this->getServicePrice($store_service);
+                                $price = weightcost($weight, $get_one['rebate'] , $service_price);
+
+                                $set_where = [
+                                    'id' => $get_one['id']
+                                    ];
+                                $set_data = [
+                                    'weight' => $weight,
+                                    'status' => 2,
+                                    'in_store_time' => $time,
+                                    'price' => $price
+                                    ];
+                                $this->db->update($set_data, $set_where);
+                                $suc_row++;
+                            }
                         }
                     }
-                    fclose($_FILES['express_data']['tmp_name']);
+                } else {
+                    showmessage('上传失败',HTTP_REFERER);
                 }
-                showmessage('文件中含有'.($row-1).'条,成功导入'.$suc_row.'条',HTTP_REFERER);
+                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));
@@ -247,20 +214,9 @@ class manage extends admin {
                 $count = $this->db->count($where);
                 $pagesize = 10;
                 $num = ceil($count/$pagesize);
-                header('Content-Type: application/vnd.ms-excel');
-                //header('Content-Disposition: attachment;filename="待入库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="goods_detail_' . date("YmdHis", time()) . '.csv"');
-                header('Cache-Control: max-age=0');
-                $fp = fopen('php://output', 'a');
+                $filename = '待出库商品详情_' . $_POST['start_time'] .'_' .$_POST['end_time'];
                 $head = array('快递单号', '中文名称', '类别', '子类别', '英文品牌', '型号', '单价', '数量');
-                foreach($head as $i => $v)
-                {
-                    $head[$i] = iconv('utf-8', 'gbk', $v);
-                }
-                $limit = 10000;
-                $r = 0;
-                fputcsv($fp, $head);
-                $row = array();
+                $row = [];
                 for ($i=0;$i<$num;$i++) {
                     $page_start = $i * $limit;
                     $res = $this->db->select($where, 'expressno', "$page_start, $pagesize");
@@ -268,22 +224,13 @@ class manage extends admin {
                         $expressno = $val['expressno'];
                         $goods_lists = $this->goods_db->select("`expressno`='".$expressno."'");
                         foreach ($goods_lists as $v) {
-                            $r++;
-                            if($r == $limit)
-                            {
-                                ob_flush();
-                                flush();
-                                $r = 0;
-                            }
-                            $row = array($v['expressno']."\t", $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
-                            foreach($row as $j => $v)
-                            {
-                                $row[$j] = iconv('utf-8', 'gbk', $v);
-                            }
-                            fputcsv($fp, $row);
+                            $row[] = array($v['expressno'], $v['goodsname'], $v['pcategory'], $v['scategory'], $v['productname'], $v['goodsmodel'], $v['uprice'], $v['num']);
                         }
                     }
                 }
+                $excel= pc_base::load_sys_class('excel','',1);
+                $excel->export($head, $row, $filename);
+                exit;
             }
             if (isset($_POST['export'])) {
                 $start_time = isset($_POST['start_time']) ? $_POST['start_time'] : '';
@@ -301,46 +248,30 @@ class manage extends admin {
                 $count = $this->db->count($where);
                 $pagesize = 100;
                 $num = ceil($count/$pagesize);
-                header('Content-Type: application/vnd.ms-excel');
-                //header('Content-Disposition: attachment;filename="待出库列表_' . $_POST['start_time'] .'_' .$_POST['end_time'] . '.csv"');
-                header('Content-Disposition: attachment;filename="for_out_store_' . date("YmdHis", time()) . '.csv"');
-                header('Cache-Control: max-age=0');
-                $fp = fopen('php://output', 'a');
+                $filename = '待出库列表_'.$_POST['start_time'] .'_' .$_POST['end_time'];
                 $head = array('仓库', '快递公司', '快递单号', '入库时间', '重量', '支付金额', '折扣', '增值服务', '发货公司' , '发货单号');
-                foreach($head as $i => $v)
-                {
-                    $head[$i] = iconv('utf-8', 'gbk', $v);
-                }
-                $limit = 10000;
-                $r = 0;
-                fputcsv($fp, $head);
-                $row = array();
+                $row = [];
                 for ($i=0;$i<$num;$i++) {
                     $page_start = $i * $limit;
                     $res = $this->db->select($where, 'storeid,company,expressno,in_store_time,weight,pay_money,rebate,service', "$page_start, $pagesize");
                     foreach ($res as $val) {
-                        $r++;
-                        if($r == $limit)
-                        {
-                            ob_flush();
-                            flush();
-                            $r = 0;
-                        }
                         $in_store_time = format::date($val['in_store_time'], 1);
                         $service = $this->getServiceName($val['service']);
                         $rebate = $val['rebate'] ? $val['rebate'] : '无';
-                        $row = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno']."\t", $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
-                        foreach($row as $j => $v)
-                        {
-                            $row[$j] = iconv('utf-8', 'gbk', $v);
-                        }
-                        fputcsv($fp, $row);
+                        $row[] = array(self::$store[$val['storeid']]['name'], $val['company'], $val['expressno']."\t", $in_store_time, $val['weight'], $val['pay_money'], $rebate, $service);
                     }
                 }
+                $excel= pc_base::load_sys_class('excel','',1);
+                $excel->export($head, $row, $filename);
+                exit;
             }
             if (isset($_POST['import'])) {
-                if (strpos($_FILES['express_data']['type'], 'application/vnd.ms-excel') === false && strpos($_FILES['express_data']['type'], 'text/csv') === false) {
-                    showmessage('上传格式必须为csv的excel文件',HTTP_REFERER);
+                $filename = $_FILES['express_data']['name'];
+                $explode = explode(".",$filename);
+                $length = count($explode);
+                $ext = $explode[$length-1];
+                if (!in_array($ext, ['xls','xlsx'])) {
+                    showmessage('上传格式必须为xls或者xlsx的excel文件',HTTP_REFERER);
                 }
                 if ($_FILES['express_data']['size'] > 5242880) {
                     showmessage('上传文件大小不能超过5M',HTTP_REFERER);
@@ -352,51 +283,50 @@ class manage extends admin {
                 $suc_row = 0;
                 $time = time();
                 if($_FILES['express_data']['tmp_name']) {
-                    if (($fp = fopen($_FILES['express_data']['tmp_name'], 'rb')) !== false) {
-                        while (($data = fgetcsv($fp)) !== false) {
-                            if ($row!=0) {
-                                if (count($data) != 10) {
-                                    $row++;
-                                    continue;
-                                }
-                                $store = $data[0];
-                                $company = $data[1];
-                                $expressno = trim($data[2]);
-                                $in_store_time = $data[3];
-                                $weight = floatval($data[4]);
-                                $pay = floatval($data[5]);
-                                $rebat = $data[6];
-                                $service = $data[7];
-                                $send_company = $data[8];
-                                $send_no = $data[9];
-                                if (!$company || !$expressno || !$in_store_time || !$weight || !$pay || !$rebat || !$service || !$send_company || !$send_no) {
-                                    $row++;
-                                    continue;
-                                }
-                                $where = [
-                                    'expressno' => $expressno,
-                                    'status' => 2,
-                                    'pay_status' => 1
+                    $excel= pc_base::load_sys_class('excel','',1);
+                    $data = $excel->import($_FILES['express_data']['tmp_name'], $ext);
+                    if (!$data) {
+                        showmessage('没检测到数据,请检查是否excel或者是否有内容',HTTP_REFERER);
+                    }
+                    $row = count($data) - 1;
+                    foreach ($data as $k=>$v) {
+                        if ($k != 1) {
+                            if (count($v) != 10) {
+                                continue;
+                            }
+                            $store = $v['A'];
+                            $company = $v['B'];
+                            $expressno = trim($v['C']);
+                            $in_store_time = $v['D'];
+                            $weight = floatval($v['E']);
+                            $pay = floatval($v['F']);
+                            $rebat = $v['G'];
+                            $service = $v['H'];
+                            $send_company = $v['I'];
+                            $send_no = $v['J'];
+                            if (!$company || !$expressno || !$in_store_time || !$weight || !$pay || !$rebat || !$service || !$send_company || !$send_no) {
+                                continue;
+                            }
+                            $where = [
+                                'expressno' => $expressno,
+                                'status' => 2,
+                                'pay_status' => 1
                                 ];
-                                if (mb_strlen($send_company, "utf-8") > 20 || strlen($send_no) > 50) {
-                                    $row++;
-                                    continue;
-                                }
-                                $set_data = [
-                                    'send_company' => iconv('gbk', 'utf-8', $send_company),
+                            if (mb_strlen($send_company, "utf-8") > 20 || strlen($send_no) > 50) {
+                                continue;
+                            }
+                            $set_data = [
+                                'send_company' => $send_company,
                                     'send_no' => $send_no,
                                     'out_store_time' => $time,
                                     'status' => 3
                                     ];
-                                $this->db->update($set_data, $where);
-                                $suc_row++;
-                            }
-                            $row++;
+                            $this->db->update($set_data, $where);
+                            $suc_row++;
                         }
                     }
-                    fclose($_FILES['express_data']['tmp_name']);
                 }
-                showmessage('文件中含有'.($row-1).'条,成功导入'.$suc_row.'条',HTTP_REFERER);
+                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
             }
         } else {
             $start_time = date("Y-m-d", strtotime("-3 month"));
@@ -622,7 +552,6 @@ class manage extends admin {
         }
         return true;
     }
-
 	
 }
 ?>

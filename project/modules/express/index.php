@@ -325,6 +325,26 @@ class index extends foreground {
         } else {
             $express_mode = '普通入库';
         }
+        $time_node = [];
+        $time_node[] = [
+            'name' => '快递单创建',
+            'value' => 1,
+            'time' => $express['createtime']
+            ];
+        if ($express['status'] >=2) {
+            $time_node[] = [
+                'name' => '快递入库',
+                'value' => 2,
+                'time' => $express['in_store_time']
+            ];
+            if ($express['pay_status'] == 1) {
+                $time_node[] = [
+                    'name' => '支付运费',
+                    'value' => 2,
+                    'time' => $express['pay_time']
+                ];
+            }
+        }
         $service = $express['service'];
         $service_arr = $this->decodeService($service);
         $pages = $this->goods_db->pages;
@@ -823,7 +843,7 @@ class index extends foreground {
             'time' => $express['in_store_time']
         ];
         $time_node[] = [
-            'name' => '支付时间',
+            'name' => '支付运费',
             'value' => 2,
             'time' => isset($express['pay_time']) ? $express['pay_time'] : 0,
         ];
