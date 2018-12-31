@@ -1,0 +1,316 @@
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+address, cite, dfn, em, var { font-style:normal; }
+code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+small{ font-size:12px; }
+ul, ol { list-style:none; }
+a { text-decoration:none; color:#000; out-line: none;}
+a:hover { text-decoration:underline; }
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+legend { color:#000; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; }
+
+
+header {
+    position: relative;
+    z-index: 999999;
+    height: 121px;
+    background-color: rgb(66, 101, 167);
+}
+header .container .con_top {
+            height: 37px;
+            min-width: 1000px;
+            background-color: rgb(255, 109, 55);
+            box-sizing:border-box;
+        }
+        header .container .con_center {
+            height: 85px;
+            width: 1000px;
+            margin:0 auto;
+            box-sizing:border-box;
+
+        }
+
+        header .container .con_center div {
+            display:inline-block;
+            color:#fff;
+            margin-top:24px;
+            margin-left: 5px;
+        }
+        header .container .con_center div p:nth-child(1) {
+            font-size:30px;
+        }
+        header .container .con_center div p:nth-child(2) {
+            font-size:12px;
+            color: rgb(204, 204, 204);
+        }
+        header .container .con_center ul {
+            float: right;
+        }
+        header .container .con_center ul li {
+            float: left;
+            color:#fff;
+            font-size:14px;
+            cursor:pointer;
+        }
+        header .container .con_center ul li a {
+            display: block;
+            padding:40px 16px 22px;
+            color:#fff;
+            text-decoration:none;
+        }
+        header .container .con_center ul .active {
+            color:#ff6d37;
+            border-bottom:3px solid #ff6d37;
+            font-size:14px;
+        }
+        header .container .con_center ul .li_ul .active_ol {
+            background-color:#ff6d37;
+            color:#fff;
+        }
+
+        header .container .con_center .con_ul li:nth-child(4) {
+            position:relative;
+        }
+        header .container .con_center ul li .li_ul {
+            position:absolute;
+            width:126px;
+            display:none;
+            top:85px;
+            left:0;
+        }
+        header .container .con_center ul li .li_ul li {
+            background-color:#fff;
+            color:#000;
+            padding:0;
+            line-height:30px;
+            width: 126px;
+            height:30px;
+            text-align:center;
+            font-size:14px;
+            border:none;
+        }
+        header .container .con_top p {
+            position:relative;
+            display:block;
+            width: 1000px;
+            margin:0 auto;
+            line-height:37px;
+            font-size:14px;
+            color:#fff;
+        }
+        header .container .con_top p img,header .container .con_top p span:nth-child(3),header .container .con_top p span:nth-child(5) {
+            position:absolute;
+        }
+        header .container .con_top p img:nth-child(2) {
+            right:223px;
+            top:9px;
+        }
+        header .container .con_top p img:nth-child(4) {
+            top:9px;
+            right:92px;
+        }
+        header .container .con_top p span:nth-child(3) {
+            right:132px;
+            top:1px;
+        }
+        header .container .con_top p span:nth-child(5) {
+            right:0;
+            top:1px;
+        }
+        header .container .con_top p span:nth-child(6) {
+            margin-left:10px;
+        }
+        header .container .con_top p span:nth-child(6) a {
+            color: #fff;
+            text-decoration:none;
+        }
+        header .container .con_top p span:nth-child(7) a {
+            color: #fff;
+            text-decoration:none;
+        }
+
+        footer{
+            min-width:1000px;
+            height: 275px;
+            background-color: rgb(66, 101, 167);
+        }
+        footer .con{
+            width:1000px;
+            margin:0 auto;
+        }
+        footer .con ul {
+            height:255px;
+        }
+        footer .con ul li {
+            float: left;
+        }
+        footer .con .l1{
+            width: 240px;
+            padding-top:20px;
+            color:#fff;
+            font-size:18px;
+            line-height: 140%;
+        }
+        footer .con .l1 p{
+            padding-bottom: 40px;
+        }
+        footer .con .l1 a{
+            margin-right:5px;
+        }
+        footer .con .l2 {
+            width: 290px;
+            padding-top:20px;
+            color:#fff;
+        }
+        footer .con .l2 p:nth-child(1) {
+            font-size:18px;
+        }
+        footer .con .l2 span:nth-child(2) {
+            font-size:12px;
+        }
+        footer .con .l2 .p-li {
+            height: 36px;
+            font-size:12px;
+            line-height:36px;
+            position:relative;
+            padding-left:28px;
+        }
+        footer .con .l2 .p-li img {
+            position:absolute;
+            top:8px;
+            left:0;
+        }
+        footer .con .l3 {
+            width: 460px;
+            padding-top:20px;
+            color:#fff;
+        }
+        footer .con .l3 p:nth-child(1) {
+            font-size:18px;
+        }
+        footer .con .l3 span:nth-child(2) {
+            font-size:12px;
+        }
+        footer .con .l3 .p-li {
+            height:30px;
+            font-size:12px;
+            line-height:30px;
+            border-bottom: 1px dashed #c6c6c6;
+        }
+        footer .con .l3 .span-last {
+            float:right;
+        }
+        footer .footer-bottom {
+            width:100%;
+            min-width:1000px;
+            height:30px;
+            color:#fff;
+            margin:0 auto;
+            text-align:center;
+            font-size:12px;
+            background-color: rgb(66, 101, 167);
+        }
+
+
+        footer .con .l3 a {
+            text-decoration:none;
+            out-line: none;
+            color:#fff;
+        }
+        footer .con .l3 a:hover {
+            color:rgb(255, 109, 55);
+        }
+
+
+
+// 全部货物入库记录
+#content {
+    width: 100%;
+    min-width: 1000px;
+    color: #555555;
+    margin-top:50px;
+    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
+}
+#content .content_detail {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 10px 50px 50px;
+    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
+    min-height: 400px;
+}
+#content .common_panel {
+    background: #ecf4fb;
+    border: 1px solid #afcdeb;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 35px;
+}
+#content .common_panel .panel_header {
+    height: 20px;
+    border-bottom: 1px solid #afcdeb;
+    padding: 10px 15px;
+    font-size: 14px;
+    line-height: 20px;
+}
+#content .common_panel .panel_content {
+    background: #ffffff;
+    font-size: 12px;
+    overflow: hidden;
+}
+#content .common_list {
+    width: 100%;
+}
+#content .common_list thead {
+    background: #ecf4fb;
+}
+#content .common_list thead tr {
+    border-bottom: 1px solid #afcdeb;
+}
+#content .common_list thead tr th {
+    text-align: center;
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 8px 5px;
+    white-space: nowrap;
+}
+#content .common_list thead tr th.last {
+    border-right: 0;
+}
+#content .common_list tbody {
+    background: #ffffff;
+}
+#content .common_list tbody tr td.nowrap {
+    white-space: nowrap;
+}
+#content .common_list tbody tr td {
+    border-bottom: 1px solid #afcdeb;
+    border-right: 1px solid #afcdeb;
+    text-align: center;
+    padding: 8px 5px;
+}
+#content .common_list tbody tr td.last {
+    border-right: 0;
+}
+#content .common_list tbody tr.last td {
+    border-bottom: 0;
+}
+#content .common_panel .panel_content a {
+    color: #336699;
+}
+#content .pager_button {
+    overflow: hidden;
+    text-align: center;
+}
+#content .common_panel .panel_content .empty {
+    text-align: center;
+    padding: 20px 0;
+}

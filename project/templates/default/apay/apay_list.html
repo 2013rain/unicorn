@@ -1,0 +1,46 @@
+
+{template 'member', 'header'}
+<link rel="stylesheet" type="text/css" href="{CSS_PATH}cost_list.css">
+
+
+<!-- 消费记录列表 -->
+<div id="content" style="margin-top: 50px;">
+    <div class="content_detail">
+      <div class="common_panel">
+        <div class="panel_header" style="background-color: rgba(246,170,0,0.4);text-align: right;">当前账户余额：{$memberinfo['amount']}元</div>
+          <div class="panel_content">
+              <table class="common_list">
+                <thead>
+                  <tr style="background-color: rgba(246,170,0,0.6);">
+                    <th>交易发起时间</th>
+                    <th>交易金额</th>
+                    <th>余额</th>
+                    <th>交易内容</th>
+
+                    <th class="last">货运单号</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {loop $tradelist $k $v}
+                  <tr style="background-color: rgba(246,170,0,0.4);">
+                    <td class="nowrap">{$v['finish_time']}</td>
+                    <td class="nowrap"><span style="color:#5d5;;">{$v['amount']}</span></td>
+                    <td class="nowrap">{$v['balance']}</td>
+                    <td>{$v['order_name']}</td>
+                    <td ><a href="/index.php?m=express&c=index&a=detail&id={$v['express_id']}">{$v['express_no']}</a></td>
+                  </tr>
+                {/loop}
+                </tbody>
+                <tfoot>
+                  <tr class="last">
+                    <td colspan="5" class="last">
+                      <div class="empty">只显示最近30条明细</div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+          </div>
+      </div>
+    </div>
+</div>
+{template 'content', 'footer'}

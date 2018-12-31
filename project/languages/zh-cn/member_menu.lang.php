@@ -11,4 +11,5 @@ $LANG['price'] = '价格与服务';
 $LANG['price_server'] = '价格与服务';
 $LANG['aboutus'] = '关于我们';
 $LANG['guide'] = '新手指南';
+$LANG['apay_list'] = '支付记录';
 ?>
