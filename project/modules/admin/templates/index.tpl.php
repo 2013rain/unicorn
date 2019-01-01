@@ -58,7 +58,7 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
     </div></div>
 </div>
 <div class="header">
-	<div class="logo lf"><a href="<?php echo $currentsite['domain']?>" target="_blank"><span class="invisible"><?php echo L('phpcms_title')?></span></a></div>
+	<div class="logo lf"><a href="<?php echo $currentsite['domain']?>" target="_blank"><span class="invisible">橙子家海外物流转运</span></a></div>
     <div class="rt-col">
     	<div class="tab_style white cut_line text-r"><a href="javascript:;" onclick="lock_screen()"><img src="<?php echo IMG_PATH.'icon/lockscreen.png'?>"> <?php echo L('lockscreen')?></a>
     <ul id="Skin">
@@ -70,7 +70,7 @@ var pc_hash = '<?php echo $_SESSION['pc_hash']?>'
         </div>
     </div>
     <div class="col-auto">
-    	<div class="log white cut_line"><?php echo L('hello'),$admin_username?>  [<?php echo $rolename?>]<span>
+    	<div class="log white cut_line">您好！<?php echo $admin_username?>  [<?php echo $rolename?>]<span>|</span><a href="?m=admin&c=index&a=public_logout">[退出]</a>
     	</div>
         <ul class="nav white" id="top_menu">
         <?php
