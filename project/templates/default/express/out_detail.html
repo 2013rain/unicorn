@@ -52,7 +52,7 @@
       <dl class="list_info">
         <dd>
           <div class="label">收件人</div>
-          <div class="value">{$addr_info['consignee']},{$addr_info['province']},{$addr_info['area']},{$addr_info['addressinfo']},{$addr_info['zipcode']},{$addr_info['mobile']}</div>
+          <div class="value">{$addr_info['consignee']}</div>
         </dd>
         <dd>
           <div class="label">手机</div>
@@ -84,7 +84,7 @@
           {loop $time_node $node}
           <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
           {/loop}
-          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="'https://www.kuaidi100.com/chaxun?com={$express['send_company']}&nu={$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
+          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.kuaidi100.com/chaxun?com={$express['send_company']}&nu={$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
       </dl>
     </div>
     <div class="common_panel">
