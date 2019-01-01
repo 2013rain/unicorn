@@ -806,11 +806,15 @@ class index extends foreground {
         $store = self::$store;
         $where = [
             'expressno' => $expressno,
+            'userid' =>$userid
         ];
         $express = $this->db->get_one($where);
         if (!$express || $express['userid'] != $userid || !in_array($express['status'],[3,4,5,6,7])) {
             showmessage('非法操作', 'index.php?m=express&c=index');
         }
+        $express['flower_wight_cost'] = weightcost($info['weight']-1, 0);
+        $express['flower_wight'] = ($info['weight']-1)>0 ?($info['weight']-1)*1000：0;
+
         $expressno = $express['expressno'];
         $where = [
             'userid' => $userid,

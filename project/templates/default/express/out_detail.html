@@ -17,6 +17,7 @@
 <!-- 查看快递信息 -->
 <div id="content" style="margin-top: 50px;">
   <div class="content_detail">
+    <div style="border: 1px solid rgba(246,170,0,0.4)!important;">
     <div class="header_intro_panel">
       <table>
         <tbody>
@@ -54,6 +55,15 @@
           <div class="value">{$addr_info['consignee']},{$addr_info['province']},{$addr_info['area']},{$addr_info['addressinfo']},{$addr_info['zipcode']},{$addr_info['mobile']}</div>
         </dd>
         <dd>
+          <div class="label">手机</div>
+          <div class="value">{$addr_info['mobile']}</div>
+        </dd>
+        <dd>
+          <div class="label">地址</div>
+          <div class="value">{$addr_info['province']},{$addr_info['area']},{$addr_info['addressinfo']},{$addr_info['zipcode']}</div>
+        </dd>
+
+        <dd>
           <div class="label">出库单重量</div>
           <div class="value">{$express['weight']}</div>
         </dd>
@@ -74,7 +84,7 @@
           {loop $time_node $node}
           <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
           {/loop}
-          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.trackingmore.com/embed_box_float-cn.html?wd={$express['send_company']} {$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
+          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="'https://www.kuaidi100.com/chaxun?com={$express['send_company']}&nu={$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
       </dl>
     </div>
     <div class="common_panel">
@@ -129,7 +139,7 @@
               <tr class="last">
                 <td>运费</td>
                 <td>{weightcost($express['weight'])}</td>
-                <td class="last">出库单称重{$express['weight']}公斤，计费重量{$express['weight']}公斤，最终计费重量以飞往中国时实际重量为准，转运偏好为转运中国默认，首重500克49.0元，续重100克6.9元</td>
+                <td class="last">出库单称重{$express['weight']}公斤，计费重量{$express['weight']}公斤，最终计费重量以飞往中国时实际重量为准，转运偏好为转运中国默认，首重1000克1100日元，续重{$express['flower_wight']}克{$express['flower_wight_cost']}日元</td>
               </tr>
           </tbody>
         </table>
@@ -163,7 +173,7 @@
       </div>
     </div>
     -->
-
+  </div>
   </div>
 </div>
 <!-- 查看快递信息 -->
