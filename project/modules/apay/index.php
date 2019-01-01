@@ -17,7 +17,7 @@ class index extends foreground{
 		$this->_userid = param::get_cookie('_userid');
 		$this->_username = param::get_cookie('_username');
 		$this->_groupid = param::get_cookie('_groupid');
-		$this->alipay= pc_base::load_sys_class('alipay','',1);
+
 	}
 	//首页
 	public function init() {
