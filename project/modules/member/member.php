@@ -105,30 +105,16 @@ class member extends admin {
 			}
 			
 			
-			$where = '';
+			$where = ' 0 AND ';
 			
 			//如果是超级管理员角色，显示所有用户，否则显示当前站点用户
 			if($_SESSION['roleid'] == 1) {
-				if(!empty($siteid)) {
-					$where .= "`siteid` = '$siteid' AND ";
-				}
-			} else {
-				$siteid = get_siteid();
-				$where .= "`siteid` = '$siteid' AND ";
-			}
-				
-			if($status) {
-				$islock = $status == 1 ? 1 : 0;
-				$where .= "`islock` = '$islock' AND ";
-			}
-		
-			if($groupid) {
-				$where .= "`groupid` = '$groupid' AND ";
+				$where = ' 1 AND ';
+			} else ($_SESSION['roleid'] == 2){
+				$where = 'admin_userid='.$this->userid . " AND ";
 			}
 			
-			if($modelid) {
-				$where .= "`modelid` = '$modelid' AND ";
-			}	
+			
 			$where .= "`regdate` BETWEEN '$where_start_time' AND '$where_end_time' AND ";
 
 			//资金范围
@@ -206,11 +192,11 @@ class member extends admin {
 		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 		
 		//如果是超级管理员角色，显示所有用户，否则显示当前站点用户
+		$where = ' 0 ';
 		if($_SESSION['roleid'] == 1) {
 			$where = '';
-		} else {
-			$siteid = get_siteid();
-			$where .= "`siteid` = '$siteid'";
+		} else if($_SESSION['roleid'] == 2) {
+			$where = 'admin_userid='.$this->userid;
 		}
 		
 		$memberlist_arr = $this->db->listinfo($where, 'userid DESC', $page, 15);

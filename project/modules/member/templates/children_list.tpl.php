@@ -19,7 +19,7 @@
 			<th align="left"><?php echo L('regip')?></th>
 			<th align="left"><?php echo L('lastlogintime')?></th>
 
-			<th align="left"><?php echo L('point')?></th>
+			<th align="left">余额</th>
 			<th align="left"><?php echo L('operation')?></th>
 		</tr>
 	</thead>
@@ -32,15 +32,15 @@
 		<td align="left"><input type="checkbox" value="<?php echo $v['userid']?>" name="userid[]"></td>
 		<td align="left"><?php if($v['islock']) {?><img title="<?php echo L('lock')?>" src="<?php echo IMG_PATH?>icon/icon_padlock.gif"><?php }?></td>
 		<td align="left"><?php echo $v['userid']?></td>
-		<td align="left"><?php echo $v['username']?><a href="javascript:member_infomation(<?php echo $v['userid']?>, '<?php echo $v['modelid']?>', '')"><?php echo $member_model[$v['modelid']]['name']?><img src="<?php echo IMG_PATH?>admin_img/detail.png"></a></td>
-		<td align="left"><?php $v['enname']?></td>
+		<td align="left"><?php echo $v['username']?></td>
+		<td align="left"><?php echo $v['enname']?></td>
 		<td align="left"><?php echo new_html_special_chars($v['nickname'])?></td>
 		<td align="left"><?php echo $v['email']?></td>
 
 		<td align="left"><?php echo $v['regip']?></td>
 		<td align="left"><?php echo format::date($v['lastdate'], 1);?></td>
 
-		<td align="left"><?php echo $v['point']?></td>
+		<td align="left"><?php echo $v['amount']?></td>
 		<td align="left">
 			<a href="javascript:edit(<?php echo $v['userid']?>, '<?php echo $v['username']?>')">[<?php echo L('edit')?>]</a>
 		</td>
