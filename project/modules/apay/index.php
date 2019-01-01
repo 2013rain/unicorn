@@ -28,7 +28,7 @@ class index extends foreground{
 			'member_id'=>$memberinfo['userid'],
 			'status'=>1,
 		);
-		$tradelist = $this->express_trade_log->listinfo($where, 'finish_time DESC', $page, 30);
+		$tradelist = $this->express_trade_log->listinfo($where, 'finish_time DESC', $page, 15);
 		$pages = $this->express_trade_log->pages;
 		include template('apay', 'apay_list');
 
