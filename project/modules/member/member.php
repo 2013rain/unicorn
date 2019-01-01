@@ -111,7 +111,7 @@ class member extends admin {
 			if($_SESSION['roleid'] == 1) {
 				$where = ' 1 AND ';
 			} else if ($_SESSION['roleid'] == 2) {
-				$where = 'admin_userid='.$this->userid . " AND ";
+				$where = 'admin_userid='.(int)$this->userid . " AND ";
 			}
 			
 			
@@ -196,7 +196,7 @@ class member extends admin {
 		if($_SESSION['roleid'] == 1) {
 			$where = '';
 		} else if($_SESSION['roleid'] == 2) {
-			$where = 'admin_userid='.$this->userid;
+			$where = 'admin_userid='. (int)$this->userid;
 		}
 		
 		$memberlist_arr = $this->db->listinfo($where, 'userid DESC', $page, 15);
