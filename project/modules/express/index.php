@@ -812,8 +812,8 @@ class index extends foreground {
         if (!$express || $express['userid'] != $userid || !in_array($express['status'],[3,4,5,6,7])) {
             showmessage('非法操作', 'index.php?m=express&c=index');
         }
-        $express['flower_wight_cost'] = weightcost($info['weight']-1, 0);
-        $express['flower_wight'] = ($info['weight']-1)>0 ?($info['weight']-1)*1000：0;
+        $express['flower_wight_cost'] = weightcost($info['weight'], 0) - weightcost(0, 0) ;
+        $express['flower_wight'] = ($info['weight']-1)>0 ?($info['weight']-1)*1000 : 0;
 
         $expressno = $express['expressno'];
         $where = [
