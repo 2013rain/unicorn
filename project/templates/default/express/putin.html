@@ -74,14 +74,11 @@
             <tr>
               <td class="label">快递编号</td>
               <td class="item">
-                <div class="field_with_errors">
+                <!-- <div class="field_with_errors"> -->
                   <input class="textbox required" id="inbound_express_tracking_number" name="expressno" type="text" >
-                </div>
+                <!-- </div> -->
               </td>
-              <td class="info">
-              	<!--<span class="alert">已经被使用</span>
-				-->
-              </td>
+              <td class="info"></td>
 
             </tr>
             <tr>
@@ -156,13 +153,13 @@
                 <td class="last">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}</td>
 				</tr>
             {/loop}
-            
+
             </tbody>
           </table>
         </div>
       </div>
-    
-     
+
+
       <div class="common_panel">
         <div class="panel_header">填写备注信息</div>
         <div class="panel_content">
@@ -336,39 +333,65 @@
         return this.optional(element) || /^[\u4e00-\u9fa50-9a-zA-Z-_#]+$/.test(value);
       }, "请输入正确的快递编号");
 
+    jQuery.validator.addMethod("exitExpressno", function (value, element) {
+       var flag = 1;
+        $.ajax({
+          type:"GET",
+          url:'index.php?m=express&c=index&a=public_checkexpressno_ajax&',
+          async:false,
+          data:{'expressno':value},
+          success: function(msg){
+            if(msg != '1'){
+              flag = 0;
+            }
+          }
+        });
+        if(flag == 0){
+          return false;
+        }else{
+          return true;
+        }
+    }, "快递编号已存在");
+
       $("form:first").validate({
         ignore : "",
         rules : {
-          "inbound[express_tracking_number]": {
-            required: true,
-            isExpressCode: true
+          // "inbound[express_tracking_number]": {//快递编号
+          //   required: true,
+          //   isExpressCode: true,
+          //   exitExpressno:true
+          // },
+          "expressno": {
+              required: true,
+              isExpressCode: true,
+              exitExpressno:true
           },
-          "inbound[warehouse_id]": {
+          "inbound[warehouse_id]": {//入库仓库
             required: true
           },
-          "inbound[lu_express_id]": {
+          "inbound[lu_express_id]": {//快递公司
             required: true
           },
           "inbound[brand]": {
             required: true
           },
-          "inbound[name]": {
+          "inbound[name]": {//货物概述
             required: true
           }
         }
       });
 
-      $("#inbound_express_tracking_number").blur(function() {
-        var input_express_tracking_number = $(this).val();
-        if (input_express_tracking_number.length > 10  && received_express_tracking_numbers.length > 0){
-          for (ri in received_express_tracking_numbers){
-            if (received_express_tracking_numbers[ri].indexOf(input_express_tracking_number) > 0) {
-              alert("您输入的快递编号和已经入库的"+received_express_tracking_numbers[ri]+"疑似为同一个包裹,因为转快递原因库房实际签收包裹快递单号可能会在原单号前面增加位数,请仔细核对");
-              return false;
-            }
-          }
-        }
-      });
+      // $("#inbound_express_tracking_number").blur(function() {
+      //   var input_express_tracking_number = $(this).val();
+      //   if (input_express_tracking_number.length > 10  && received_express_tracking_numbers.length > 0){
+      //     for (ri in received_express_tracking_numbers){
+      //       if (received_express_tracking_numbers[ri].indexOf(input_express_tracking_number) > 0) {
+      //         alert("您输入的快递编号和已经入库的"+received_express_tracking_numbers[ri]+"疑似为同一个包裹,因为转快递原因库房实际签收包裹快递单号可能会在原单号前面增加位数,请仔细核对");
+      //         return false;
+      //       }
+      //     }
+      //   }
+      // });
 
 
       $("#go_step_two").click(function (event) {
