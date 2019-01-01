@@ -27,20 +27,25 @@
                     <td class="nowrap"><span style="color:#5d5;;">{$v['amount']}</span></td>
                     <td class="nowrap">{$v['balance']}</td>
                     <td>{$v['order_name']}</td>
-                    <td ><a href="/index.php?m=express&c=index&a=detail&id={$v['express_id']}">{$v['express_no']}</a></td>
+                    <td ><a href="/index.php?m=express&c=index&a=out_detail&expressno={$v['express_no']}">{$v['express_no']}</a></td>
                   </tr>
                 {/loop}
                 </tbody>
                 <tfoot>
                   <tr class="last">
                     <td colspan="5" class="last">
+                      {if count($tradelist)==0}
                       <div class="empty">只显示最近30条明细</div>
+                      {else}
+                      <div id="pages"><?php echo $pages;?></div>
+                      {/if}
                     </td>
                   </tr>
                 </tfoot>
               </table>
           </div>
       </div>
+      
     </div>
 </div>
 {template 'content', 'footer'}
