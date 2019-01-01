@@ -110,7 +110,7 @@ class member extends admin {
 			//如果是超级管理员角色，显示所有用户，否则显示当前站点用户
 			if($_SESSION['roleid'] == 1) {
 				$where = ' 1 AND ';
-			} else ($_SESSION['roleid'] == 2){
+			} else if ($_SESSION['roleid'] == 2) {
 				$where = 'admin_userid='.$this->userid . " AND ";
 			}
 			
@@ -165,7 +165,7 @@ class member extends admin {
 			}
 			
 		} else {
-			$where = '';
+			$where = ' 0 ';
 		}
 
 		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
