@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2018-12-29 15:12:33
 * @Last Modified by:   Marte
-* @Last Modified time: 2018-12-29 15:22:06
+* @Last Modified time: 2019-01-02 15:25:22
 */
 
 'use strict';
@@ -40,3 +40,14 @@
         }
     }
 // }
+
+//分页统一使用，获取页码部分宽度 居中用
+$(function () {
+    var w=0;
+    $(".pages-pay-l a").each(function() {
+        w+=(parseInt($(this).width()) + 4);
+        console.log(w);
+    });
+    w+=14;
+    $(".pages-pay-l").width(w);
+});
