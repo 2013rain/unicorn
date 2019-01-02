@@ -7,11 +7,11 @@
 <div id="content" style="margin-top: 50px;">
     <div class="content_detail">
       <div class="common_panel">
-        <div class="panel_header" style="background-color: rgba(246,170,0,0.4);text-align: right;">当前账户余额：{$memberinfo['amount']}日元</div>
+        <div class="panel_header" style="background-color: rgba(246,170,0,0.6);text-align: right;">当前账户余额：{$memberinfo['amount']}日元</div>
           <div class="panel_content">
               <table class="common_list">
                 <thead>
-                  <tr style="background-color: rgba(246,170,0,0.6);">
+                  <tr style="background-color: rgba(246,170,0,0.4);">
                     <th>交易发起时间</th>
                     <th>交易金额</th>
                     <th>余额</th>
@@ -22,7 +22,7 @@
                 </thead>
                 <tbody>
                 {loop $tradelist $k $v}
-                  <tr style="background-color: rgba(246,170,0,0.4);">
+                  <tr>
                     <td class="nowrap">{$v['finish_time']}</td>
                     <td class="nowrap"><span style="color:#5d5;;">{$v['amount']}</span></td>
                     <td class="nowrap">{$v['balance']}</td>
@@ -37,7 +37,7 @@
                       {if count($tradelist)==0}
                       <div class="empty">只显示最近30条明细</div>
                       {else}
-                      <div id="pages"><?php echo $pages;?></div>
+                      <div class="pages-pay-l" id="pages"><?php echo $pages;?></div>
                       {/if}
                     </td>
                   </tr>
@@ -45,7 +45,17 @@
               </table>
           </div>
       </div>
-      
+
     </div>
 </div>
-{template 'content', 'footer'}
+
+<script type="text/javascript">
+    var w=0;
+    $(".pages-pay-l a").each(function() {
+        w+=(parseInt($(this).width()) + 4);
+        console.log(w);
+    });
+    w+=14;
+    $(".pages-pay-l").width(w);
+</script>
+{template 'member', 'footer'}
