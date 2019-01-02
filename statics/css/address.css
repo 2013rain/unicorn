@@ -235,8 +235,7 @@ header .container .con_top {
 }
 #content .content_detail {
     width: 1000px;
-    margin: 0 auto;
-    padding-top: 10px;
+    margin: 50px auto;
     min-height: 400px;
     box-sizing: border-box;
 }
