@@ -235,13 +235,11 @@ header .container .con_top {
     min-width: 1000px;
     color: #555555;
     margin-top:50px;
-    // background: url(/assets/www/product/content_bgs-4022db4….png) repeat-y center top #f4f4f4;
 }
 #content .content_detail {
     width: 1000px;
     margin: 0 auto;
     padding: 10px 50px 50px;
-    // background: url(/assets/www/product/content_detail_bgs-1daa3a2….png) no-repeat 0px bottom;
     min-height: 400px;
 }
 #content .common_panel {
@@ -314,3 +312,8 @@ header .container .con_top {
     text-align: center;
     padding: 20px 0;
 }
+
+
+  .pages-pay-l { box-sizing: border-box; padding: 8px; margin: 0 auto; }
+  .pages-pay-l a { padding-right: 4px; }
+  .pages-pay-l span { padding:0 3px 0 3px; background-color: rgba(246,170,0,1); text-align:center; color:#fff; margin-right:2px; }

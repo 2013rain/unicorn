@@ -35,7 +35,7 @@ class admin {
 		if(ROUTE_M =='admin' && ROUTE_C =='index' && in_array(ROUTE_A, array('login', 'public_card'))) {
 			return true;
 		} else {
-			$userid = param::get_cookie('userid');
+			$this->userid = $userid = param::get_cookie('userid');
 			if(!isset($_SESSION['userid']) || !isset($_SESSION['roleid']) || !$_SESSION['userid'] || !$_SESSION['roleid'] || $userid != $_SESSION['userid']) showmessage(L('admin_login'),'?m=admin&c=index&a=login');
 		}
 	}
@@ -196,6 +196,7 @@ class admin {
 				$ip = ip();
 				$log = pc_base::load_model('log_model');
 				$username = param::get_cookie('admin_username');
+				$this->username = $username;
 				$userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : '';
 				$time = date('Y-m-d H-i-s',SYS_TIME);
 				$url = '?m='.ROUTE_M.'&c='.ROUTE_C.'&a='.ROUTE_A;

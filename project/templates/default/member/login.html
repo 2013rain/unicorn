@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{if isset($SEO['title']) && !empty($SEO['title'])}{$SEO['title']}{/if}{$SEO['site_title']}</title>
+    <title>橙子家海外物流转运</title>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}login.css">
-    
+
     <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
     <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
 
@@ -45,7 +45,6 @@
           <td class="label">{L('checkcode')}</td>
           <td class="item" style="position: relative;">
             <input type="text" id="code" name="code" size="8" class="input-text textbox">
-            <!-- <label for="email" class="error" style="float: right;"></label> -->
             {form::checkcode('code_img', '5', '14', 120, 26)}
           </td>
           <td class="info"></td>
@@ -79,13 +78,7 @@
       if (!theForm) {
           theForm = document.aspnetForm;
       }
-      // function __doPostBack(eventTarget, eventArgument) {
-      //     if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-      //         theForm.__EVENTTARGET.value = eventTarget;
-      //         theForm.__EVENTARGUMENT.value = eventArgument;
-      //         theForm.submit();
-      //     }
-      // }
+
 
       $(function(){
         $("#aspnetForm").validate({
@@ -108,5 +101,11 @@
             $(this).closest('form').submit();
           }
         });
-      })
+      });
+
+      $(document).keyup(function(event){
+        if(event.keyCode ==13){
+          $("#register_button").trigger("click");
+        }
+      });
   </script>

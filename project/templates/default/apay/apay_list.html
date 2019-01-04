@@ -7,11 +7,11 @@
 <div id="content" style="margin-top: 50px;">
     <div class="content_detail">
       <div class="common_panel">
-        <div class="panel_header" style="background-color: rgba(246,170,0,0.4);text-align: right;">当前账户余额：{$memberinfo['amount']}元</div>
+        <div class="panel_header" style="background-color: rgba(246,170,0,0.6);text-align: right;">当前账户余额：{$memberinfo['amount']}日元</div>
           <div class="panel_content">
               <table class="common_list">
                 <thead>
-                  <tr style="background-color: rgba(246,170,0,0.6);">
+                  <tr style="background-color: rgba(246,170,0,0.4);">
                     <th>交易发起时间</th>
                     <th>交易金额</th>
                     <th>余额</th>
@@ -22,25 +22,32 @@
                 </thead>
                 <tbody>
                 {loop $tradelist $k $v}
-                  <tr style="background-color: rgba(246,170,0,0.4);">
+                  <tr>
                     <td class="nowrap">{$v['finish_time']}</td>
                     <td class="nowrap"><span style="color:#5d5;;">{$v['amount']}</span></td>
                     <td class="nowrap">{$v['balance']}</td>
                     <td>{$v['order_name']}</td>
-                    <td ><a href="/index.php?m=express&c=index&a=detail&id={$v['express_id']}">{$v['express_no']}</a></td>
+                    <td ><a href="/index.php?m=express&c=index&a=out_detail&expressno={$v['express_no']}">{$v['express_no']}</a></td>
                   </tr>
                 {/loop}
                 </tbody>
                 <tfoot>
                   <tr class="last">
                     <td colspan="5" class="last">
+                      {if count($tradelist)==0}
                       <div class="empty">只显示最近30条明细</div>
+                      {else}
+                      <div class="pages-pay-l" id="pages"><?php echo $pages;?></div>
+                      {/if}
                     </td>
                   </tr>
                 </tfoot>
               </table>
           </div>
       </div>
+
     </div>
 </div>
-{template 'content', 'footer'}
+
+
+{template 'member', 'footer'}

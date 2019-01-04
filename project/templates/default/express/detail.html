@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{$SEO['site_title']}</title>
+    <title>橙子家海外物流转运</title>
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
     <link rel="stylesheet" type="text/css" href="{CSS_PATH}detail.css">
 
@@ -17,7 +17,7 @@
 <!-- 查看快递信息 -->
 <div id="content" style="margin-top: 50px;">
   <div class="content_detail">
-    <div class="header_intro_panel">
+    <!-- <div class="header_intro_panel">
       <table>
         <tbody>
           <tr style="background-color:rgba(246,170,0,0.6);">
@@ -71,7 +71,49 @@
           <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
           {/loop}
       </dl>
+    </div> -->
+    <div class="common_panel">
+      <div class="panel_header">入库信息详情</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="15%">入库仓库</th>
+              <th width="10%">快递公司</th>
+              <th width="20%">快递单号</th>
+              <th width="25%">货物概述</th>
+              <th width="10%">入库重量</th>
+              <th width="10%">货物数量</th>
+              <th width="10%" class="last">入库方式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="last">
+              <td>{$store[$express['storeid']]['name']}</td>
+              <td>{$express['company']}</td>
+              <td>{$express['expressno']}</td>
+              <td>{$express['detail']}</td>
+              <td>{$express['weight']}</td>
+              <td>{$goods_num}</td>
+              <td class="last">{$express_mode}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <div class="common_panel">
+      <div class="panel_header">快递信息</div>
+      <div class="panel_content">
+        <div class="text">
+          <dl class="chart_info" express_id="other" express_number="12344566AAAA">
+            {loop $time_node $node}
+            <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
+            {/loop}
+          </dl>
+        </div>
+      </div>
+    </div>
+
     <div class="common_panel">
       <div class="panel_header">快递单中货物信息</div>
       <div class="panel_content">
@@ -90,11 +132,11 @@
           	{loop $goods $good}
             <tr class="last">
             	<td >{$good['goodsname']}</td>
-            <td  >{$good['pcategory']} - {$good['scategory']}</td>
-			<td>{$good['productname']}</td>
-			<td >{$good['goodsmodel']}</td>
-			<td>{$good['uprice']}</td>
-			<td class="last">{$good['num']}</td>
+              <td  >{$good['pcategory']} - {$good['scategory']}</td>
+        			<td>{$good['productname']}</td>
+        			<td >{$good['goodsmodel']}</td>
+        			<td>{$good['uprice']}</td>
+        			<td class="last">{$good['num']}</td>
             </tr>
             {/loop}
           </tbody>
