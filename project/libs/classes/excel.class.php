@@ -70,7 +70,11 @@ class excel {
         for ($currentRow = 1; $currentRow <= $allRow; $currentRow++) {
             for ($currentColumn = 'A'; $currentColumn <= $allColumn; $currentColumn++) {
                 $address = $currentColumn . $currentRow;
-                $data[$currentRow][$currentColumn] = $currentSheet->getCell($address)->getValue();
+                $cell = $currentSheet->getCell($address)->getValue();
+                if (is_object($cell)) {
+                    $cell = $cell->__toString();
+                }
+                $data[$currentRow][$currentColumn] = $cell;
             }
         }
         @unlink ($filename);
