@@ -341,8 +341,8 @@ class manage extends admin {
         $name = ''; 
         $len = strlen($serviceStr);
         for ($i = 0; $i < $len; $i++) {
-            if ($serviceStr[$i] == '1' && isset(self::$services[$i])) {
-                $name .= self::$services[$i]['name'] . ';';
+            if ($serviceStr[$i] == '1' && isset(self::$services[$i+1])) {
+                $name .= self::$services[$i+1]['name'] . ';';
             }   
         }
         if (!$name) {
