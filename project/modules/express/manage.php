@@ -502,7 +502,6 @@ class manage extends admin {
     }
 
     function set_next_status() {
-        exit('功能废弃');
         $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         $status = isset($_GET['s']) ? intval($_GET['s']) : 0;
         if (!$id || !$status) {
