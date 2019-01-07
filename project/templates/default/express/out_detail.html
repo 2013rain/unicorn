@@ -17,76 +17,79 @@
 <!-- 查看快递信息 -->
 <div id="content" style="margin-top: 50px;">
   <div class="content_detail">
-    <div style="border: 1px solid rgba(246,170,0,0.4)!important;">
-    <div class="header_intro_panel">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <div class="label">出库仓库：</div>
-              <div class="value">
-                {$store[$express['storeid']]['name']}
-              </div>
-            </td>
-            <td>
-              <div class="label">快递单号：</div>
-              <div class="value">{$express['expressno']}</div>
-            </td>
-            <td>
-              <div class="label">国内单号：</div>
-              <div class="value">{$express['send_company']}{$express['send_no']}</div>
-            </td>
-            <td>
-              <div class="label">货物数量：</div>
-              <div class="value">{$goods_num}</div>
-            </td>
-            <td class="status">
-              <div class="label">状态：</div>
-              <div class="value">{if $express['status']==3}待登机{elseif $express['status']==4}待清关{elseif $express['status']==5}待派送{elseif $express['status']==6}国内派送中{elseif $express['status']==7}已完成{/if}</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    
+    <div class="common_panel">
+      <div class="panel_header">出库信息</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="15%">出库仓库</th>
+              <th width="10%">快递单号</th>
+              <th width="20%">国内单号</th>
+              <th width="25%">货物数量</th>
+              <th width="10%">状态</th>
+              <th width="20%"  class="last">货物概述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="last">
+              <td>{$store[$express['storeid']]['name']}</td>
+              <td>{$express['expressno']}</td>
+              <td>{$express['send_company']}{$express['send_no']}</td>
+              <td>{$goods_num}</td>
+              <td>{if $express['status']==3}待登机{elseif $express['status']==4}待清关{elseif $express['status']==5}待派送{elseif $express['status']==6}国内派送中{elseif $express['status']==7}已完成{/if}
+              </td>
+              <td class="last">{$express['detail']}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="detail_info_panel">
-      <dl class="list_info">
-        <dd>
-          <div class="label">收件人</div>
-          <div class="value">{$addr_info['consignee']}</div>
-        </dd>
-        <dd>
-          <div class="label">手机</div>
-          <div class="value">{$addr_info['mobile']}</div>
-        </dd>
-        <dd>
-          <div class="label">地址</div>
-          <div class="value">{$addr_info['province']},{$addr_info['area']},{$addr_info['addressinfo']},{$addr_info['zipcode']}</div>
-        </dd>
 
-        <dd>
-          <div class="label">出库单重量</div>
-          <div class="value">{$express['weight']}</div>
-        </dd>
-        <dd>
-          <div class="label">出库单费用</div>
-          <div class="value">{$express['price']}</div>
-        </dd>
-        <dd>
-          <div class="label">实付费用</div>
-          <div class="value">{$express['pay_money']}</div>
-        </dd>
-        <dd>
-          <div class="label">货物概述</div>
-          <div class="value">{$express['detail']}</div>
-        </dd>
-      </dl>
-      <dl class="chart_info">
-          {loop $time_node $node}
-          <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
-          {/loop}
-          {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.kuaidi100.com/chaxun?com={$express['send_company']}&nu={$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
-      </dl>
+     <div class="common_panel">
+      <div class="panel_header">收件人信息</div>
+      <div class="panel_content">
+        <table class="common_list">
+          <thead>
+            <tr>
+              <th width="15%">收件人</th>
+              <th width="10%">手机</th>
+              <th width="20%">省市区</th>
+              <th width="25%">出库单重量</th>
+              <th width="10%">实付费用</th>
+              <th width="20%"  class="last">详细地址</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="last">
+              <td>{$addr_info['consignee']}</td>
+              <td>{$addr_info['mobile']}</td>
+              <td>{$addr_info['province']},{$addr_info['area']},{$addr_info['city']}</td>
+              <td>{$express['weight']}</td>
+              <td>{$express['pay_money']}</td>
+              <td class="last">{$addr_info['addressinfo']},{$addr_info['zipcode']}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <div class="common_panel">
+      <div class="panel_header">快递信息</div>
+      <div class="panel_content">
+        <div class="text">
+          <dl class="chart_info" express_id="other" express_number="12344566AAAA">
+            {loop $time_node $node}
+            <dd>{$node['name']}&nbsp;<em>({format::date($node['time'],1)})</em></dd>
+            {/loop}
+            {if $show_send_no}<dd class="">国内快递号：{$express['send_company']} {$express['send_no']}</dd><dd class="last"><a target="_blank" href="https://www.kuaidi100.com/chaxun?com=[{$express['send_company']}]&nu={$express['send_no']}">点击这里去查询包裹信息</a></dd>{/if}
+
+          </dl>
+        </div>
+      </div>
+    </div>
+
+
     <div class="common_panel">
       <div class="panel_header">快递单中货物信息</div>
       <div class="panel_content">
@@ -173,7 +176,6 @@
       </div>
     </div>
     -->
-  </div>
   </div>
 </div>
 <!-- 查看快递信息 -->
