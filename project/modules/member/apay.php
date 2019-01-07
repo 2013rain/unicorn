@@ -100,6 +100,51 @@ class apay extends admin {
 		include $this->admin_tpl('charge_list');
 	}
 
+
+	/**
+	 * 
+	 */
+	function point_list() {
+
+		$memberid = isset($_GET['memberid']) ? trim($_GET['memberid']) : '';
+		$start_time = isset($_GET['start_time']) ? trim($_GET['start_time']) : '';
+        $end_time = isset($_GET['end_time']) ? trim($_GET['end_time']) : '';
+        
+		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+		
+		$where = " status = 1 ";
+
+		if($memberid !="" ) {
+			$where .= " AND  member_id =".(int)$memberid;
+		}
+		if($start_time !="" && $end_time !="" ) {
+			$where .= " AND  finish_time >='".addslashes($start_time)."' ";
+			$where .= " AND  finish_time <='".addslashes($end_time)."' ";
+		}
+		//供货商，单独
+		if ($_SESSION['roleid'] == 2) {
+			$where .= ' AND admin_id='.(int)$this->userid . "  ";
+		}
+		
+		
+		$tradelist_arr = $this->express_trade_log->listinfo($where, 'finish_time DESC', $page, 15);
+		$pages = $this->express_trade_log->pages;
+
+		$sum_arr = $this->express_trade_log->get_one($where, 'sum(point) as point');
+
+		
+		foreach($tradelist_arr as $k=>$v) {
+			$user = $this->member_model->get_one(array('userid'=>$v['member_id']));
+			$tradelist_arr[$k] = $v;
+			$tradelist_arr[$k]['username'] = $user['username'];
+			$tradelist_arr[$k]['enname'] = $user['enname'];
+
+		}
+
+		
+		include $this->admin_tpl('point_list');
+	}
+
 	/**
 	 * defalut
 	 */

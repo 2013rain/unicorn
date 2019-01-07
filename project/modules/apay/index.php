@@ -78,15 +78,18 @@ class index extends foreground{
 	       	$paydata = array(
 	       		'status'=>1,
 	       		'amount'=>$info['price'],
+	       		'point'=> floor($info['price']),
 	       		'balance'=>($userinfo['amount']-$info['price']),
 	       		'finish_time'=>date('Y-m-d H:i:s'),
 	       		'express_id'=>$express_id,
+	       		'admin_id'=> (int)$userinfo['admin_userid'],
 	       		'order_name'=> '快递费支付'.$info['price'].'元',
 	       	);
 	       	$this->express_trade_log->update($paydata, array('order_no'=>$order_no));
 	       	//
 	       	$user_update =array(
-	       		'amount'=> ($userinfo['amount']-$info['price'])
+	       		'amount'=> ($userinfo['amount']-$info['price']),
+	       		'point'=> ($userinfo['point']+ $paydata['point']),
 	       	);
 	       	$this->member_model->update($user_update, array('userid'=>$memberinfo['userid']));
 	       	//

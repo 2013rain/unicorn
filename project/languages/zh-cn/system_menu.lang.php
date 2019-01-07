@@ -3,6 +3,7 @@
 Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
+$LANG['point_list'] = '积分记录';
 $LANG['charge_list'] = '充值记录';
 $LANG['user_recharge'] = '会员充值';
 $LANG['apay_log'] = '交易记录';
