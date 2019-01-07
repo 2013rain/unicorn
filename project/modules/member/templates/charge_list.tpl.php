@@ -4,15 +4,14 @@
 <form name="searchform" action="" method="get" >
 <input type="hidden" value="member" name="m">
 <input type="hidden" value="apay" name="c">
-<input type="hidden" value="apay_list" name="a">
+<input type="hidden" value="charge_list" name="a">
 
 <table width="100%" cellspacing="0" class="search-form">
     <tbody>
 		<tr>
 		<td>
 		<div class="explain-col">
-				快递单号：
-				<input name="express_no" type="text" value="<?php echo $express_no; ?>" class="input-text" />
+				时间: <?php echo form::date('start_time',$start_time)?>至<?php echo form::date('end_time',$end_time)?>
 				&nbsp;&nbsp;
 				<input type="submit" name="search" class="button" value="<?php echo L('search')?>" />
 	</div>
@@ -27,13 +26,12 @@
 	<thead>
 		<tr>
 			
-			<th align="left">logid</th>
-			<th align="left"><?php echo L('username')?></th>
+			<th align="left">会员id</th>
+			<th align="left">会员姓名</th>
 			<th align="left">英文名</th>
-			<th align="left">快递单号</th>
-			<th align="left">支付状态</th>
+			<th align="left">充值时间</th>
 			<th align="left">金额</th>
-			<th align="left">支付时间</th>
+			<th align="left">充值人</th>
 
 		</tr>
 	</thead>
@@ -43,13 +41,12 @@
 	foreach($tradelist_arr as $k=>$v) {
 ?>
     <tr>
-		<td align="left"><?php echo $v['id']?></td>
+		<td align="left"><?php echo $v['member_id']?></td>
 		<td align="left"><?php echo $v['username']?></td>
 		<td align="left"><?php echo $v['enname']?></td>
-		<td align="left"><?php echo $v['express_no']?></td>
-		<td align="left"><?php  if($v['status']=='1'){echo '已支付';} else {echo '待支付'; } ?></td>
-		<td align="left"><?php echo $v['amount']?></td>
 		<td align="left"><?php echo $v['finish_time']?></td>
+		<td align="left"><?php echo $v['amout']?></td>
+		<td align="left"><?php echo $v['adminname']?></td>
     </tr>
 <?php
 	}
