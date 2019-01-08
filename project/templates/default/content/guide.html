@@ -1,0 +1,826 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <title>橙子家海外物流转运</title>
+
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}login.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}guidance.css">
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+
+    <script type="text/javascript" src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}bootstrap.min.js"></script>
+</head>
+<body>
+{template "content","banner"}
+
+<!-- 新手指南 -->
+
+    <div style="margin: 0 auto; width: 1000px; margin-bottom: 20px;">
+        <div class="hc_lnav" style="margin-left: 10px; height: 3450px;">
+            <div class="allbtn">
+                <ul style="width: 140px" class="jspop box">
+                    <h2>
+                        <a href="javascript:changehelp();">
+                            <strong id="a1show" style="display: block;">&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;橙子家教程<i>&nbsp;</i>
+                        </a>
+                    </h2>
+                    <li class="a1">
+                        <div class="tx"><a href="#" style="color:#FFAF35;"><i>&nbsp;</i>转运教程</a> </div>
+                        <div class="pop" style="display:block; height:3450px; width:820px;">
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">1.注册橙子家账号</i></span>
+                                <p class="p1">使用手机号注册。（关注并绑定橙子家微信服务可实时掌握包裹动态）</p>
+                                <img style="display: block; position: absolute; left: 100px; top: 265px; cursor: pointer;" onclick="toReg()" src="{IMG_PATH}btn.png">
+                                <img class="img2" src="{IMG_PATH}1.png">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">2.获取海外仓地址</i></span>
+                                <p class="p1">进入会员中心，系统会自动分配您的专属客户代码以及海外地址。</p>
+                                <img class="img2" style="margin-left: 0px; width:85%;" src="{IMG_PATH}2.png">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">3.购物下单</i></span>
+                                <p class="p1">
+                                    前往海外电商网站购物,下单时填写您的专属海外仓地址。
+                                    <a href="javaScript:changehelp2();" style="color: #FFAF35; text-decoration: underline;">点击查看海外购物流程</a>
+                                </p>
+                                <img class="img2" src="{IMG_PATH}3.png" style="width:80%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">4.海外仓接收包裹</i></span>
+                                <p class="p1">橙子家对您的包裹进行签收扫描,并发往分拨中心。</p>
+                                <img class="img2" src="{IMG_PATH}5.png" style="width:80%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">5.分拨中心操作</i></span>
+                                <p class="p1">分拨中心进行拍照、称重、智能分箱等操作，并通知用户支付运费。</p>
+                                <img class="img2" src="{IMG_PATH}6.png" style="width:80%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">6.支付运费&amp;包裹出库</i></span>
+                                <br>
+                                <p class="p1">勾选需要发货的包裹，进行支付。支付完后，橙子家分拨中心会安排包裹装运、起飞。</p>
+                                
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">7.海关清关</i></span>
+                                <p class="p1">
+                                    包裹将被运送至清关口岸,清关通过后,包裹进入派送环节。<br>
+                                    若为香港自提渠道，则无需清关，包裹直接邮寄至橙子家香港自提仓库，并通知用户来香港提取包裹。
+                                </p>
+                                <img class="img2" src="{IMG_PATH}8.png">
+                            </dl>
+                            <dl class="dl2" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">8.派送&amp;用户签收</i></span>
+                                <p class="p1">快递送货中，坐等收货吧！</p>
+                                <img src="{IMG_PATH}9.png">
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="a2">
+                        <div class="tx"><a href="#" style=""><i>&nbsp;</i>购物教程</a> </div>
+                        <div class="pop" style="display: none; height: 5700px;  width:820px;">
+                            <dl class="dl2">
+                                <p class="p3">为了方便你熟悉海外电商购物，我们将以图文的形式为你展现详细流程，以下以日本乐天www.rakuten.co.jp为例：</p>
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">Step 1 首先进入登陆页面，将页面语言调整为中文。</i></span>
+                                <p class="p1">① 点击www.rakuten.co.jp注册日本乐天账号</p>
+                                <img class="img3" src="{IMG_PATH}10.png" style="width:88%;">
+                            </dl>
+                           
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">Step 2 填写你的注册信息，请注意将用户信息中的姓名信息填写为在网站为你生成的唯一识别码（即你的收货姓名）。</i></span>
+                               
+                                <img class="img2" src="{IMG_PATH}11.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                   Step 3 填写详细用户信息时，将地址信息填写成仓库地址。
+                                </i></span>
+                                
+                                <img class="img2" src="{IMG_PATH}13.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                        Step 4 在乐天主页搜索框中输入商品名，点击查找。
+                                    </i></span>
+                                <img class="img2" src="{IMG_PATH}14.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                   Step 5 进入商品详情页，将商品加入购物车。
+                                </i></span>
+
+                                <img class="img2" src="{IMG_PATH}16.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                        Step 6 进入购物车，进行结算。
+                                    </i></span>
+               
+                                <img class="img2" src="{IMG_PATH}17.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <span>
+                                    <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                Step 7 输入信用卡信息，选择支付方式。
+                                    </i></span>
+                  
+                                <img class="img2" src="{IMG_PATH}18.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">
+                                    Step 8 选择日本国内配送方式。
+                                </i>
+                                <img class="img2" src="{IMG_PATH}19.png" style="width:88%;">
+                            </dl>
+                            <dl class="dl1" style="width:820px;">
+                                <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">Step 9 核对信息</i>
+                                <p class="p2">核对您的商品、数量、收货地址、付款方式等，切记将收件人信息填写为您在本网站的收件信息，然后提交订单</p>
+                            </dl>
+                            <dl class="dl2" style="width:820px;">
+                                <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">Step 10 购买成功</i>
+                                <p class="p2">可在我的订单中，查看购买的商品。</p>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="a8">
+                        <div class="tx"><a href="#" style=""><i>&nbsp;</i>禁运物品&nbsp;</a> </div>
+                        <div class="pop" style="display: none; height: 2350px;  width:820px;">
+                            <table style="width: 1000px; margin-top: 40px; width:820px;">
+                                <tbody><tr>
+                                    <td colspan="4">
+                                        <span>
+                                            <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">一、航空管制类</i></span>
+                                        <br>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}weapon.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">武器  军用物品</span><br>
+                                            <span class="span4">武器弹药&amp;仿真武器&amp;望远镜</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="枪支、子弹、炮弹、手榴弹、地雷、炸弹、弓箭、仿真枪、瞄准器、枪械配件、手铐、警棍、电击棍、防弹衣、防弹头盔、迷彩服饰等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}medicine.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">违禁物品</span><br>
+                                            <span class="span4">烈性毒药&amp;麻醉药物(毒品)&amp;蟑螂药等杀虫剂</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="烈性毒药：铊、氰化物、砒霜等；麻醉药物（毒品）：鸦片、吗啡、可卡因、海洛因、大麻、冰毒、麻黄素及其它相关制品等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}irrigation.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">液压灌装物品</span><br>
+                                            <span class="span4">金属灌装液压物品</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="氧气瓶、防嗮喷雾、生发喷雾、气雾剂等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}perfumee.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">易燃、易爆品</span><br>
+                                            <span class="span4">香水、香薰、指甲油、精油、剃须刀清洗液和含酒精成分的物品</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="打火机、火柴、雷管、炸药、火药、烟花、电池、汽油、煤油、酒精、油、瓦斯、磷、硫磺等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}chemistryy.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">危险化学（化工）品</span><br>
+                                            <span class="span4">腐蚀性物品&amp;放射性元素或含放射性物品&amp;生化制品</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="腐蚀性物品：硫酸、盐酸、有机溶剂、农药、双氧水等；放射性元素或含放射性物品： 铀、钴、镭、钚等，及接触或存放过放射性物品的容器、工具等；
+                        生化制品：病毒、医药废弃物、血液、血清样本等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}winee.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">烟酒(含电子烟)</span><br>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}glue1.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">胶水、墨水</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}skate.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">超长物品</span><br>
+                                            <span class="span4">鱼竿、滑雪板等</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="line-height: 80px;">
+                                        <img class="img1" src="{IMG_PATH}radius.png"><i class="font1">二、海关、商检管制类（所有自提线路不受限制）</i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}camera.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">部分数码产品</span><br>
+                                            <span class="span4">手机、笔记本、电子书、平板电脑、数码相机、单反相机、单反镜头</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}car.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">交通配件</span><br>
+                                            <span class="span4">汽车、摩托车、自行车配件和附件等</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}herb.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">名贵药草</span><br>
+                                            <span class="span4">燕窝、冬虫夏草、参、鹿茸、阿胶等</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}poison.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">医疗用品，药品（非保健品）</span><br>
+                                            <span class="span4">处方药，麻醉药品，治疗疾病类药品等</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}drink.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">饮料</span><br>
+                                            <span class="span4">茶叶、维生素功能饮料、酸奶、果汁、运动饮料、其他饮料等</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}golf.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">高尔夫球头</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}animal.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">动植物</span><br>
+                                            <span class="span4">动植物相关物品</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="假发、动物、植物、种子或繁殖材料、标本、动物饲料、皮张、毛类，蹄、骨角类及其制品（象牙、犀牛角）等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}knifc.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">刀具类等</span><br>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}expensive.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">贵重物品</span><br>
+                                            <span class="span4">一线品牌奢侈品、文物古玩、陶瓷工艺等</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="贵金属及其制品、首饰、宝石、水晶、化石等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}big.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">大件商品</span><br>
+                                            <span class="span4">大型家电、音响等</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="乐器、家电、家具等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}money.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">任何国家货币</span><br>
+                                            <span class="span4">有价证券、国家货币、伪造货币、任何国家机密资料等</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}print.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">印刷品</span><br>
+                                            <span class="span4">书籍字画类、印刷品等</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}media.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">传媒介质</span><br>
+                                            <span class="span4">胶卷、照片、唱片、IC电子零配件等</span>
+                                            <p class="span9" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-container="body" data-content="线路板、CPU、IC、机械手臂、网卡、游戏卡、影片、录音带、录像带、激光视盘、光盘、计算机储存介质配件(如：U盘、硬盘)及其它传媒介质等。" data-original-title="" title="">
+                                                显示全部
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}tools.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">不属于民生类需求的其他物品</span><br>
+                                            <span class="span4">生产工具、生产原料、生产材料、零件配件等</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}sex.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">成人用品器具类</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}luhui.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">含芦荟成分商品</span><br>
+                                            <span class="span4">日本线路禁运，其他线路不限。</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}meat.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">其它禁运食品</span><br>
+                                            <span class="span4">待加工半成品、 含蛋、肉、内脏、奶类加工食品、 各类肉泥等</span>
+                                        </div>
+                                    </td>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}helmet.jpg"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">头盔</span><br>
+                                            <span class="span4"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td6">
+                                        <img src="{IMG_PATH}second.png"></td>
+                                    <td class="td7">
+                                        <div class="div1">
+                                            <span class="span10">所有二手商品</span>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <span style="color: red; font-size: 16px; line-height: 35px;">
+                                            <br>
+                                            备注：1、所有电子产品均需要在合理自用的范围内（单个包裹价值不能超2000元和重量不能超3KG）部分特殊商品详细请咨询客服。 <br>
+                                            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2、以上是禁运的进口物品种类（客户委托运送之物品之类不得为海关总署令第43号《中华人民共和国禁止进出境物品表》、《中华人民共和国限制进出境物品表》及本禁运列表中列举之物品种类），以帮助和提醒您更加明智地购物，避免购买到违禁物品而导致无法发货。如果因个人失误，没有真实预报，一旦查出，后果由客户自己承担。
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </li>
+
+
+                    <h2>
+                        <a href="javascript:void(0);">
+                            <strong id="a2show" style="display: none;">&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;常见问题<i>&nbsp;</i>
+                        </a>
+                    </h2>
+                    <li class="a6">
+                        <div class="tx"><a href="#" style=""><i>&nbsp;</i>理赔条款</a> </div>
+                        <!-- <div class="pop" style="display: none; height: 2280px; width: 1020px;"> -->
+                        <div class="pop" style="display: none; height: 2280px; width: 820px;">
+                            <dl class="dl5" style="width:800px;">
+                                <span class="span2">理赔条款</span>
+                            </dl>
+
+                            <dl class="dl6">
+                                <div>
+                                    <span class="span3">一、理赔细则</span><br>
+                                    <span>当包裹价值超过2000元人民币， 我们建议您选择全额全程保险（保险费费率为1%）以及加固服务。</span>
+                                </div>
+                                <span class="span4">
+                                    <div class="div2">1.</div>
+                                    <div class="div4">丢失理赔条款说明：</div><br>
+                                    <div class="span8">
+                                        1)  有购买全额全程保险：理赔参照购物小票金额。<br>
+                                        2)  未购买全额全程保险：理赔参照购物小票金额。<br>
+                                        3)  包裹到达香港代收仓库丢失，理赔参照购物小票金额赔偿，最高赔偿RMB2000元。
+
+                                    </div>
+                                </span>
+                                <br>
+                                <span class="span4">
+                                    <div class="div2">2.</div>
+                                    <div class="div4">破损理赔条款说明：</div><br>
+                                    <div class="span8">
+                                        1)  有选择加固服务，同时购买全额全程保险，理赔参照购物小票金额。<br>
+                                        2)  有选择加固服务，但未购买全额全程保险，理赔参照购物小票金额。<br>
+                                        3)  未选择加固服务，但有购买全额全程保险，理赔参照购物小票金额最高50%。<br>
+                                        4)  未选择加固服务，同时未购买全额全程保险，理赔参照购物小票金额的最高30%。<br>
+                                        5)  包裹到达香港代收仓库，客户提货时出现破损、少货，不予赔偿。
+                                    </div>
+                                </span>
+                                <br>
+                                <span class="span4">
+                                    <div class="div2">3.</div>
+                                    <div class="div4">泄露理赔条款说明：</div><br>
+                                    <div class="span8">
+                                        1)  已选择加固的包裹，根据漏液比例进行赔偿，最高比例不超过泄露商品价值的30%。<br>
+                                        2)  未选择加固的包裹泄露不予赔偿。
+                                    </div>
+                                </span>
+                                <br>
+                                <span class="span4">
+                                    <div class="div2">4.</div>
+                                    <div class="div4">差重理赔条款说明：</div><br>
+                                    <div class="span8">
+                                        在您收到包裹后不拆箱的情况下复称，差重在100克以内不予受理。100克以上（含100克）可向客服申请差重运费补偿。<br>
+                                        申请所要提供图片：快递公司开拆复磅证明（重量精确到小数点后两位）。
+                                    </div>
+                                </span>
+                                <br>
+                                <span class="span4">
+                                    <div class="div2">5.</div>
+                                    <div class="div4">时效理赔及界定：</div><br>
+                                    <div class="span8">
+                                        如包裹状态一直未更新，从海外快递官网显示成功投递（签收人为橙子家）到国内发货时间，全程超过6个月，<br> 赔偿包裹金额及运费；（不含因用户自行支付运费环节耽误的时间，合箱从付款时间开始算）。
+                                    </div>
+                                </span>
+                                <br>
+
+                                <div>
+                                    <span class="span5">注：
+                                        1)  商品破损后导致完全无法使用，赔偿金额才参考受损商品购买价值进行赔偿；一般的商品损坏，不影响使用时仅理赔10%运费，不针对商品价值进行理赔。</span><br>
+                                    <span class="span6">2)  理赔汇率：美线6.9431，港币0.8877，日元0.0611， 澳元5.1140，欧元7.8734，英镑8.8562。注：每月1日公布当月的理赔汇率。<br>
+                                        <span class="span6">3)  一旦包裹发生理赔，我们按商品购买价值和申报价值中较低的一个进行赔付。</span><br>
+
+                                </span></div>
+                                <br>
+                                <br>
+                                <div>
+                                    <span class="span3">二、免责申明</span><br>
+                                    <span class="span4">
+                                        <div class="div6">以下为免责条款，不在承保范围之内。</div>
+                                    </span>
+                                    <span class="span4">
+                                        <div class="div2">1.</div>
+                                        <div class="div4">由于自然灾害、战争、暴乱等不可抗力造成的。</div>
+                                    </span><br>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">2.</div>
+                                        <div class="div4">由于清关时效、航班延误、客户延迟付款、快递延误、收件人信息错误等而导致的货物性质变化，过保质期、过保修期。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">3.</div>
+                                        <div class="div4">对其他非我公司原因产生的直接损失或间接损失，我司不承担连带责任和赔偿责任。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">4.</div>
+                                        <div class="div4">寄递的包裹违反寄达国规定或违禁品，经主管机关没收或产生的罚款需客户自己承担，并我司会依法追究法律责任。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">5.</div>
+                                        <div class="div4">海外电商错发、漏发等。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">6.</div>
+                                        <div class="div4">关于少件，如没有快递公司的开拆记录清点单则视为购物网站漏发，橙子家不承担理赔责任，客户需自行联系购物网站补发商品。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">7.</div>
+                                        <div class="div4">因客户没有及时确认及支付运费、海关税金等导致的延误。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">8.</div>
+                                        <div class="div4">因客户疏忽，货物入库超过3个月未确认支付发货的，橙子家将对该货物做弃货处理，且不承担任何责任。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">9.</div>
+                                        <div class="div4">超出受理时限的索赔申请。（货物入橙子家转运仓库后，超过180天未收到货物并且客户未提出索赔的）</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">10.</div>
+                                        <div class="div4">
+                                            因托运商品的本质通过加固无法避免损坏（如childlife液体维生素等）、瑕疵、特性或固有缺陷、货物本身包装不良、自然性质、 <br>内在缺陷在运输过程中造成的损坏、泄露等（陶瓷、玻璃、液晶显示屏等易碎品，无论选择加固与否，可保丢失，但不保破损。）
+                                        </div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">11.</div>
+                                        <div class="div4">违反本公司网站条款或其他协议，如地址书写不规范或不完整造成货物的遗失等。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">12.</div>
+                                        <div class="div4">税金为海关收取，如发生理赔，不予退还。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">13.</div>
+                                        <div class="div4">包裹正常签收表示转运全程的终结，正常签收后的包裹提出遇险索赔请求，我司不予受理。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">14.</div>
+                                        <div class="div4">禁运物品或不承运商品转发海外境内其他地址，由海外快递公司造成的遗失、破损、泄露等。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">15.</div>
+                                        <div class="div4">禁运商品我司不予发货，如客户执意发运，一切后果自负，我司保留追究法律责任的权利。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">16.</div>
+                                        <div class="div4">用户于非正常签收之日起10个自然日内按照理赔需要提供的资料提供材料，缺一不可，货物已有签收轨迹，则自签收之日起10个自然日后，<br>将不再接受任何理赔申请；货物已有海外转运仓入库轨迹，无签收轨迹，则自入库之日起 6个月后，将不再接受任何理赔申请。</div><br>
+                                    </span>
+                                    <br>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <div>
+                                    <span class="span3">三、索赔流程</span><br>
+                                    <span class="span4">
+                                        <div class="div2">1.</div>
+                                        <div class="div4">理赔方式为邮件。发送邮件至：30177219@qq.com，标题格式为：单号+客户代码+理赔项目。如：“*****5400011111+ABCDE+破损。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">2.</div>
+                                        <div class="div4">
+                                            签收时，务必与快递员当面验货，如发现货物短少、破损请联系快递员开点货清单和破损证明， 24小时内联系客服理赔（逾期不予受理）；<br>受理后，我司将在收到邮件后8个工作日内完成审核上报，并给予您答复及理赔款项。
+                                        </div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4" style="color: red;">
+                                        <div class="div2">3.</div>
+                                        <div class="div4">
+                                            货物已有签收轨迹，则自签收之日起10个自然日后，将不再接受任理赔申请；货物已有海外转运仓入库轨迹，无签收轨迹，则自入库之日起6个月后，<br>将不再接受任何理赔申请。
+                                        </div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">备注：理赔资料需完整才可赔付。开拆邮件记录单要求：</span><br>
+                                    <span class="span4">a.盖章必须要清晰，快递员必须要签名；</span><br>
+                                    <span class="span4">b.少货的必须要有原始重量和复磅重量；</span><br>
+                                    <span class="span4">c.必须要有快递公司单号；</span><br>
+                                    <span class="span4">d.破损和丢失情况要提供详细描述，并提供购物订单截图 （包含海外快递单号和金额）和购物网站， 破损照片（倘若提供凭证不足将影响理赔结果）。 </span>
+                                </div>
+                                <br>
+                                <div>
+                                    <span class="span3">不承保范围</span><br>
+                                    <span class="span4">
+                                        <div class="div2">1.</div>
+                                        <div class="div4">现金、支票、票据、单证、有价证券、信用证、护照以及艺术品、金银、珠宝、首饰、钻石、玉器、文物古玩。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">2.</div>
+                                        <div class="div4">鱼粉、菜籽饼、地瓜干、花生、各类粮食饲料、原糖等有自燃特性、易腐易蛀物品。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">3.</div>
+                                        <div class="div4">中国大陆境内无修复或定损技术能力和相关配件的精密货品。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">4.</div>
+                                        <div class="div4">危险品、易燃易爆物品、卫星、武器弹药、军用品。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">5.</div>
+                                        <div class="div4">动植物、海货、鲜活货、需冷藏运输的货物。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">6.</div>
+                                        <div class="div4">舱面货（集装箱运输方式除外）。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">7.</div>
+                                        <div class="div4">裸装或散装运输货品。</div><br>
+                                    </span>
+                                    <br>
+                                    <span class="span4">
+                                        <div class="div2">8.</div>
+                                        <div class="div4">返修、在用货物、旧货、二手货品。</div><br>
+                                    </span>
+                                    <br>
+                                </div>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+        $(document).ready(function(){
+            $(".con_ul li").mouseenter(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+            }).mouseout(function() {
+                $(".active-jq").addClass("active ").siblings().removeClass("active");
+            });
+            $(".con_ul li").click(function(){
+                $(this).addClass("active-jq").siblings().removeClass("active-jq");
+            });
+        });
+
+    </script>
+
+<script type="text/javascript">
+        $(function () { $("[data-toggle='popover']").popover(); });
+
+        $(function () {
+            if (window.location.search == "?jinyunwupin") {
+                $(".a8").find(".tx").next().attr("style", "display:block;height:2350px;  width:820px;");
+                $(".hc_lnav").height("2350px");
+                $("#a1show").show();
+                $("#a2show").hide();
+                $(".tx").children(1).attr("style", "");
+                $(".a8").find(".tx").children(1).attr("style", "color:#FFAF35;");
+            }
+        });
+
+        $(".tx").on("click", function () {
+            $(".pop").hide();
+            if ($(this).parent().attr("class") == "a1") {
+                $(this).next().attr("style", "display:block;height:3450px; width:820px;");
+                $(".hc_lnav").height("3450px");
+                $("#a1show").show();
+                $("#a2show").hide();
+            }
+            else if ($(this).parent().attr("class") == "a2") {
+                $(this).next().attr("style", "display:block;min-height:4850px; width:820px;");
+                $(".hc_lnav").height("4850px");
+                $("#a1show").show();
+                $("#a2show").hide();
+            }
+
+            else if ($(this).parent().attr("class") == "a8") {
+                $(this).next().attr("style", "display:block;height:2350px; width:820px;");
+                $(".hc_lnav").height("2350px");
+                $("#a1show").show();
+                $("#a2show").hide();
+            }
+
+            else if ($(this).parent().attr("class") == "a4") {
+                var hei = $(this).next(".pop").height();
+                if ($(this).next(".pop").height() > 2000) {
+                    $(this).next().attr("style", "display:block;height:1100px;width:820px;");
+                    $(".hc_lnav").height("1100px");
+                }
+                else {
+                    $(this).next().attr("style", "display:block;width:820px;");
+                    $(this).next(".pop").height(hei);
+                    $(".hc_lnav").height(hei);
+                }
+                $("#a2show").show();
+                $("#a1show").hide();
+            }
+            else if ($(this).parent().attr("class") == "a5") {
+                var hei = $(this).next(".pop").height();
+                if ($(this).next(".pop").height() > 2500) {
+                    $(this).next().attr("style", "display:block;height:1150px;width:820px;");
+                    $(".hc_lnav").height("1150px");
+                }
+                else {
+                    $(this).next().attr("style", "display:block;width:820px;");
+                    $(this).next(".pop").height(hei);
+                    $(".hc_lnav").height(hei);
+                }
+                $("#a2show").show();
+                $("#a1show").hide();
+            }
+            else if ($(this).parent().attr("class") == "a6") {
+                $(this).next().attr("style", "display:block;height:2280px;width:820px;");
+                $(".hc_lnav").height("2280px");
+                $("#a2show").show();
+                $("#a1show").hide();
+            }
+            $(".tx").children(1).attr("style", "");
+            $(this).children(1).attr("style", "color:#FFAF35;");
+        });
+
+        $(document).ready(function () {
+            $(".hc_lnav").height($(".pop").height());
+        });
+
+        function changehelp() {
+            $('.a1 a').click();
+        }
+
+        function changehelp2() {
+            $('.a2 a').click();
+            scrollTo(0, 0);
+        }
+
+        function changehelp5(position) {
+            $('.' + position + " a").click();
+            scrollTo(0, 0);
+        }
+
+        function toReg() {
+            window.location = "#"
+        }
+    </script>
+
+{template "content","footer"}
