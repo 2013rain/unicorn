@@ -1,0 +1,485 @@
+﻿/*----------如何使用样式----------*/
+
+.popover.top {
+    margin-top: -10px;
+}
+
+.popover.right {
+    margin-left: 10px;
+}
+
+.popover.bottom {
+    margin-top: 10px;
+}
+
+.popover.left {
+    margin-left: -44px;
+}
+
+.popover.bottom .popover-content {
+    padding: 10px;
+}
+
+.popover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+    display: none;
+    /*padding: 1px;*/
+    text-align: left;
+    white-space: normal;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    background-clip: padding-box;
+    color: #777;
+}
+
+.popover.top {
+    margin-top: -10px;
+}
+
+.popover.right {
+    margin-left: 10px;
+}
+
+.popover.bottom {
+    margin-top: 10px;
+}
+
+.popover.left {
+    margin-left: -44px;
+}
+
+.popover.bottom .popover-content {
+    padding: 10px;
+}
+
+.popover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+    display: none;
+    /*padding: 1px;*/
+    text-align: left;
+    white-space: normal;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    background-clip: padding-box;
+}
+
+
+
+.hc_lnav {
+    z-index: 1;
+    position: relative;
+    width: 140px;
+    margin: 40px 0 0 0px;
+}
+
+    .hc_lnav .allbtn {
+        z-index: 99999;
+        position: relative;
+    }
+
+        .hc_lnav .allbtn h2 {
+            font-size: 14px;
+        }
+
+            .hc_lnav .allbtn h2 a {
+                line-height: 36px;
+                background-color: #F4F4F4;
+                // padding-left: 13px;
+                width: 180px;
+                font-family: 微软雅黑, 黑体;
+                height: 36px;
+                color: #949494;
+                font-size: 14px;
+                font-weight: normal;
+            }
+
+                .hc_lnav .allbtn h2 a:hover {
+                    background-color: #F8F8F8;
+                    text-decoration: none;
+                }
+
+            .hc_lnav .allbtn h2 i {
+            }
+
+            .hc_lnav .allbtn h2 strong {
+                width: 7px;
+                background-color: #ffaf35;
+                float: left;
+            }
+
+        .hc_lnav .allbtn ul {
+            z-index: 99999;
+            position: absolute;
+            background-color: #F4F4F4;
+            width: 190px;
+            height: 380px;
+            left: 0px;
+            color: black;
+        }
+
+            .hc_lnav .allbtn ul li {
+                padding-bottom: 7px;
+                zoom: 1;
+                clear: both;
+                cursor: default;
+            }
+
+                .hc_lnav .allbtn ul li .tx {
+                    line-height: 35px;
+                    background-color: #F4F4F4;
+                    padding-left: 10px;
+                    background-repeat: no-repeat;
+                    background-position: right center;
+                    height: 35px;
+                    _background-image: none;
+                }
+
+                    .hc_lnav .allbtn ul li .tx:hover {
+                        background-color: #F8F8F8;
+                    }
+
+                    .hc_lnav .allbtn ul li .tx a {
+                        font-family: 微软雅黑, 黑体;
+                        color: #949494;
+                        font-size: 14px;
+                        -webkit-transition: color 0.1s ease-out 0s;
+                        -moz-transition: color 0.1s ease-out 0s;
+                        -ms-transition: color 0.1s ease-out 0s;
+                        -o-transition: color 0.1s ease-out 0s;
+                        transition: color 0.1s ease-out 0s;
+                    }
+
+                        .hc_lnav .allbtn ul li .tx a i {
+                            line-height: 25px;
+                            margin-top: 5px;
+                            width: 25px;
+                            background-position: 0px 0px;
+                            float: left;
+                            height: 25px;
+                            margin-right: 10px;
+                            text-decoration: none;
+                        }
+
+                .hc_lnav .allbtn ul li dl {
+                    zoom: 1;
+                    color: #949494;
+                    clear: both;
+                    padding-top: 4px;
+                }
+
+                .hc_lnav .allbtn ul li dt {
+                    padding-left: 10px;
+                    width: 30px;
+                    float: left;
+                    padding-top: 1px;
+                }
+
+                .hc_lnav .allbtn ul li dd {
+                    line-height: 22px;
+                    width: 150px;
+                    float: left;
+                    padding-top: 2px;
+                }
+
+                .hc_lnav .allbtn ul li .pop {
+                    background-color: #F3F3F3;
+                    margin-left: 20px;
+                    position: absolute;
+                    border-left: medium none;
+                    padding-bottom: 10px;
+                    min-height: 466px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    border-top: medium none;
+                    top: 0px;
+                    left: 125px;
+                    font-size:12px;
+                }
+
+                    .hc_lnav .allbtn ul li .pop h3 {
+                        font-size: 14px;
+                    }
+
+                    .hc_lnav .allbtn ul li .pop dl {
+                        color: #666666;
+                    }
+
+                        .hc_lnav .allbtn ul li .pop dl a.un {
+                            color: #a5a5a5;
+                        }
+
+                    .hc_lnav .allbtn ul li .pop dt {
+                        padding-left: 0px;
+                        width: 72px;
+                    }
+
+                    .hc_lnav .allbtn ul li .pop dd {
+                        width: 565px;
+                        margin-left: -12px;
+                    }
+
+                    .hc_lnav .allbtn ul li .pop .act {
+                        width: 640px;
+                        height: 80px;
+                        overflow: hidden;
+                        padding-top: 10px;
+                    }
+
+                .hc_lnav .allbtn ul li:hover .tx {
+                    color: #FFAF35;
+                    text-decoration: none;
+                }
+
+
+                    .hc_lnav .allbtn ul li:hover .tx a {
+                        color: #ffaf35;
+                    }
+
+                        .hc_lnav .allbtn ul li:hover .tx a i {
+                            background-position: 0px -25px;
+                        }
+
+                .hc_lnav .allbtn ul li:hover .pop dl a.un {
+                    color: #a5a5a5;
+                    text-decoration: none;
+                }
+
+.font1 {
+    font-size: 20px;
+    color: #2B6DA0;
+    font-family: 微软雅黑;
+    font-style: normal;
+    margin-left: 10px;
+    font-weight: bolder;
+}
+
+.dl1 {
+    // border-bottom: 1px solid #DDDDDD;
+    margin-top: 40px;
+    width: 920px;
+}
+
+.dl2 {
+    margin-top: 40px;
+}
+
+.dl3 {
+    height: 100px;
+}
+
+.dl4 {
+    height: 250px;
+}
+
+.dl5 {
+    border-bottom: 1px solid #DDDDDD;
+    margin-top: 30px;
+    height: 40px;
+}
+
+.dl6 {
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+.img1 {
+    position: relative;
+    top: 4px;
+}
+
+.img2 {
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.img3 {
+    margin-left: 40px;
+    margin-top: 25px;
+}
+
+.p1 {
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.p2 {
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.p3 {
+    font-size: 16px;
+    font-family: 微软雅黑;
+    margin-bottom: 30px;
+}
+
+.hc_lnav .allbtn ul li:hover a:hover {
+    color: #FFAF35;
+    text-decoration: none;
+}
+
+.span1 {
+    margin-left: 40px;
+}
+
+.span2 {
+    margin-left: 40px;
+    color: #43AAF9;
+    font-size: 20px;
+    font-family: 微软雅黑;
+    font-weight: bolder;
+}
+
+.span3 {
+    color: black;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.a3 .span3, .a4 .span3, .a5 .span3 {
+    cursor: pointer;
+}
+
+.span4 {
+    line-height: 22px;
+}
+
+.span5 {
+    color: red;
+    line-height: 30px;
+}
+
+.span6 {
+    color: red;
+    margin-left: 28px;
+    line-height: 30px;
+}
+
+.span7 {
+    line-height: 50px;
+}
+
+.span8 {
+    line-height: 30px;
+    margin-left: 28px;
+}
+
+.span9 {
+    color: #2179cc;
+    line-height: 24px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.span10 {
+            color: red;
+            font-size: 22px;
+            font-family: "Microsoft Yahei";
+        }
+
+.td1 {
+    background-color: #EEEEEE;
+    text-align: center;
+    line-height: 40px;
+}
+
+.td2 {
+    background-color: #FFFFFF;
+    text-align: center;
+    line-height: 40px;
+    width: 200px;
+}
+
+.td3 {
+    background-color: #FFFFFF;
+    padding-left: 30px;
+    line-height: 40px;
+}
+
+.td4 {
+    background-color: #FAFAFA;
+    text-align: center;
+    line-height: 40px;
+    width: 200px;
+}
+
+.td5 {
+    background-color: #FAFAFA;
+    padding-left: 30px;
+    line-height: 40px;
+    padding-right: 15px;
+}
+
+.td6 {
+    text-align: center;
+    width: 150px;
+    height:140px;
+}
+
+.td7 {
+    line-height: 40px;
+    width: 300px;
+}
+
+.table1 {
+    border: 1px solid #DFDFDF;
+    width: 1000px;
+}
+
+.div1 {
+    height: 120px;
+    position: relative;
+    width: 100%;
+}
+
+.div2 {
+    width: 10px;
+    float: left;
+}
+
+.div3 {
+    width: 725px;
+    float: left;
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.div4 {
+    width: 781px;
+    float: left;
+    padding-left: 10px;
+}
+
+.div5 {
+    width: 980px;
+    float: left;
+    padding-left: 20px;
+}
+
+.div6 {
+    color: red;
+    width: 1000px;
+    float: left;
+    padding-left: 1px;
+}
+
+.dl6 img {
+    vertical-align: middle;
+}

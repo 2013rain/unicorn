@@ -358,5 +358,14 @@ class index {
 			return '1';
 		}
 	 }
+
+	 //列表页
+	public function guide() {
+		$SEO = seo(1);
+		$siteid = $GLOBALS['siteid'] = max($siteid,1);
+		define('SITEID', $siteid);
+		$CATEGORYS = getcache('category_content_1','commons');
+		include template('content', 'guide');
+	}
 }
 ?>
