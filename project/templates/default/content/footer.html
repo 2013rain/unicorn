@@ -17,18 +17,15 @@
                 <li class="l3">
                     <p>较新资讯</p>
                     <span class="p-li-first">THE LATEST INFORMATION</span>
-                    {$footlist = getcache('category_content_1','commons')}
-                    {$idx=0}
+
                     {loop $footlist $cate}
-                    {if $cate['ismenu']=='1' && $cate['parentid']=='6' && $idx<4}
-                    {$idx=$idx+1}
                     <p class="p-li"><span><a href="{$cate['url']}">{$cate['catname']}</a></span></p>
                     {/if}
                     {/loop}
                 </li>
             </ul>
         </div>
-        <div class="footer-bottom">© {$smarty.now|date_format:"%Y"} 橙子家海外物流转运&nbsp;辽ICP备18017411号-1</div>
+        <div class="footer-bottom">© {$year} 橙子家海外物流转运&nbsp;辽ICP备18017411号-1</div>
     </footer>
     <!-- /底部 -->
 
