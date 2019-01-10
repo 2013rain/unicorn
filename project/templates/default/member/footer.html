@@ -19,7 +19,7 @@
                     <span class="p-li-first">THE LATEST INFORMATION</span>
                     {php $footlist=getcache('category_content_1','commons'); }
                     {loop $footlist $cate}
-                    {if $value['ismenu']=='1' && $value['parentid']=='6' && $i<4 }
+                    {if $cate['ismenu']=='1' && $cate['parentid']=='6' && $i<4 }
                     {php $i++;}
                     <p class="p-li"><span><a href="{$cate['url']}">{$cate['catname']}</a></span></p>
                     {/if}
