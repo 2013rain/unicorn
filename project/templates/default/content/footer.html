@@ -17,7 +17,7 @@
                 <li class="l3">
                     <p>较新资讯</p>
                     <span class="p-li-first">THE LATEST INFORMATION</span>
-                
+                    {php $footlist=getcache('category_content_1','commons'); }
                     {loop $footlist $cate}
                     {if $value['ismenu']=='1' && $value['parentid']=='6' && $i<4 }
                     {php $i++;}
