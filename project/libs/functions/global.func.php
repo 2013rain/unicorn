@@ -502,20 +502,7 @@ function template($module = 'content', $template = 'index', $style = '') {
 	} else {
 		$style = 'default';
 	}
-	//统一底部
-	$tmplist = getcache('category_content_1','commons');
-	$footlist =array();
-	$i=0;
-	foreach ($tmplist as $value) {
-		if ($value['ismenu']=='1' && $value['parentid']=='6') {
-			$footlist[]=$value;
-			$i++;
-		}
-		if($i>=4){
-			break;
-		}
-	}
-	$year = date("Y");
+	
 	if(!$style) $style = 'default';
 	$template_cache = pc_base::load_sys_class('template_cache');
 	$compiledtplfile = PHPCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.php';

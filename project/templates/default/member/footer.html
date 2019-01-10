@@ -16,14 +16,17 @@
                 </li>
                 <li class="l3">
                     <p>较新资讯</p>
-                    <span class="p-li-first">THE LATEST INFORMATION</span>
+                    
                     {loop $footlist $cate}
+                    {if $value['ismenu']=='1' && $value['parentid']=='6' && $i<4 }
+                    {php $i++;}
                     <p class="p-li"><span><a href="{$cate['url']}">{$cate['catname']}</a></span></p>
+                    {/if}
                     {/loop}
                 </li>
             </ul>
         </div>
-        <div class="footer-bottom">© {$year} 橙子家海外物流转运&nbsp;辽ICP备18017411号-1</div>
+        <div class="footer-bottom">© {php echo date("Y");}橙子家海外物流转运&nbsp;辽ICP备18017411号-1</div>
     </footer>
     <!-- /底部 -->
 
