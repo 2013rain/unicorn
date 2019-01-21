@@ -81,7 +81,7 @@
 		<td align="left"><?php echo $v['create_time']?></td>
 		<td align="left">
 			<a href="javascript:edit(<?php echo $v['id']?>, '编辑商品')">[<?php echo L('edit')?>]</a>
-			<a >[<?php echo L('delete')?>]</a>
+			
 		</td>
     </tr>
 <?php

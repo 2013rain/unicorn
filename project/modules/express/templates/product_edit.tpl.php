@@ -4,68 +4,36 @@
 <script language="javascript" type="text/javascript" src="<?php echo JS_PATH?>formvalidator.js" charset="UTF-8"></script>
 <script language="javascript" type="text/javascript" src="<?php echo JS_PATH?>formvalidatorregex.js" charset="UTF-8"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-	var ok1=false;
-    var ok2=false;
-    var ok3=false;
-    var ok4=false;
-    if ( $('#bar_code').length==0) { ok1=true;}
-    $('#bar_code').blur(function(){
-     if($(this).val().length >= 1 && $(this).val().length <=200 && $(this).val()!=''){
-     	$.ajax({
-            type:"GET",
-            url:"/index.php?m=express&c=product&a=public_checkebarcode_ajax"+"&bar_code="+$(this).val(),
-            dataType:"json",
-            success:function(data){
-                if( data == "1" ) {
-		                ok1=true;
-					} else {
-		               alert('条形码错误');
-					}
-            },
-            error:function(jqXHR){
-                alert('系统错误，请刷新页面重试');
-            }
-        });
-      
-     }else{
-     	alert('请输入条形码');
-     }
-    });
-    $('#country_goods_name').blur(function(){
-     if($(this).val().length >= 1 && $(this).val().length <=200 && $(this).val()!=''){
-     	 ok2=true; 
-     }else{
-     	alert('请输入日文名');
-     }
-    });
+<!--
+$(function(){
+	$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
 
-    $('#uprice').blur(function(){
-     if($(this).val().length >= 1 && $(this).val().length <=200 && $(this).val()!=''){
-     	 ok3=true; 
-     }else{
-     	alert('请输入单价');
-     }
-    });
-    $('#uweight').blur(function(){
-     if($(this).val().length >= 1 && $(this).val().length <=200 && $(this).val()!=''){
-     	 ok4=true; 
-     }else{
-     	alert('请输入毛重');
-     }
-    });
+	$("#bar_code").formValidator({onshow:"输入条形码",onfocus:"输入条形码"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"输入正确"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=express&c=product&a=public_checkebarcode_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+            if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "条形码已存在",
+		onwait : " "
+	});
 
-    $('#dosubmit').click(function(){
- 
-     if(ok1 && ok2 && ok3 && ok4){
-      $('#myform').submit();
-     }else{
-     	alert('请补充内容');
-      	return false;
-     }
-    });
+	$("#country_goods_name").formValidator({onshow:"输入日文名",onfocus:"输入日文名"}).inputValidator({min:1,max:200,onerror:"日文名不合法"});
+	
+	$("#uprice").formValidator({tipid:"pointtip",onshow:"输入单价",onfocus:"输入单价"}).regexValidator({regexp:"^\\d+(\\.\\d+)?$",onerror:""});
 
-  });
+	$("#uweight").formValidator({tipid:"pointtip",onshow:"输入毛重",onfocus:"输入毛重"}).regexValidator({regexp:"^\\d+(\\.\\d+)?$",onerror:""});
+	
+});
+//-->
 </script>
 <div class="pad-10">
 <div class="common-form">
@@ -164,8 +132,7 @@
 	</table>
 </fieldset>
 <div class="bk15"></div>
-
-    <input name="dosubmit" id="dosubmit" type="button"  value="<?php echo L('submit')?>" class="dialog">
+    <input name="dosubmit" type="submit" id="dosubmit" value="<?php echo L('submit')?>" class="dialog">
 </form>
 </div>
 </div>
