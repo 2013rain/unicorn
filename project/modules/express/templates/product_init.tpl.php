@@ -29,7 +29,8 @@
     </tbody>
 </table>
 
-<input type="submit" name="search" class="button" value=" <?php echo L('search')?> " />
+<input type="submit" name="search" class="button" value="&nbsp;&nbsp;<?php echo L('search')?>&nbsp;&nbsp; " />
+&nbsp;&nbsp;
 <input type="button" onclick="javascript:edit(0, '新增商品')" class="button" value=" 新增商品 " />
 
 </form>

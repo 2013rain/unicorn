@@ -3,6 +3,9 @@
 Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
+$LANG['productinfo'] = '商品管理';
+$LANG['product_init'] = '商品列表';
+$LANG['import_goods'] = '导入商品';
 $LANG['point_list'] = '积分记录';
 $LANG['charge_list'] = '充值记录';
 $LANG['user_recharge'] = '会员充值';

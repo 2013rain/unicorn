@@ -203,14 +203,47 @@ class product extends admin {
                             $measur_unit = trim($v['H']);
                             $uprice = trim($v['I']);
                             $zhprice = trim($v['J']);
-                            $zhweight = trim($v['K']);
-                            $uweight = trim($v['L']);
+                            $nweight = trim($v['K']);
                             $uweight = trim($v['L']);
                             $product_area = trim($v['M']);
 
-                           
-                            if ( 1) {
-                               
+                            $nweight = (int)$nweight;
+                            $uweight = (int)$uweight;
+
+                            if (empty($bar_code) || empty($status)|| empty($country_goods_name)|| empty($is_special)|| empty($uprice) || empty($uweight)) {
+                            	continue;
+                            }
+                            $uprice = floatval($uprice);
+                            $zhprice = floatval($zhprice);
+                            if (!in_array($status, array('0','1')) || !in_array($is_special, array('0','1'))) {
+                            	continue;
+                            }
+                            if ($uprice<=0 || $uweight<=0 ) {
+                            	continue;
+                            }
+
+                            $one = $this->db->get_one(array("bar_code"=>$bar_code));
+                            if (!empty($one)) {
+                            	continue;
+                            }
+                            $goods_data["bar_code"] = $bar_code;
+                            $goods_data["status"] = $status;
+							$goods_data["country_goods_name"] = $country_goods_name;
+							$goods_data["ch_name"] = $ch_name;
+							$goods_data["en_name"] = $en_name;
+							$goods_data["is_special"] = $is_special;
+							$goods_data["goodsmodel"] = $goodsmodel;
+							$goods_data["measur_unit"] = $measur_unit;
+							$goods_data["uprice"] = $uprice;
+							$goods_data["uweight"] = $uweight;
+							$goods_data["product_area"] = $product_area;
+
+							$goods_data["zhprice"] = $zhprice;
+							$goods_data["nweight"] = $nweight;
+
+                            $goods_data["create_time"] = $create_time;
+							$one = $this->db->insert($goods_data);
+                            if ( !empty($one)) {
                                 $suc_row++;
                             }
                         }
