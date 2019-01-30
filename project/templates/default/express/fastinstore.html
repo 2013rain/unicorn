@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>橙子家海外物流转运</title>
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}animate.min.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}putin_a.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}address.css">
+    <link rel="stylesheet" type="text/css" href="{CSS_PATH}inbound.css">
+    <style type="text/css">
+        .step_two {display:none}
+    </style>
+    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script src="{JS_PATH}common.js"></script>
+    <script src="{JS_PATH}address.js"></script>
+    <script src="{JS_PATH}inbound2.js"></script>
+
+    <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
+</head>
+{template 'member', 'banner'}
+<!-- 入库部分 -->
+<div id="content" style="margin-top:50px;">
+  <div class="content_detail">
+    <!-- <div class="notify_panel">
+      <div class="alert">快递单号已经被使用</div>
+    </div> -->
+
+  <div class="steps_panel">
+    <dl>
+      <dd class="current">
+        <div class="step">1</div>
+        <div class="intro">填写海外快递信息</div>
+      </dd>
+      <dd>
+        <div class="step">2</div>
+        <div class="intro">选择增值服务</div>
+      </dd>
+    </dl>
+  </div>
+  <form accept-charset="UTF-8" style=" margin-bottom: 50px;" action="" class="new_inbound" id="new_inbound" method="post" novalidate="novalidate">
+
+      <div class="step_one">
+      <div class="common_panel" style="margin-bottom:25px;">
+        <div class="panel_header">海外快递公司快递单信息</div>
+        <div class="panel_content">
+          <table class="common_form">
+            <tbody>
+            <tr>
+            <td class="label">请选择入库仓库</td>
+              <td class="item" colspan="2">
+                <dl class="inbound_warehouse_select">
+                	{loop $stores $store}
+                  <dd class="us_or" unit_price_label="单价" warehouse_id="{$store['id']}">{$store['name']}</dd>
+                  {/loop}
+
+                  <input id="inbound_warehouse_id" name="store" type="hidden" value="">
+                  <input name="dosubmit" type="hidden" value="dosubmit">
+                </dl>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <table class="common_form" id="inbound_express_info" style="display:none;">
+            <tbody>
+            <tr>
+              <td class="label">快递公司</td>
+              <td class="item">
+                <input id="inbound_lu_express_id" name="company" type="hidden" value="1">
+                <select class="select express_select required" style="width:180px;"></select>
+              </td>
+              <td class="info"></td>
+            </tr>
+            <tr>
+              <td class="label">快递编号</td>
+              <td class="item">
+                <!-- <div class="field_with_errors"> -->
+                  <input class="textbox required" id="inbound_express_tracking_number" name="expressno" type="text" >
+                <!-- </div> -->
+              </td>
+              <td class="info"></td>
+
+            </tr>
+            <tr>
+              <td class="label">货物概述</td>
+              <td class="item"><input class="textbox required" id="inbound_name" name="summary" type="text" ></td>
+              <td class="info"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel_footer" id="inbound_express_info_submit_assisted_declaration" style="overflow:visible;display:none;">
+          <div class="common_button" style="overflow:visible;"></div>
+        </div>
+      </div>
+      <div class="notify_panel" id="list_notify" style="display:none;"></div>
+      <div class="common_panel" id="inbound_items_info" style="display:none;">
+      <div class="panel_header">根据条形码添加商品信息</div>
+       <div class="panel_footer">
+          <div >
+            <input type="text" placeholder="输入商品条形码"  style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
+            <input type="button" style="margin-right: 8px;background-color: #6CD134;    color: #ffffff;line-height: 12px;padding: 5px 16px 6px; font-size: 12px;" onclick="AddProduct()" value="增加商品" />
+            
+            
+          </div>
+        </div>
+      <div class="panel_content" id="inbound_item_list">
+      <table class="common_list">
+      <thead><tr class="">
+        <th>条形码</th>
+        <th>日文名</th>
+      <th>中文名称</th>
+      <th>型号</th>
+      <th id="unit_price_label">日元单价</th>
+      <th id="unit_price_label">单品毛重</th>
+      <th>数量</th>
+      <th class="last">操作</th>
+      </tr>
+      </thead>
+        <tbody id="mybody">
+
+        </tbody>
+      </table>
+      </div>
+
+       
+      </div>
+      <div class="submit_button" id="inbound_info_submit" style="display:none;">
+        <a href="" id="go_step_two"> 下一步：选择增值服务</a>
+      </div>
+      <div class="tips" style="color:red;margin-top:5px;">申报提示：请根据订单内不同货品品名分别如实申报，避免因为申报问题导致清关查验。</div>
+      <div class="tips" style="color:red;margin-top:5px;">入库提示：库房周末正常休息，不签收包裹，快递周末显示送达的包裹会在工作日再次派件给库房，所以周末送达的包裹入库会有延时。
+    </div>
+</div>
+<div class="step_two">
+      <div class="common_panel">
+        <div class="panel_header">选择增值服务</div>
+        <input name="set_service" type="hidden" value="service">
+        <input name="dosubmit" type="hidden" value="dosubmit">
+        <div class="panel_content">
+          <table class="common_list inbound_service_list">
+            <thead>
+              <tr>
+                <th width="5%"> &nbsp;</th>
+                <th>增值服务名称</th>
+                <th class="last">增值服务介绍及收费</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{loop $service_info $info}
+            	<tr>
+            		<td>
+	                  <input class="check_inbound_item"  name="service[]" type="checkbox" can_merge="{$info['can_merge']}" value="{$info['value']}">
+	                </td>
+                <td>{$info['name']}</td>
+                <td class="last">{$info['desc']}{if isset($info['price_desc'])} {$info['price_desc']} {/if}</td>
+				</tr>
+            {/loop}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="common_panel">
+        <div class="panel_header">填写备注信息</div>
+        <div class="panel_content">
+          <table class="common_form">
+            <tbody>
+              <tr>
+                <td class="label">备注信息</td>
+                <td class="item">
+                  <input class="textbox" id="inbound_user_memo" name="remark" type="text">
+                </td>
+                <td class="info"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="submit_button">
+        <a class="previous_button" href="#">返回上一步：填写海外快递信息</a>
+        <a href="#this" id="submit">提交入库</a>
+      </div>
+</div>
+  </form>
+
+  <div id="inbound_assisted_declaration_panel" style="display:none;">
+    <div class="mask"></div>
+    <div class="common_panel">
+      <div class="panel_header">免申报一键货到即发<a href="https://www.uszcn.com/user/addresses"> 编辑收货地址</a></div>
+      <div class="panel_content">
+        <div class="intro">
+          <p>通过此方式入库，您可不填写商品信息，直接将包裹发为货到即发，货物将由库房人员依您包裹内实际商品如实申报。</p>
+          <p>请注意账户内保持有足够金额，否则系统将视为普通包裹入库，仍需要您再次登录系统补足入库信息。</p>
+          <p>选择一键货到即发，已填写的商品信息将被忽略，如您仍想按普通方式入库，请点击取消。</p>
+          <p>如果您的包裹内有需要缴纳强制保险的货物，建议自行申报，否则可能会因未缴纳强制保险而转为普通入库。</p>
+        </div>
+        <div class="notify_panel" style="padding:0 20px;display:none;"><div class="alert"></div></div>
+        <table class="common_form">
+          <tbody>
+            <tr>
+              <td class="label">请选择收货地址</td>
+              <td class="item" colspan="2" style="width:auto;"><select class="select address_id" style="width:600px;"></select></td>
+            </tr>
+            <tr>
+              <td class="label">保价金额</td>
+              <td class="item" style="width:15%;">
+                <input class="textbox insurance_amount" id="" name="" style="width:50px;margin-right:8px;" type="text">元
+              </td>
+              <td class="info">
+                <span class="notice">国际转运有风险，如没有购买保险货品丢失则理赔上限为1000元人民币。保价费用收取投保金额的1.5%，最高保价6500.0元</span>
+              </td>
+            </tr>
+            <tr><td class="label">备注信息</td><td class="item" colspan="2" style="width:auto;"><input class="textbox user_memo" id="" name="" type="text" value=""></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel_footer">
+        <div class="submit_button">
+          <a href="https://www.uszcn.com/inbounds#this" id="inbound_assisted_declaration_panel_submit_button">保存</a>
+          <a class="previous_button" href="https://www.uszcn.com/inbounds#this" id="inbound_assisted_declaration_panel_cancel_button">取消</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+<!-- /入库部分 -->
+
+
+
+  <script type="text/javascript">
+    var tdhtml = "<tr id=\"bound_%idx%\"><td>%bar_code%</td><td>%country_goods_name%</td>";
+     tdhtml += "<td>%ch_name%</td><td>%goodsmodel%</td>";
+     tdhtml += "<td>%uprice%</td><td>%uweight%</td>";
+     tdhtml += "<td id=\"bound_%bar_code%\">0</td><td><a  onclick=\"deleteTr('bound_%idx%')\">删除</a>%hidden%</td></tr>";
+     var idxtd =0;
+     var hiddenHtml = "<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][bar_code]\" id=\"bar_code_%bar_code%\">";
+     hiddenHtml +="<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][num]\" id=\"num_%bar_code%\" >";
+     function AddProduct(){
+      bar_code = $("#bar_code").val();
+      if (bar_code=="") {
+        alert("请输入条形码");
+        return false;
+      }
+      if ($("#bar_code_"+bar_code).length>0) {
+              oldv= $("#num_"+bar_code).val();
+              oldv =parseInt(oldv,10)
+              $("#num_"+bar_code).val(oldv+1);
+              $("#bound_"+bar_code).html(oldv+1);
+              return true;
+      }
+      $.ajax({
+          type:"GET",
+          url:'index.php?m=express&c=index&a=public_getbarcode_ajax&',
+          async:false,
+          dataType:'json',
+          data:{'bar_code':bar_code},
+          success: function(data){
+            if(data.code == '1'){
+              alert(data.msg);
+              return false;
+            }else {
+              oneinfo = data.info;
+              hd_html = hiddenHtml.replace(/%idx%/g,idxtd);
+              hd_html = hd_html.replace(/%bar_code%/g,oneinfo.bar_code);
+              one_td = tdhtml.replace(/%hidden%/g,hd_html);
+              one_td = one_td.replace(/%idx%/g,idxtd);
+              one_td = one_td.replace(/%bar_code%/g,oneinfo.bar_code);
+              one_td = one_td.replace(/%country_goods_name%/g,oneinfo.country_goods_name);
+              one_td = one_td.replace(/%ch_name%/g,oneinfo.ch_name);
+              one_td = one_td.replace(/%goodsmodel%/g,oneinfo.goodsmodel);
+              one_td = one_td.replace(/%uprice%/g,oneinfo.uprice);
+              one_td = one_td.replace(/%uweight%/g,oneinfo.uweight);
+              $("#mybody").html($("#mybody").html()+one_td)
+              $("#num_"+oneinfo.bar_code).val(1);
+              $("#bar_code_"+oneinfo.bar_code).val(oneinfo.bar_code);
+              $("#bound_"+bar_code).html(1);
+              idxtd++;
+            }
+          }
+        });
+     }
+      function deleteTr(objid){
+        $("#"+objid).remove();
+      }
+
+    var click_date_array = new Array();
+    var $inbound_assisted_declaration_panel = $("#inbound_assisted_declaration_panel");
+    var $inbound_assisted_declaration_common_panel = $("#inbound_assisted_declaration_panel .common_panel");
+    var $inbound_assisted_declaration_panel_mask = $("#inbound_assisted_declaration_panel .mask");
+    var inbound_assisted_declaration_panel_shown = false;
+    var adjust_inbound_assisted_declaration_panel = function() {
+      if (!inbound_assisted_declaration_panel_shown) {
+        return;
+      }
+      var cw = document.body.clientWidth;
+      var ch = document.body.clientHeight;
+      $inbound_assisted_declaration_common_panel.css({
+        left : ((cw - $inbound_assisted_declaration_common_panel.outerWidth()) / 2).toString() + 'px'
+      });
+      $inbound_assisted_declaration_panel.css({
+        width : cw.toString() + 'px',
+        height : ch.toString() + 'px'
+      });
+      $inbound_assisted_declaration_panel_mask.css({
+        width : cw.toString() + 'px',
+        height : ch.toString() + 'px'
+      });
+    };
+    var show_inbound_assisted_declaration_panel = function() {
+      $inbound_assisted_declaration_panel.show();
+      inbound_assisted_declaration_panel_shown = true;
+      adjust_inbound_assisted_declaration_panel();
+    };
+    $(window).resize(function() {
+      adjust_inbound_assisted_declaration_panel();
+    });
+    $("#inbound_assisted_declaration_panel_cancel_button").click(function() {
+      inbound_assisted_declaration_panel_shown = false;
+      $inbound_assisted_declaration_panel.hide();
+      return false;
+    });
+    $("#inbound_assisted_declaration_panel_submit_button").click(function(event) {
+      click_date_array.push(new Date());
+      var click_date_array_length = click_date_array.length;
+      if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+        event.cancelBubble = true;
+        return false;
+      }
+
+      $inbound_assisted_declaration_common_panel.find('.notify_panel').hide();
+      var to_address_id = $inbound_assisted_declaration_common_panel.find("select.address_id").val();
+      var insurance_amount = $inbound_assisted_declaration_common_panel.find("input.insurance_amount").val();
+      var user_memo = $inbound_assisted_declaration_common_panel.find("input.user_memo").val();
+
+      var alert_messages = [];
+      if (!to_address_id) {
+        alert_messages.push("请选择收货地址");
+      }
+      if (insurance_amount.length > 0) {
+        if (!/^(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(insurance_amount)) {
+          alert_messages.push("请输入正确的保价金额");
+        } else if (isNaN(parseFloat(insurance_amount)) || parseFloat(insurance_amount) <= 0) {
+          alert_messages.push("请输入正确的保价金额");
+        } else if (parseFloat(insurance_amount) > 6500) {
+          alert_messages.push("保价金额需要小于6500元");
+        }
+      }
+
+      if (alert_messages.length > 0) {
+        $inbound_assisted_declaration_common_panel.find(".notify_panel .alert").empty();
+        for (var i in alert_messages) {
+          $inbound_assisted_declaration_common_panel.find(".notify_panel .alert").append($("<p>").text(alert_messages[i]));
+        }
+        $inbound_assisted_declaration_common_panel.find(".notify_panel").show();
+
+      } else {
+        var $form = $("form:first");
+        $form.append($("<input>").attr({ type : "hidden", name : "assisted_declaration" }).val("1"));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][to_address_id]" }).val(to_address_id));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][insurance_amount]" }).val(insurance_amount));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound_service[immediate_outbound][enable]" }).val("1"));
+        $form.append($("<input>").attr({ type : "hidden", name : "inbound[user_memo]" }).val(user_memo));
+        $form.submit();
+      }
+
+      return false;
+    });
+    var immediate_outbound_init = function() {
+      var $this = $(".inbound_service_list input.immediate_outbound");
+      if ($this.is(":checked")) {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "checked" : false, "disabled" : "disabled" });
+        $(".immediate_outbound_panel").slideDown("fast");
+      } else {
+        $(".inbound_service_list input[class!=immediate_outbound]").attr({ "disabled" : null });
+        $(".immediate_outbound_panel").slideUp("fast");
+      }
+    };
+
+
+    $(function () {
+      Inbound.Brief.init();
+
+      jQuery.validator.addMethod("isExpressCode", function (value, element) {
+        value = $(element).val().replace(/\s+/g, '');
+        $(element).val(value);
+        return this.optional(element) || /^[\u4e00-\u9fa50-9a-zA-Z-_#]+$/.test(value);
+      }, "请输入正确的快递编号");
+
+    jQuery.validator.addMethod("exitExpressno", function (value, element) {
+       var flag = 1;
+        $.ajax({
+          type:"GET",
+          url:'index.php?m=express&c=index&a=public_checkexpressno_ajax&',
+          async:false,
+          data:{'expressno':value},
+          success: function(msg){
+            if(msg != '1'){
+              flag = 0;
+            }
+          }
+        });
+        if(flag == 0){
+          return false;
+        }else{
+          return true;
+        }
+    }, "快递编号已存在");
+
+      $("form:first").validate({
+        ignore : "",
+        rules : {
+          // "inbound[express_tracking_number]": {//快递编号
+          //   required: true,
+          //   isExpressCode: true,
+          //   exitExpressno:true
+          // },
+          "expressno": {
+              required: true,
+              isExpressCode: true,
+              exitExpressno:true
+          },
+          "inbound[warehouse_id]": {//入库仓库
+            required: true
+          },
+          "inbound[lu_express_id]": {//快递公司
+            required: true
+          },
+          "inbound[brand]": {
+            required: true
+          },
+          "inbound[name]": {//货物概述
+            required: true
+          }
+        }
+      });
+
+      // $("#inbound_express_tracking_number").blur(function() {
+      //   var input_express_tracking_number = $(this).val();
+      //   if (input_express_tracking_number.length > 10  && received_express_tracking_numbers.length > 0){
+      //     for (ri in received_express_tracking_numbers){
+      //       if (received_express_tracking_numbers[ri].indexOf(input_express_tracking_number) > 0) {
+      //         alert("您输入的快递编号和已经入库的"+received_express_tracking_numbers[ri]+"疑似为同一个包裹,因为转快递原因库房实际签收包裹快递单号可能会在原单号前面增加位数,请仔细核对");
+      //         return false;
+      //       }
+      //     }
+      //   }
+      // });
+
+
+      $("#go_step_two").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+          event.cancelBubble = true;
+          return false;
+        }
+        var part1_valid = $(this).closest("form").valid();
+        var part2_valid = Inbound.Brief.itemListValid();
+        if (part1_valid && part2_valid) {
+        //$(this).closest("form").submit();
+            $(".step_one").hide();
+            $(".step_two").show();
+            $(".steps_panel dl dd:first").removeClass("current");
+            $(".steps_panel dl dd:last").addClass("current");
+        }
+        return false;
+      });
+      $(".previous_button").click(function(event){
+              $(".step_two").hide();
+              $(".step_one").show();
+              $(".steps_panel dl dd:last").removeClass("current");
+              $(".steps_panel dl dd:first").addClass("current");
+      });
+
+      $("#submit_assisted_declaration").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 500) {
+          event.cancelBubble = true;
+          return false;
+        }
+        if ($(this).closest("form").valid()) {
+          $.post("/inbounds/brief_addresses", {}, function(ret) {
+            show_inbound_assisted_declaration_panel();
+            var $select = $("#inbound_assisted_declaration_panel select.select");
+            $select.empty();
+            for (var i in ret) {
+              $select.append($("<option>").text(ret[i].brief).attr("value", ret[i].id));
+            }
+            return false;
+          }, "json");
+        }
+        return false;
+      });
+      $("#submit").click(function (event) {
+        click_date_array.push(new Date());
+        var click_date_array_length = click_date_array.length;
+        if (click_date_array_length > 1 && click_date_array[click_date_array_length - 1].getTime() - click_date_array[click_date_array_length - 2].getTime() < 2000) {
+          event.cancelBubble = true;
+          return false;
+        }
+
+        var is_inbound_service_immediate_outbound_enable = $("#inbound_service_immediate_outbound_enable").is(":checked");
+        var is_us_hk_pick_up = $("#lu_freight_rate_id_11").is(":checked");
+        var is_jp_hk_pick_up = $("#lu_freight_rate_id_12").is(":checked");
+        var hk_pick_up_confirm_message = "您已选择香港自提转运偏好，货物将发往香港仓库\n您选择的收货地址仅用于区分包裹归属，不是实际收货地址\n货物到达香港仓库后，您需要自行去香港仓库提货\n确认选择香港自提吗？";
+        if (is_inbound_service_immediate_outbound_enable && (is_us_hk_pick_up || is_jp_hk_pick_up) && !window.confirm(hk_pick_up_confirm_message)) {
+          return false;
+        }
+
+        if ($(".inbound_cash_on_delivery_panel #inbound_cash_on_delivery_enable:checked").length == 1) {
+          if (validate_inbound_cash_on_delivery_panel()) {
+            $(this).closest("form").submit();
+          }
+        } else {
+          $(this).closest("form").submit();
+        }
+        return false;
+      });
+	  $(".immediate_outbound_panel .current_to_address a.edit_immediate_outbound_to_address").click(function() {
+        var $tbody = $(this).closest("tbody");
+        $tbody.find("tr.current_to_address").hide();
+        $tbody.find("tr.edit_to_address").show();
+        $tbody.find("tr.edit_to_address .address_list input:first").attr("checked", "checked");
+        return false;
+      });
+	  if ($(".address_list input:checked").length == 0) {
+        $(".address_list input:first").attr("checked", "checked");
+      }
+	  $(".inbound_service_list input.immediate_outbound").click(function() { immediate_outbound_init(); });
+      immediate_outbound_init();
+
+    });
+  </script>
+
+
+<script type="text/javascript">
+  var expresses ={$expresses};
+
+  var categories = {$goods_category};
+  var inbound_lu_express_id = 1;
+  var received_express_tracking_numbers = [];
+</script>
+{template 'member', 'footer'}

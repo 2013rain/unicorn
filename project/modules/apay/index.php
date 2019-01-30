@@ -97,6 +97,7 @@ class index extends foreground{
 	       		'pay_status'=>1,
 	       		'pay_money'=>$info['price'],
 	       		'pay_time'=>time(),
+	       		'address_info'=>json_encode($addressInfo),
 	       	);
 	       	$this->member_express->update($exp_data, array('id'=>$express_id) );
 			showmessage('支付成功','index.php?m=express&c=index&a=init');
