@@ -38,10 +38,216 @@ class manage extends admin {
 	 * defalut
 	 */
 	function init() {
-        //$lists = $this->db->listinfo([], '', $page, 20);
-        //$pages = $this->db->pages;
-        //include $this->admin_tpl('list');
+        $show_header = $show_scroll = true;
+
+        //搜索框
+        $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : '';
+        $major_no = isset($_GET['major_no']) ? trim($_GET['major_no']) : '';
+        $express_list = array();
+        if (empty($expressno)&&empty($major_no)) {
+            include $this->admin_tpl('pmanage_init');
+        }
+        $down = isset($_GET['down']) ? int($_GET['down']) : '';
+
+        $where = " 1 ";
+        if (!empty($barcode)) {
+            $where .= " AND expressno LIKE '".addslashes($expressno)."' ";
+        }
+        if (!empty($jpname)) {
+            $where .= " AND major_no LIKE '".addslashes($major_no)."' ";
+        }
+
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        $express_list = $this->db->listinfo($where, 'id DESC', $page, 15);
+
+        $pages = $this->db->pages;
+        $express_status = array(
+            '7'=>'订单完成',
+            '6'=>'快递派送',
+            '5'=>'快递清关',
+            '4'=>'快递登机',
+            '3'=>'仓库出库',
+            '2'=>'快递入库',
+            '1'=>'快递单创建',
+            '-1'=>'问题订单',
+        );
+        if ($down==1 ) {
+
+            //按条件导出订单详情
+            $head = array('主运单号','快递单号','物品名称','英文物品名称','净重(g)','毛重(g)','规格/型号','申报数量','申报总价（￥）','申报总价(日元)','申报计量单位','收件人','收件人城市','收件人地址','收件人电话','收件人身份证');
+            $row = array();
+            $express_list = $this->db->listinfo($where, 'id DESC');
+            $this->product_model = pc_base::load_model('product_goods_model');
+            foreach($express_list as $k=>$v) {
+                $goods_list = $this->goods_db->listinfo(array('userid'=>$v['userid'], 'expressno'=>$v['expressno'] ));
+                $address_info = json_decode($v['address_info'],true);
+                foreach($goods_list as $goods) {
+                    $product_info = array();
+                    if (!empty($goods["bar_code"])) {
+                        $product_info = $this->product_model->get_one(array('bar_code'=>$goods["bar_code"]));
+                    }
+
+                    $line = array();
+                    $line[]=$v['major_no'];
+                    $line[]=$v['expressno'];
+                    $line[]=$goods['goodsname'];
+                    $line[]= isset($product_info['en_name'])?$product_info['en_name']:'';
+
+                    $line[]= isset($product_info['nweight'])?$product_info['nweight']:'';
+                    $line[]= isset($product_info['uweight'])?$product_info['uweight']:'';
+
+                    $line[]=isset($product_info['goodsname'])?$product_info['goodsname']:$goods['goodsname'];
+                    $line[]=$goods['num'];
+                    $line[]=$goods['num'] * $product_info['zhprice'];
+                    $line[]=$goods['num'] * $goods['uprice'];
+                    $line[]=$product_info['measur_unit'];
+                    $line[]=$address_info['province'];
+                    $line[]=$address_info['province'].'/'.$address_info['city'].'/'.$address_info['area'].$address_info['addressinfo'];
+                    $line[]=$address_info['mobile'];
+                    $line[]=$address_info['idcard'];
+                    $row[]=$line;
+                }
+                
+            }
+            $filename = "detail_".date("YmdHis");
+            $excel= pc_base::load_sys_class('excel','',1);
+            $excel->export($head, $row, $filename);
+            exit;
+
+        } else {
+            include $this->admin_tpl('manage_init');
+        }
+        
 	}
+    //扫描入库
+    function scan_in_store()
+    {
+        if(isset($_POST['dosubmit'])) {
+            $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
+            $opt = isset($_POST['opt']) ? trim($_POST['opt']) : '';
+            if (!in_array($opt, array('-1','1')) || empty($expressno)) {
+                showmessage('非法操作',HTTP_REFERER);
+            }
+            $get_one = $this->db->get_one(array('expressno'=>$expressno));
+            if (empty($get_one)|| $get_one['status'] != 1) {
+                showmessage('无效快递单',HTTP_REFERER);
+            }
+            if ($opt=='-1') {
+                //直接转给问题订单
+                $set_where = [
+                'id' => $get_one['id']
+                ];
+                $set_data = [
+                    'status' => -1,
+                    ];
+                $this->db->update($set_data, $set_where);
+                showmessage('操作完成',HTTP_REFERER);
+            }
+            $weight = isset($_POST['weight']) ? floatval($_POST['weight']) : '';
+            $goods = isset($_POST['goods']) ? $_POST['goods'] : array();
+            $product = isset($_POST['product']) ? $_POST['product'] : array();
+            if ($weight<=0) {
+                showmessage('无效操作',HTTP_REFERER);
+            }
+            $store_service = $get_one['service'];
+            $service_price = $this->getServicePrice($store_service);
+            $price = weightcost($weight, $get_one['rebate'] , $service_price);
+            $this->product_model = pc_base::load_model('product_goods_model');
+            $new_goods = array();
+            $time = time();
+            foreach((array)$product as $val) {
+                if (!empty($val['bar_code'])) {
+                        $product_info = $this->product_model->get_one(array('bar_code'=>$bar_code));
+                        if (empty($product_info)) {
+                            showmessage('含有不存在商品',HTTP_REFERER);
+                        }
+                        $new_goods[] = array(
+                            'userid' => $get_one['userid'],
+                            'expressno' => $get_one['expressno'],
+                            'goodsname' => $product_info['goodsname'],
+                            'pcategory' => '',
+                            'scategory' => '',
+                            'productname' => '',
+                            'goodsmodel' => $product_info['goodsmodel'],
+                            'uprice' => $product_info['uprice'],
+                            'num' => $val['num'],
+                            'bar_code' => $product_info['bar_code'],
+                            'createtime' => $time
+                        );
+
+                }
+            }
+            foreach((array)$goods as $val) {
+                if (!empty($val['id'])) {
+                     $set_where = array(
+                        'userid'=>$get_one['userid'],
+                        'expressno'=>$get_one['expressno'],
+                        'id'=>$val['id']
+                    );
+                    $this->goods_db->update(array('num'=>$val['num']), $set_where);
+                }
+               
+            }
+            foreach ($new_goods as $sql) {
+               $this->goods_db->insert($sql);
+            }
+            
+            $set_where = [
+                'id' => $get_one['id']
+                ];
+            $set_data = [
+                'weight' => $weight,
+                'status' => 2,
+                'in_store_time' => $time,
+                'price' => $price
+                ];
+            $this->db->update($set_data, $set_where);
+            showmessage('入库完成',HTTP_REFERER);
+
+        }else{
+            include $this->admin_tpl('scan_in_store');
+        }
+        
+    }
+    function public_getexpress_ajax()
+    {
+        $return = array('code'=>1,'info'=>array(),'msg'=>'');
+        $expressno = isset($_GET['expressno']) ? trim($_GET['expressno']) : '';
+        if (!empty($expressno)) {
+           $express_info = $this->db->get_one(array('expressno'=>$expressno));
+           if (!empty($express_info)){
+                $goods_list = $this->goods_db->listinfo(array('userid'=>$express_info['userid'], 'expressno'=>$express_info['expressno'] ));
+                $return['code']='0';
+                $express_info['goods_list']= $goods_list;
+                $return['info']=$express_info;
+           } else {
+            $return['msg']='不存在该订单';
+           }
+        } else {
+            $return['msg']='参数错误';
+        }
+        echo json_encode($return);
+        exit();
+    }
+    function public_getproduct_ajax()
+    {
+        $return = array('code'=>1,'info'=>array(),'msg'=>'');
+        $bar_code = isset($_GET['bar_code']) ? trim($_GET['bar_code']) : '';
+        if (!empty($bar_code)) {
+            $this->product_model = pc_base::load_model('product_goods_model');
+            $product_info = $this->product_model->get_one(array('bar_code'=>$bar_code));
+           if (!empty($product_info)){
+                $return['code']='0';
+                $return['info']=$product_info;
+           } else {
+               $return['msg']='不存在该商品';
+           }
+        } else {
+            $return['msg']='参数错误';
+        }
+        echo json_encode($return);
+        exit();
+    }
 
     function in_storage() {
         if(isset($_POST['dosubmit'])) {
@@ -249,7 +455,7 @@ class manage extends admin {
                 $pagesize = 100;
                 $num = ceil($count/$pagesize);
                 $filename = '待出库列表_'.$_POST['start_time'] .'_' .$_POST['end_time'];
-                $head = array('仓库', '快递公司', '快递单号', '入库时间', '重量', '支付金额', '折扣', '增值服务', '发货公司' , '发货单号');
+                $head = array('仓库', '快递公司', '快递单号', '入库时间', '重量', '支付金额', '折扣', '增值服务', '发货公司' , '发货单号','主运单号(批次)');
                 $row = [];
                 for ($i=0;$i<$num;$i++) {
                     $page_start = $i * $limit;
@@ -291,7 +497,7 @@ class manage extends admin {
                     $row = count($data) - 1;
                     foreach ($data as $k=>$v) {
                         if ($k != 1) {
-                            if (count($v) != 10) {
+                            if (count($v) != 11) {
                                 continue;
                             }
                             $store = $v['A'];
@@ -304,6 +510,7 @@ class manage extends admin {
                             $service = $v['H'];
                             $send_company = $v['I'];
                             $send_no = $v['J'];
+                            $major_no = trim($v['K']);
                             if (!$company || !$expressno || !$in_store_time || !$weight || !$pay || !$rebat || !$service || !$send_company || !$send_no) {
                                 continue;
                             }
@@ -319,7 +526,8 @@ class manage extends admin {
                                 'send_company' => $send_company,
                                     'send_no' => $send_no,
                                     'out_store_time' => $time,
-                                    'status' => 3
+                                    'status' => 3,
+                                    'major_no'=>$major_no
                                     ];
                             $this->db->update($set_data, $where);
                             $suc_row++;
