@@ -45,15 +45,16 @@ class manage extends admin {
         $major_no = isset($_GET['major_no']) ? trim($_GET['major_no']) : '';
         $express_list = array();
         if (empty($expressno)&&empty($major_no)) {
-            include $this->admin_tpl('pmanage_init');
-        }
-        $down = isset($_GET['down']) ? int($_GET['down']) : '';
+            include $this->admin_tpl('manage_init');
+
+        } else {
+            $down = isset($_GET['down']) ? intval($_GET['down']) : '';
 
         $where = " 1 ";
-        if (!empty($barcode)) {
+        if (!empty($expressno)) {
             $where .= " AND expressno LIKE '".addslashes($expressno)."' ";
         }
-        if (!empty($jpname)) {
+        if (!empty($major_no)) {
             $where .= " AND major_no LIKE '".addslashes($major_no)."' ";
         }
 
@@ -117,6 +118,8 @@ class manage extends admin {
         } else {
             include $this->admin_tpl('manage_init');
         }
+        }
+        
         
 	}
     //扫描入库
@@ -226,10 +229,15 @@ class manage extends admin {
         if (!empty($expressno)) {
            $express_info = $this->db->get_one(array('expressno'=>$expressno));
            if (!empty($express_info)){
-                $goods_list = $this->goods_db->listinfo(array('userid'=>$express_info['userid'], 'expressno'=>$express_info['expressno'] ));
-                $return['code']='0';
-                $express_info['goods_list']= $goods_list;
-                $return['info']=$express_info;
+                if ($express_info['status']=='1') {
+                    $goods_list = $this->goods_db->listinfo(array('userid'=>$express_info['userid'], 'expressno'=>$express_info['expressno'] ));
+                    $return['code']='0';
+                    $express_info['goods_list']= $goods_list;
+                    $return['info']=$express_info;
+                } else {
+                    $return['msg']='订单状态不支持入库操作';
+                }
+                
            } else {
             $return['msg']='不存在该订单';
            }

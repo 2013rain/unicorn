@@ -61,14 +61,14 @@
 ?>
     <tr>
 		<td align="left"><?php echo $v['id']?></td>
-		<td align="left"><?php echo $v['major_no']?></td>
-		<td align="left"><?php echo $v['expressno']?></td>
+		<td align="left"><?php echo trim($v['major_no'])?></td>
+		<td align="left"><?php echo trim($v['expressno'])?></td>
 		<td align="left"><?php echo $v['userid']?></td>
 		<td align="left"><?php echo $v['detail']?></td>
 		<td align="left"><?php echo $v['weight']?></td>
 		<td align="left"><?php echo $v['pay_money']?></td>
-		<td align="left"><?php echo $v['send_no']?></td>
-		<td align="left"><?php if($v['statsu']=='2' && $v['pay_status']=='1') {echo '已支付';} else { echo $express_status[$v['statsu']]; }?></td>
+		<td align="left"><?php echo trim($v['send_no'])?></td>
+		<td align="left"><?php if($v['status']=='2' && $v['pay_status']=='1') {echo '已支付';} else { echo $express_status[$v['status']]; }?></td>
     </tr>
 <?php
 	}
@@ -91,7 +91,8 @@ function down() {
 		alert("条件不能为空");
 		return false;
 	}
-	this.location.href="?m=express&c=manage&a=init&down=1&major_no="+major_no+"&expressno="+expressno
+	pc_hash = "<?php echo htmlspecialchars($_GET['pc_hash']); ?>" ;
+	this.location.href="?m=express&c=manage&a=init&down=1&major_no="+major_no+"&expressno="+expressno+"&pc_hash="+pc_hash;
 }
 
 
