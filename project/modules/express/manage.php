@@ -177,8 +177,13 @@ class manage extends admin {
 
                 }
             }
+            $goods_list = $this->goods_db->listinfo(array('userid'=>$get_one['userid'], 'expressno'=>$get_one['expressno'] ));
+            $exitGoodsNum = array();
+            foreach ($goods_list as $g) {
+                 $exitGoodsNum[$g['id']]=$g["num"];
+            }
             foreach((array)$goods as $val) {
-                if (!empty($val['id'])) {
+                if (!empty($val['id']) && isset($exitGoodsNum[$val['id']]) && $exitGoodsNum[$val['id']]!=$val['num']) {
                      $set_where = array(
                         'userid'=>$get_one['userid'],
                         'expressno'=>$get_one['expressno'],
