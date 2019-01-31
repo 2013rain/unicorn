@@ -3,6 +3,8 @@
 Add a new file(.lang.php) with your module name at /phpcms/languages/
 translation save at the array:$LANG
 */
+$LANG['express_init'] = '订单查询';
+$LANG['scan_in_store'] = '扫码入库';
 $LANG['productinfo'] = '商品管理';
 $LANG['product_init'] = '商品列表';
 $LANG['import_goods'] = '导入商品';
