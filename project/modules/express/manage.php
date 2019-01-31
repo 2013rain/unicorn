@@ -125,6 +125,7 @@ class manage extends admin {
         if(isset($_POST['dosubmit'])) {
             $expressno = isset($_POST['expressno']) ? trim($_POST['expressno']) : '';
             $opt = isset($_POST['opt']) ? trim($_POST['opt']) : '';
+            $cause = isset($_POST['cause']) ? trim($_POST['cause']) : '';
             if (!in_array($opt, array('-1','1')) || empty($expressno)) {
                 showmessage('非法操作',HTTP_REFERER);
             }
@@ -133,12 +134,16 @@ class manage extends admin {
                 showmessage('无效快递单',HTTP_REFERER);
             }
             if ($opt=='-1') {
+                if (empty($cause)) {
+                    showmessage('请填写问题订单备注',HTTP_REFERER);
+                }
                 //直接转给问题订单
                 $set_where = [
                 'id' => $get_one['id']
                 ];
                 $set_data = [
                     'status' => -1,
+                    'cause'=>$cause
                     ];
                 $this->db->update($set_data, $set_where);
                 showmessage('操作完成',HTTP_REFERER);

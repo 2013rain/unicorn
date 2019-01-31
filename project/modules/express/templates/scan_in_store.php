@@ -55,6 +55,7 @@
 <label>快递单称重：<input name="weight" id="weight" type="text"  class="input-text" />(kg)</label>&nbsp; 
 <input type="button" class="button"  value=" 确认入库 " onclick="instore()" />
 &nbsp; &nbsp; 
+问题订单备注：<input name="cause" id="cause" type="text"  class="input-text" /></label>
 <input type="button" class="button"  value=" 转为问题订单 " onclick="problem()" />
 </div>
 
@@ -136,8 +137,12 @@ function instore() {
 }
 function problem() {
 	$("#myopt").val("-1");
+	cause=$("#cause").val();
 	if(expressno=='') {
 		alert("内容错误，无法完成提交");
+		return false;
+	} else if (cause=="") {
+		alert("请填写问题备注");
 		return false;
 	} else {
 		myform.submit();
