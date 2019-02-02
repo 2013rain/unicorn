@@ -73,10 +73,15 @@ var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%
 var hiddenForm2 = "<font color=\"red\">New</font><input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"hidden\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
 var idx=0;
 var expressno;
+
 function searchExpress() {
+
 	expressno = $("#expressno").val();
+	$("#expressno").attr("disabled",true);
+
 	if (expressno=='') {
 		alert("请输入快递");
+		$("#expressno").removeAttr("disabled");
 		return false;
 	}
  		$.ajax({
@@ -93,13 +98,16 @@ function searchExpress() {
                }
              }
         });
+    $("#expressno").removeAttr("disabled");
           
 	
 }
 function addProduct() {
 	var bar_code = $("#bar_code").val();
+	$("#bar_code").attr("disabled",true);
 	if (bar_code=="") {
 		alert("请输入条形码");
+		$("#bar_code").removeAttr("disabled");
 		return false;
 	}
 	if ($("#rnum_"+bar_code).length>0) {
@@ -127,6 +135,7 @@ function addProduct() {
                }
              }
         });
+	$("#bar_code").removeAttr("disabled");
 }
 function instore() {
 	$("#myopt").val("1");

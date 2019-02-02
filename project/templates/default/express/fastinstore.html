@@ -99,9 +99,10 @@
        <div class="panel_footer">
           <div >
             <input type="text" placeholder="输入商品条形码"   onblur="AddProduct()" style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
+            <!--
             <input type="button" style="margin-right: 8px;background-color: #6CD134;    color: #ffffff;line-height: 12px;padding: 5px 16px 6px; font-size: 12px;" onclick="AddProduct()" value="增加商品" />
             
-            
+            -->
           </div>
         </div>
       <div class="panel_content" id="inbound_item_list">
@@ -242,15 +243,19 @@
      hiddenHtml +="<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][num]\" id=\"num_%bar_code%\" >";
      function AddProduct(){
       bar_code = $("#bar_code").val();
+      $("#bar_code").attr("disabled",true);
       if (bar_code=="") {
         alert("请输入条形码");
+        $("#bar_code").removeAttr("disabled");
         return false;
       }
+      $("#bar_code").val("");
       if ($("#bar_code_"+bar_code).length>0) {
               oldv= $("#num_"+bar_code).val();
               oldv =parseInt(oldv,10)
               $("#num_"+bar_code).val(oldv+1);
               $("#bound_"+bar_code).html(oldv+1);
+              $("#bar_code").removeAttr("disabled");
               return true;
       }
       $.ajax({
@@ -283,6 +288,7 @@
             }
           }
         });
+      $("#bar_code").removeAttr("disabled");
      }
       function deleteTr(objid){
         $("#"+objid).remove();
