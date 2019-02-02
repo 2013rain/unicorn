@@ -14,14 +14,16 @@
 		<td>
 		<div class="explain-col">
 				快递编号：
-				<input name="expressno" id="expressno" type="text"  class="input-text" />
-
+				<input name="expressno" id="expressno" type="text" onblur="searchExpress()" placeholder="输入快递编号"  class="input-text" />
+				<!--
 				<input type="button"  class="button" onclick="searchExpress()" value="&nbsp;&nbsp;搜索快递&nbsp;&nbsp; " />
+				-->
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				商品条形码：
-				<input name="bar_code" id="bar_code" type="text"  class="input-text" />
-
+				<input name="bar_code" id="bar_code" type="text" onblur="addProduct()"  placeholder="输入商品条形码" class="input-text" />
+				<!--
 				<input type="button" class="button" onclick="addProduct()" value="&nbsp;&nbsp;入库商品&nbsp;&nbsp; " />
+				-->
 
 		</div>
 		</td>

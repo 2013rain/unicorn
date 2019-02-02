@@ -28,7 +28,7 @@
             <input type="file" name="express_data">
             <input type="hidden" name="MAX_FILE_SIZE" value="3145728" />
             <input name="import" type="hidden" value="1">
-            <input type="submit"  class="button" value="批量导入待入库快递单" />
+            <input type="submit"  class="button" value="批量导入商品" />
 		</td>
 		</tr>
     </tbody>

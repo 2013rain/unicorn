@@ -10,11 +10,11 @@
     <style type="text/css">
         .step_two {display:none}
     </style>
-    <script src="{JS_PATH}jquery-3.2.1.min.js"></script>
-    <script src="{JS_PATH}jquery.validate.zh.min.js"></script>
-    <script src="{JS_PATH}common.js"></script>
-    <script src="{JS_PATH}address.js"></script>
-    <script src="{JS_PATH}inbound2.js"></script>
+    <script type="text/javascript" src="{JS_PATH}jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{JS_PATH}jquery.validate.zh.min.js"></script>
+    <script type="text/javascript"  src="{JS_PATH}common.js"></script>
+    <script type="text/javascript" src="{JS_PATH}address.js"></script>
+    <script type="text/javascript" src="{JS_PATH}inbound2.js"></script>
 
     <script type="text/javascript" src="{JS_PATH}wow.min.js"></script>
 </head>
@@ -98,7 +98,7 @@
       <div class="panel_header">根据条形码添加商品信息</div>
        <div class="panel_footer">
           <div >
-            <input type="text" placeholder="输入商品条形码"  style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
+            <input type="text" placeholder="输入商品条形码"   onblur="AddProduct()" style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
             <input type="button" style="margin-right: 8px;background-color: #6CD134;    color: #ffffff;line-height: 12px;padding: 5px 16px 6px; font-size: 12px;" onclick="AddProduct()" value="增加商品" />
             
             

@@ -508,7 +508,7 @@ class manage extends admin {
                 $time = time();
                 if($_FILES['express_data']['tmp_name']) {
                     $excel= pc_base::load_sys_class('excel','',1);
-                    $data = $excel->import($_FILES['express_data']['tmp_name'], $ext);
+                    $data = @$excel->import($_FILES['express_data']['tmp_name'], $ext);
                     if (!$data) {
                         showmessage('没检测到数据,请检查是否excel或者是否有内容',HTTP_REFERER);
                     }
