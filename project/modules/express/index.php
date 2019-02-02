@@ -1091,8 +1091,13 @@ class index extends foreground {
         $admin_userid = (int)$this->memberinfo['admin_userid'];
         $this->goods_model = pc_base::load_model('product_goods_model');
         $goods_info = $this->goods_model->get_one(array('bar_code'=>$bar_code));
-        $return['code']='0';
-        $return['info']=$goods_info;
+        if (!empty($goods_info)) {
+            $return['code']='0';
+            $return['info']=$goods_info;
+        } else {
+             $return['msg'] = '无此商品条码'.$bar_code;
+        }
+        
         echo json_encode($return);
         exit();
     }
