@@ -18,6 +18,8 @@ class index extends foreground {
 	}
 
 	public function init() {
+		header('Location: /index.php?m=express&c=index&a=init');
+		exit();
 		$memberinfo = $this->memberinfo;
 		
 		//初始化phpsso
@@ -27,8 +29,7 @@ class index extends foreground {
 
 		$grouplist = getcache('grouplist');
 		$memberinfo['groupname'] = $grouplist[$memberinfo[groupid]]['name'];
-		header('Location: /index.php?m=express&c=index&a=init');
-		exit();
+		
 		include template('member', 'index');
 	}
 	
