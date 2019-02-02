@@ -44,7 +44,7 @@ class foreground {
 				}
 				
 				if($this->memberinfo && $this->memberinfo['password'] === $password) {
-					
+					/*
 					if (!defined('SITEID')) {
 					   define('SITEID', $this->memberinfo['siteid']);
 					}
@@ -68,6 +68,7 @@ class foreground {
 						param::set_cookie('email', $this->memberinfo['email']);
 						showmessage(L('need_emial_authentication', '', 'member'), 'index.php?m=member&c=index&a=register&t=2');
 					}
+					*/
 				} else {
 					param::set_cookie('auth', '');
 					param::set_cookie('_userid', '');
