@@ -166,7 +166,7 @@ class manage extends admin {
             $time = time();
             foreach((array)$product as $val) {
                 if (!empty($val['bar_code'])) {
-                        $product_info = $this->product_model->get_one(array('bar_code'=>$bar_code));
+                        $product_info = $this->product_model->get_one(array('bar_code'=>$val['bar_code']));
                         if (empty($product_info)) {
                             showmessage('含有不存在商品',HTTP_REFERER);
                         }

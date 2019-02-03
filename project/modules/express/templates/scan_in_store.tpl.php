@@ -66,11 +66,11 @@
 </div>
 <script type="text/javascript">
 <!--
-var td_html = "<tr><td align=\"left\" >%expressno% %hidden%</td><td align=\"left\" id=\"goods_%bar_code%\" >%bar_code%</td>"
+var td_html = "<tr><td align=\"left\" >%expressno% </td><td align=\"left\" id=\"goods_%bar_code%\" >%bar_code% %new%</td>"
 td_html += "<td align=\"left\" >%goodsname%</td><td align=\"left\" >%num%</td>"
-td_html += "<td align=\"left\"  ><input type=\"number\" value=\"0\" id=\"num_%bar_code%\" data-bar=\"%bar_code%\" onblur=\"updateNum(this)\" /></td></tr>"
-var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%\"><input type=\"hidden\" name=\"goods[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
-var hiddenForm2 = "<font color=\"red\">New</font><input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"hidden\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
+td_html += "<td align=\"left\"  >%hidden%</td></tr>"
+var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%\"><input type=\"number\" name=\"goods[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
+var hiddenForm2 = "<input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"number\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"1\">" 
 var idx=0;
 var expressno;
 
@@ -138,10 +138,7 @@ function addProduct() {
                	  alert(data.msg)
                } else {
 					createLine(data.info);
-					oldnum = $("#rnum_"+bar_code).val();
-					oldnum = parseInt(oldnum,10);
-					$("#rnum_"+bar_code).val(oldnum+1);
-					$("#num_"+bar_code).val(oldnum+1);
+
 					return true;
                }
              }
@@ -177,10 +174,11 @@ function problem() {
 
 function createHtml(data) {
 	var html;
-
+	myexpressno = $("#myexpressno").val();
 	$.each(data.goods_list, function(index,value){
-	     html+=td_html.replace(/%hidden%/g, hiddenForm1);;
-	     html= html.replace(/%expressno%/g, data.expressno);
+	     html+=td_html.replace(/%hidden%/g, hiddenForm1); 
+	     html =html.replace(/%new%/g, "<font></font>");
+	     html= html.replace(/%expressno%/g, myexpressno);
 	     html= html.replace(/%bar_code%/g, value.bar_code);
 	     html= html.replace(/%goodsname%/g, value.goodsname);
 	     html= html.replace(/%num%/g, value.num);
@@ -188,26 +186,24 @@ function createHtml(data) {
 	     html= html.replace(/%id%/g, value.id);
 	     idx++;
 	});
-	$("#tbody").html(html);
+	html =html.replace(/%new%/g, "<font></font>");
+	$("#tbody").append(html);
 }
 
 function createLine(data) {
 	var html;
 	myexpressno = $("#myexpressno").val();
-	html+=td_html.replace(/%hidden%/g, hiddenForm2);;
+	html =td_html.replace(/%hidden%/g, hiddenForm2);
 	 html= html.replace(/%expressno%/g, myexpressno);
-	 html= html.replace(/%bar_code%/g, value.bar_code);
-	 html= html.replace(/%goodsname%/g, value.goodsname);
-	 html= html.replace(/%num%/g, value.num);
+	 html =html.replace(/%new%/g, "<font color=\"red\">New</font>");
+	 html= html.replace(/%bar_code%/g, data.bar_code);
+	 html= html.replace(/%goodsname%/g, data.ch_name);
+	 html= html.replace(/%num%/g, 0);
 	 html= html.replace(/%idx%/g, idx);
-	 html= html.replace(/%id%/g, value.id);
+
 	 idx++;
 
-	$.each(data.goods_list, function(index,value){
-	     
-	});
-	oldhtml = $("#tbody").html();
-	$("#tbody").html(oldhtml+html);
+	$("#tbody").append(html);
 }
 
 

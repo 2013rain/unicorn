@@ -315,8 +315,16 @@ class index extends foreground {
         $page = isset($_GET['page']) && trim($_GET['page']) ? intval($_GET['page']) : 1;
         //$goods = $this->goods_db->listinfo($where, '', $page, 1);
         $goods = $this->goods_db->select($where);
+        $this->product_model = pc_base::load_model('product_goods_model');
         $goods_num = 0;
-        foreach ($goods as $val) {
+        foreach ($goods as $k=> $val) {
+            $country_goods_name = '';
+            if (!empty( $val['bar_code'])) {
+                 $product_info = $this->product_model->get_one(array('bar_code'=>$val['bar_code']));
+                 $country_goods_name = $product_info['country_goods_name'];
+            }
+            $goods[$k]['country_goods_name'] = $country_goods_name;
+           
             $goods_num += $val['num'];
         }
         $service = $express['service'];
@@ -822,8 +830,15 @@ class index extends foreground {
             'expressno' => $expressno
         ];
         $goods = $this->goods_db->select($where);
+        $this->product_model = pc_base::load_model('product_goods_model');
         $goods_num = 0;
-        foreach ($goods as $val) {
+        foreach ($goods as $k=> $val) {
+            $country_goods_name = '';
+            if (!empty( $val['bar_code'])) {
+                 $product_info = $this->product_model->get_one(array('bar_code'=>$val['bar_code']));
+                 $country_goods_name = $product_info['country_goods_name'];
+            }
+            $goods[$k]['country_goods_name'] = $country_goods_name;
             $goods_num += $val['num'];
         }
         $service = $express['service'];

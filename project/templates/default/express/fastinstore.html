@@ -129,9 +129,7 @@
       <div class="submit_button" id="inbound_info_submit" style="display:none;">
         <a href="" id="go_step_two"> 下一步：选择增值服务</a>
       </div>
-      <div class="tips" style="color:red;margin-top:5px;">申报提示：请根据订单内不同货品品名分别如实申报，避免因为申报问题导致清关查验。</div>
-      <div class="tips" style="color:red;margin-top:5px;">入库提示：库房周末正常休息，不签收包裹，快递周末显示送达的包裹会在工作日再次派件给库房，所以周末送达的包裹入库会有延时。
-    </div>
+    
 </div>
 <div class="step_two">
       <div class="common_panel">
@@ -237,10 +235,10 @@
     var tdhtml = "<tr id=\"bound_%idx%\"><td>%bar_code%</td><td>%country_goods_name%</td>";
      tdhtml += "<td>%ch_name%</td><td>%goodsmodel%</td>";
      tdhtml += "<td>%uprice%</td><td>%uweight%</td>";
-     tdhtml += "<td ><input type=\"number\" value=\"1\" id=\"bound_%bar_code%\" data-bar=\"%bar_code%\" onblur=\"updateNum(this)\" /></td><td><a  onclick=\"deleteTr('bound_%idx%')\">删除</a>%hidden%</td></tr>";
+     tdhtml += "<td ><input type=\"number\"  name=\"inbound[inbound_items_attributes][%idx%][num]\" id=\"num_%bar_code%\" /></td><td><a  onclick=\"deleteTr('bound_%idx%')\">删除</a>%hidden%</td></tr>";
      var idxtd =0;
      var hiddenHtml = "<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][bar_code]\" id=\"bar_code_%bar_code%\">";
-     hiddenHtml +="<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][num]\" id=\"num_%bar_code%\" >";
+
      
 
 function EnterTextBox(where) {
@@ -252,12 +250,7 @@ function EnterTextBox(where) {
      }
  }
 
-     function updateNum(obj) {
 
-      bar = $(obj).data("bar")
-      $("#num_"+bar).val($(obj).val());
-      
-     }
      function AddProduct(){
       bar_code = $("#bar_code").val();
       $("#bar_code").attr("disabled",true);
@@ -271,7 +264,6 @@ function EnterTextBox(where) {
               oldv= $("#num_"+bar_code).val();
               oldv =parseInt(oldv,10)
               $("#num_"+bar_code).val(oldv+1);
-              $("#bound_"+bar_code).val(oldv+1);
               $("#bar_code").removeAttr("disabled");
               return true;
       }
@@ -298,10 +290,9 @@ function EnterTextBox(where) {
               one_td = one_td.replace(/%goodsmodel%/g,oneinfo.goodsmodel);
               one_td = one_td.replace(/%uprice%/g,oneinfo.uprice);
               one_td = one_td.replace(/%uweight%/g,oneinfo.uweight);
-              $("#mybody").html($("#mybody").html()+one_td)
+              $("#mybody").append(one_td)
               $("#num_"+oneinfo.bar_code).val(1);
               $("#bar_code_"+oneinfo.bar_code).val(oneinfo.bar_code);
-              $("#bound_"+bar_code).val(1);
               idxtd++;
             }
           }
