@@ -14,16 +14,16 @@
 		<td>
 		<div class="explain-col">
 				快递编号：
-				<input name="expressno" id="expressno" type="text" onblur="searchExpress()" placeholder="输入快递编号"  class="input-text" />
-				<!--
+				<input name="expressno" id="expressno" type="text" onkeypress="return EnterTextBox(1);" placeholder="输入快递编号"  class="input-text" />
+				
 				<input type="button"  class="button" onclick="searchExpress()" value="&nbsp;&nbsp;搜索快递&nbsp;&nbsp; " />
-				-->
+				
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				商品条形码：
-				<input name="bar_code" id="bar_code" type="text" onblur="addProduct()"  placeholder="输入商品条形码" class="input-text" />
-				<!--
+				<input name="bar_code" id="bar_code" type="text" onkeypress="return EnterTextBox(2);"  placeholder="输入商品条形码" class="input-text" />
+				
 				<input type="button" class="button" onclick="addProduct()" value="&nbsp;&nbsp;入库商品&nbsp;&nbsp; " />
-				-->
+				
 
 		</div>
 		</td>
@@ -68,11 +68,23 @@
 <!--
 var td_html = "<tr><td align=\"left\" >%expressno% %hidden%</td><td align=\"left\" id=\"goods_%bar_code%\" >%bar_code%</td>"
 td_html += "<td align=\"left\" >%goodsname%</td><td align=\"left\" >%num%</td>"
-td_html += "<td align=\"left\" id=\"num_%bar_code%\" >0</td></tr>"
+td_html += "<td align=\"left\"  ><input type=\"number\" value=\"0\" id=\"num_%bar_code%\" data-bar=\"%bar_code%\" onblur=\"updateNum(this)\" /></td></tr>"
 var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%\"><input type=\"hidden\" name=\"goods[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
 var hiddenForm2 = "<font color=\"red\">New</font><input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"hidden\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
 var idx=0;
 var expressno;
+
+function EnterTextBox(where) {
+     if (event.keyCode == 13) {
+     	if (where=="1") {
+     		searchExpress()
+     	}
+     	if (where=="2") {
+     		addProduct()
+     	}
+
+     }
+ }
 
 function searchExpress() {
 
@@ -98,9 +110,7 @@ function searchExpress() {
                }
              }
         });
-    $("#expressno").removeAttr("disabled");
-          
-	
+    $("#expressno").removeAttr("disabled");      
 }
 function addProduct() {
 	var bar_code = $("#bar_code").val();
@@ -114,7 +124,8 @@ function addProduct() {
 		oldnum = $("#rnum_"+bar_code).val();
 		oldnum = parseInt(oldnum,10);
 		$("#rnum_"+bar_code).val(oldnum+1);
-		$("#num_"+bar_code).html(oldnum+1);
+		$("#num_"+bar_code).val(oldnum+1);
+		$("#bar_code").removeAttr("disabled");
 		return true;
 	}
 	$.ajax({
@@ -130,7 +141,7 @@ function addProduct() {
 					oldnum = $("#rnum_"+bar_code).val();
 					oldnum = parseInt(oldnum,10);
 					$("#rnum_"+bar_code).val(oldnum+1);
-					$("#num_"+bar_code).html(oldnum+1);
+					$("#num_"+bar_code).val(oldnum+1);
 					return true;
                }
              }

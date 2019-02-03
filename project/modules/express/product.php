@@ -147,6 +147,7 @@ class product extends admin {
 	}
 	
 	public function import_goods() {
+		
 		$template = isset($_GET['template']) && trim($_GET['template']) ? (int)trim($_GET['template']) :0;
 		$import = isset($_POST['import']) && trim($_POST['import']) ? (int)trim($_POST['import']) :0;
 		if($template==1) {
@@ -181,6 +182,7 @@ class product extends admin {
                 $row = 0;
                 $suc_row = 0;
                 $create_time = date("Y-m-d H:i:s");
+
                 if($_FILES['express_data']['tmp_name']) {
                     $excel= pc_base::load_sys_class('excel','',1);
                     $data = $excel->import($_FILES['express_data']['tmp_name'], $ext);
@@ -188,11 +190,19 @@ class product extends admin {
                         showmessage('没检测到数据,请检查是否excel或者是否有内容',HTTP_REFERER);
                     }
                     $row = count($data) - 1;
-                    foreach ($data as $k=>$v) {
-                        if ($k != 1) {
+                    if ($row>20000) {
+                    	showmessage('每次导入数量限制在2w内',HTTP_REFERER);
+                    }
+                    $status_str= array('有效'=>'1','无效'=>'0');
+                    $special_str= array('是'=>'1','否'=>'0');
+
+                    foreach ((array)$data as $k=>$v) {
+
+                        if ($k > 1) {
                             if (count($v) < 13) {
                                 continue;
                             }
+                            $v = array_map("addslashes",$v);
                             $bar_code = trim($v['A']);
                             $status = trim($v['B']);
                             $country_goods_name = trim($v['C']);
@@ -210,22 +220,24 @@ class product extends admin {
                             $nweight = (int)$nweight;
                             $uweight = (int)$uweight;
 
-                            if (empty($bar_code) || empty($status)|| empty($country_goods_name)|| empty($is_special)|| empty($uprice) || empty($uweight)) {
+                            if (empty($bar_code) || empty($status)|| empty($is_special)) {
                             	continue;
                             }
                             $uprice = floatval($uprice);
                             $zhprice = floatval($zhprice);
+                            
+                           	$status = isset($status_str[$status]) ? $status_str[$status] :$status;
+                           	$is_special = isset($special_str[$is_special]) ? $special_str[$is_special] :$is_special;
+
                             if (!in_array($status, array('0','1')) || !in_array($is_special, array('0','1'))) {
                             	continue;
                             }
-                            if ($uprice<=0 || $uweight<=0 ) {
+                            if ($uprice<0 || $uweight<0 ) {
                             	continue;
                             }
-
+                            
                             $one = $this->db->get_one(array("bar_code"=>$bar_code));
-                            if (!empty($one)) {
-                            	continue;
-                            }
+                            
                             $goods_data["bar_code"] = $bar_code;
                             $goods_data["status"] = $status;
 							$goods_data["country_goods_name"] = $country_goods_name;
@@ -242,17 +254,24 @@ class product extends admin {
 							$goods_data["nweight"] = $nweight;
 
                             $goods_data["create_time"] = $create_time;
-							$one = $this->db->insert($goods_data);
-                            if ( !empty($one)) {
-                                $suc_row++;
+                            if (empty($one)) {
+                            	$res = $this->db->insert($goods_data);
+                            } else {
+                            	$res = $this->db->update($goods_data,array('id'=>$one['id']));
                             }
+                            if ($k%1000==0) {
+                            	usleep(500000);
+                            }
+                            // var_dump($res);exit();
+                            $suc_row++;
+							
                         }
                     }
                 } else {
                     showmessage('上传失败',HTTP_REFERER);
                 }
-                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条',HTTP_REFERER);
-                exit;
+                showmessage('文件中含有'.$row.'条,成功导入'.$suc_row.'条', '?m=express&c=product&a=init');
+                
 		}
 		include $this->admin_tpl('import_goods');
 	}

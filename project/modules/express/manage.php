@@ -102,6 +102,7 @@ class manage extends admin {
                     $line[]=$goods['num'] * $product_info['zhprice'];
                     $line[]=$goods['num'] * $goods['uprice'];
                     $line[]=$product_info['measur_unit'];
+                    $line[]=$address_info['consignee'];
                     $line[]=$address_info['province'];
                     $line[]=$address_info['province'].'/'.$address_info['city'].'/'.$address_info['area'].$address_info['addressinfo'];
                     $line[]=$address_info['mobile'];

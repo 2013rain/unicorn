@@ -98,11 +98,11 @@
       <div class="panel_header">根据条形码添加商品信息</div>
        <div class="panel_footer">
           <div >
-            <input type="text" placeholder="输入商品条形码"   onblur="AddProduct()" style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
-            <!--
+            <input type="text" placeholder="输入商品条形码"   onkeypress="return EnterTextBox(2);" style="border: 1px solid #AAA;font-size: 12px;height: 16px;line-height: 16px; padding: 6px; color: #666666;width: 170px; -moz-border-radius: 3px;-webkit-border-radius: 3px;    border-radius: 3px;  background: #ffffff;"  value="" id="bar_code" />
+            
             <input type="button" style="margin-right: 8px;background-color: #6CD134;    color: #ffffff;line-height: 12px;padding: 5px 16px 6px; font-size: 12px;" onclick="AddProduct()" value="增加商品" />
             
-            -->
+            
           </div>
         </div>
       <div class="panel_content" id="inbound_item_list">
@@ -237,10 +237,27 @@
     var tdhtml = "<tr id=\"bound_%idx%\"><td>%bar_code%</td><td>%country_goods_name%</td>";
      tdhtml += "<td>%ch_name%</td><td>%goodsmodel%</td>";
      tdhtml += "<td>%uprice%</td><td>%uweight%</td>";
-     tdhtml += "<td id=\"bound_%bar_code%\">0</td><td><a  onclick=\"deleteTr('bound_%idx%')\">删除</a>%hidden%</td></tr>";
+     tdhtml += "<td ><input type=\"number\" value=\"1\" id=\"bound_%bar_code%\" data-bar=\"%bar_code%\" onblur=\"updateNum(this)\" /></td><td><a  onclick=\"deleteTr('bound_%idx%')\">删除</a>%hidden%</td></tr>";
      var idxtd =0;
      var hiddenHtml = "<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][bar_code]\" id=\"bar_code_%bar_code%\">";
      hiddenHtml +="<input type=\"hidden\" name=\"inbound[inbound_items_attributes][%idx%][num]\" id=\"num_%bar_code%\" >";
+     
+
+function EnterTextBox(where) {
+     if (event.keyCode == 13) {
+      if (where=="2") {
+        AddProduct()
+      }
+
+     }
+ }
+
+     function updateNum(obj) {
+
+      bar = $(obj).data("bar")
+      $("#num_"+bar).val($(obj).val());
+      
+     }
      function AddProduct(){
       bar_code = $("#bar_code").val();
       $("#bar_code").attr("disabled",true);
@@ -254,10 +271,11 @@
               oldv= $("#num_"+bar_code).val();
               oldv =parseInt(oldv,10)
               $("#num_"+bar_code).val(oldv+1);
-              $("#bound_"+bar_code).html(oldv+1);
+              $("#bound_"+bar_code).val(oldv+1);
               $("#bar_code").removeAttr("disabled");
               return true;
       }
+        
       $.ajax({
           type:"GET",
           url:'index.php?m=express&c=index&a=public_getbarcode_ajax&',
@@ -283,7 +301,7 @@
               $("#mybody").html($("#mybody").html()+one_td)
               $("#num_"+oneinfo.bar_code).val(1);
               $("#bar_code_"+oneinfo.bar_code).val(oneinfo.bar_code);
-              $("#bound_"+bar_code).html(1);
+              $("#bound_"+bar_code).val(1);
               idxtd++;
             }
           }
