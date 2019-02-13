@@ -75,7 +75,7 @@ class manage extends admin {
         if ($down==1 ) {
 
             //按条件导出订单详情
-            $head = array('主运单号','快递单号','物品名称','英文物品名称','净重(g)','毛重(g)','规格/型号','申报数量','申报总价（￥）','申报总价(日元)','申报计量单位','收件人','收件人城市','收件人地址','收件人电话','收件人身份证');
+            $head = array('主运单号','快递单号','物品名称','物品名称(日文)','物品名称(英文)','净重(g)','毛重(g)','规格/型号','申报数量','申报总价（￥）','申报总价(日元)','申报计量单位','收件人','收件人城市','收件人地址','收件人电话','收件人身份证');
             $row = array();
             $express_list = $this->db->listinfo($where, 'id DESC');
             $this->product_model = pc_base::load_model('product_goods_model');
@@ -91,13 +91,14 @@ class manage extends admin {
                     $line = array();
                     $line[]=$v['major_no'];
                     $line[]=$v['expressno'];
-                    $line[]=$goods['goodsname'];
-                    $line[]= isset($product_info['en_name'])?$product_info['en_name']:'';
+                    $line[]=isset($product_info['ch_name'])?$product_info['ch_name']:'';$goods['goodsname'];
+                    $line[]= isset($product_info['country_goods_name'])?$product_info['country_goods_name']:'';
+					$line[]= isset($product_info['en_name']) ? $product_info['en_name'] : '';
 
                     $line[]= isset($product_info['nweight'])?$product_info['nweight']:'';
                     $line[]= isset($product_info['uweight'])?$product_info['uweight']:'';
 
-                    $line[]=isset($product_info['goodsname'])?$product_info['goodsname']:$goods['goodsname'];
+                    $line[]=isset($product_info['goodsmodel'])?$product_info['goodsmodel']:$goods['goodsmodel'];
                     $line[]=$goods['num'];
                     $line[]=$goods['num'] * $product_info['zhprice'];
                     $line[]=$goods['num'] * $goods['uprice'];
