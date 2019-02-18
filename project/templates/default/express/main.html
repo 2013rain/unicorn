@@ -140,7 +140,7 @@
         <td>{format::date($info['in_store_time'], 1)}</td>
         <td>{format::date($info['out_store_time'], 1)}</td>
         <td>{$info['weight']}</td>
-          <td><a style="color:blue" href="index.php?m=express&c=index&a=confirm&id={$info['id']}">确认收货</a></td>
+          <td><a style="color:blue" data-id="{$info['id']}" class="_shouhuo">确认收货</a></td>
       </tr>
       {/loop}
       {/if}
@@ -156,6 +156,12 @@
             });
             $(".con_ul li").click(function(){
                 $(this).addClass("active-jq").siblings().removeClass("active-jq");
+            });
+            $("._shouhuo").click(function(){
+               id=$(this).data("id")
+               if (confirm("是否确认收货？")) {
+                window.location.href="index.php?m=express&c=index&a=confirm&id="+id ;
+               }
             });
         });
 </script>

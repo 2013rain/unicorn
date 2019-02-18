@@ -67,10 +67,10 @@
 <script type="text/javascript">
 <!--
 var td_html = "<tr><td align=\"left\" >%expressno% </td><td align=\"left\" id=\"goods_%bar_code%\" >%bar_code% %new%</td>"
-td_html += "<td align=\"left\" >%goodsname%</td><td align=\"left\" >%num%</td>"
+td_html += "<td align=\"left\" >%goodsname%</td><td align=\"left\"  >%num%</td>"
 td_html += "<td align=\"left\"  >%hidden%</td></tr>"
-var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%\"><input type=\"number\" name=\"goods[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
-var hiddenForm2 = "<input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"number\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"1\">" 
+var hiddenForm1 = "<input type=\"hidden\" name=\"goods[%idx%][id]\" value=\"%id%\"><input type=\"number\" class=\"_checkIpt\" data-old=\"%num%\" name=\"goods[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"0\">" 
+var hiddenForm2 = "<input type=\"hidden\" name=\"product[%idx%][bar_code]\" value=\"%bar_code%\"><input type=\"number\"  class=\"_checkIpt\" data-old=\"%num%\" name=\"product[%idx%][num]\" id=\"rnum_%bar_code%\" value=\"1\">" 
 var idx=0;
 var expressno;
 
@@ -154,8 +154,21 @@ function instore() {
 	} else  if(weight=='') {
 		alert("填写重量");
 		return false;
-	} else if (confirm("入库操作将会使用‘入库数量’覆盖当前数量，确定入库？")) {
-		myform.submit();
+	} else  {
+		var need=0;
+		$("._checkIpt").each(function(){
+			if ($(this).val()!=$(this).data('old')) {
+				need=1;
+			}
+		  });
+		if (need){
+			if (confirm("入库操作将会使用‘入库数量’覆盖当前数量，确定入库？")) {
+				myform.submit();
+			}
+		}else{
+			myform.submit();
+		}
+		
 	}
 }
 function problem() {
